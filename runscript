@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file=$(sed -n -e 's/^.*PROG_NAME  = //p' Makefile)
+file="./bin/$file"
+
+if [ -e "$file" ]; then
+	./$file	
+else 
+	echo -e "\033[1;31mProgram is not compiled! Run: 'make'!\033[0m"
+fi 
