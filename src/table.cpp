@@ -32,6 +32,8 @@ void Table::addColumnToTable(ColumnHandler* column)
 
 void Table::printTable()
 {
+    alignColumns();
+    
     for(int i = 0; i < columns.size(); i++)
         if(tableSize != columns[i]->getColumnSize()){
             //TODO: Curses
@@ -58,6 +60,13 @@ void Table::printTable()
 
 void Table::alignColumns()
 {
+    for(int i = 0; i < columns.size(); i++)
+        if(!columns[i]->isNullable()){
+            std::cout << "Brak mozliwosci wyrownania kolumn, kolumna: \"" << columns[i]->getName() << "\" nie miec pustych pol" << std::endl;
+            // TODO: Curses
+            return;
+        }
+    
 	for(int i = 0; i < columns.size(); i++){
         while(tableSize > columns[i]->getColumnSize()){
             columns[i]->addNullValue();

@@ -6,6 +6,7 @@
 
 int main()
 {
+
 	// Pierwsza kolumna
 	Column<std::string> *firstNameColumn = new Column<std::string>("Imie");	
 	firstNameColumn->addValue("Krzysztof");
@@ -25,18 +26,16 @@ int main()
     eyesColorColumn->addValue("Zielony");
     eyesColorColumn->addValue("Niebieski");
     eyesColorColumn->addValue("Brazowe");
-    eyesColorColumn->addValue("Niebieski");
-    eyesColorColumn->addValue("Niebieski");
-    
-    
-    
+    eyesColorColumn->addValue("Niebieskie");
+    eyesColorColumn->addValue("Niebieskie");
+    eyesColorColumn->addValue("Niebieskie");
+    eyesColorColumn->addValue("Zielony");
+    eyesColorColumn->addValue("Brazowe");
+    eyesColorColumn->addValue("Piwne");
     
 	// Add to table
 	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
-	//firstTable->printTable();
-	//firstTable->alignColumns();
-    //firstTable->printTable();
-    
+	firstTable->printTable();
     
 	delete firstNameColumn;
 	delete ageColumn;	

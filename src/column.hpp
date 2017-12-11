@@ -10,10 +10,12 @@
 class ColumnHandler
 {
 public:
+    virtual std::string getName() = 0;
     virtual void printColumn() = 0;
     virtual void addNullValue() = 0;
     virtual unsigned int getColumnSize() = 0;
     virtual void printValueAtPos(unsigned int index) = 0;
+    virtual bool isNullable() = 0;
     virtual ~ColumnHandler() {};
 };
 
@@ -22,23 +24,26 @@ public:
 template <typename T> class Column : public ColumnHandler
 {
 private:
+    // Nazwa kolumny
+    std::string nameOfColumn;
+    
     // Atrybuty kolumn
     bool nullable;
     
 	// Wartosci przechowywane w kolumnie
-	std::vector<T> values;
+	std::vector<T*> values;
 	
 	// Rozmiar kolumny
 	unsigned int columnSize;
 public:
-	// Nazwa kolumny
-	std::string nameOfColumn;
-
 	// Konstruktor kolumny inicjalizujacy jej nazwe (przyjmuje nazwe nowej kolumny)
-	Column(std::string nameOfColumn);
+    Column(std::string nameOfColumn, bool nullable = true);
+    
+    // Zwraca nazwe kolumny
+    std::string getName();
     
 	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana)
-	void addValue(T value);
+	void addValue(const T &value);
 	
     // Dodaj puste pole
     void addNullValue();
@@ -58,4 +63,7 @@ public:
     
 	// Zwraca rozmiar kolumny
 	unsigned int getColumnSize();
+    
+    // Zwraca czy kolumna moze miec puste pola
+    bool isNullable();
 };

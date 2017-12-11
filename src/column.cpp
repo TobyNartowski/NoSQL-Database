@@ -2,24 +2,36 @@
 
 // Implementacje metod
 template <typename T>
-Column<T>::Column(std::string nameOfColumn)
+Column<T>::Column(std::string nameOfColumn, bool nullable)
 {
+    if(nullable)
+        this->nullable = true;
+    
 	this->nameOfColumn = nameOfColumn;
 	columnSize = 0;
 }
 
 template <typename T>
-void Column<T>::addValue(T value)
+std::string Column<T>::getName()
 {
-	values.push_back(value);
+    return nameOfColumn;
+}
+
+template <typename T>
+void Column<T>::addValue(const T &value)
+{
+    T *buffer = &(const_cast<T&>(value));
+    values.push_back(buffer);
 	columnSize++;
 }
 
 template <typename T>
 void Column<T>::addNullValue()
 {
-    // TODO
-    //values.push_back(reinterpret_cast<T>(NULL));
+    if(!nullable)
+        return;
+    
+    values.push_back(NULL);
     columnSize++;
 }
 
@@ -47,7 +59,7 @@ std::vector<unsigned int> Column<T>::findValue(T value)
 {
 	std::vector <unsigned int>indexes;
 	for(int i = 0; i < values.size(); i++)
-		if(values[i] == value)
+		if((*values[i]) == value)
 			indexes.push_back(i);
 	std::cout << "Znaleziono " << indexes.size() << " razy" << std::endl; //TODO: Curses
 	
@@ -61,13 +73,24 @@ void Column<T>::printValueAtPos(unsigned int index)
         std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
         return;
     }
-    std::cout << values[index];
+    
+    if(values[index] == NULL){
+        std::cout << " "; // TODO: Curses
+        return;
+    }
+    std::cout << *values[index];
 }
 
 template <typename T>
 unsigned int Column<T>::getColumnSize()
 {
 	return columnSize;
+}
+
+template <typename T>
+bool Column<T>::isNullable()
+{
+    return nullable;
 }
 
 

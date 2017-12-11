@@ -1,5 +1,5 @@
 CC         = g++
-FLAGS      = -Wall -std=c++14
+FLAGS      = -Wall -std=c++11
 PROG_NAME  = Database
 
 SRC_DIR    = ./src
