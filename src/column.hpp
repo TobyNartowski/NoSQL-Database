@@ -12,9 +12,10 @@ class ColumnHandler
 public:
     virtual std::string getName() = 0;
     virtual void printColumn() = 0;
-    virtual void addNullValue() = 0;
+    virtual void addNullValue(unsigned int index) = 0;
     virtual unsigned int getColumnSize() = 0;
-    virtual void printValueAtPos(unsigned int index) = 0;
+    virtual void printValue(unsigned int index) = 0;
+    virtual std::string streamPrint(unsigned int index) = 0;
     virtual bool isNullable() = 0;
     virtual ~ColumnHandler() {};
 };
@@ -42,24 +43,23 @@ public:
     // Zwraca nazwe kolumny
     std::string getName();
     
-	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana)
-	void addValue(const T &value);
+	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana oraz odpowiedni indeks)
+	void addValue(const T &value, unsigned int index = 0);
 	
-    // Dodaj puste pole
-    void addNullValue();
+    // Dodaj puste pole (przyjmuje opdowiedni indeks)
+    void addNullValue(unsigned int index);
     
-	// Usun wartosc na pozycji (przyjmuje odpowiedni indeks)
-	void deleteValueAtPos(unsigned int index);
-
-	// Znajdz wartosc
-	// (przyjmuje wartosc; zwraca wektor z indeksami, gdzie znaleziono wartosc)
-	std::vector<unsigned int> findValue(T value);	
+	// Usun wartosc (przyjmuje odpowiedni indeks)
+	void deleteValue(unsigned int index);
 
 	// Wyswietl cala kolumne
 	void printColumn(); // TODO: Curses
 
-    // Wyswietla wartosc na pozycji (przyjmuje odpowiedni indeks)
-    void printValueAtPos(unsigned int index);
+    // Wyswietla wartosc (przyjmuje odpowiedni indeks)
+    void printValue(unsigned int index);
+    
+    // TESTOWANIE
+    std::string streamPrint(unsigned int index);
     
 	// Zwraca rozmiar kolumny
 	unsigned int getColumnSize();

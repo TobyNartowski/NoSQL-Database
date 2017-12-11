@@ -1,3 +1,7 @@
+/*
+ TODO: Laczenie tabel
+*/
+
 #include "column.hpp"
 #include "table.hpp"
 
@@ -6,9 +10,8 @@
 
 int main()
 {
-
 	// Pierwsza kolumna
-	Column<std::string> *firstNameColumn = new Column<std::string>("Imie");	
+	Column<std::string> *firstNameColumn = new Column<std::string>("Imie");
 	firstNameColumn->addValue("Krzysztof");
 	firstNameColumn->addValue("Marek");
 	firstNameColumn->addValue("Pawel");
@@ -23,23 +26,25 @@ int main()
 
     // Trzecia kolumna
     Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu");
-    eyesColorColumn->addValue("Zielony");
-    eyesColorColumn->addValue("Niebieski");
+    eyesColorColumn->addValue("Zielone");
+    eyesColorColumn->addValue("Niebieskie");
     eyesColorColumn->addValue("Brazowe");
-    eyesColorColumn->addValue("Niebieskie");
-    eyesColorColumn->addValue("Niebieskie");
-    eyesColorColumn->addValue("Niebieskie");
-    eyesColorColumn->addValue("Zielony");
-    eyesColorColumn->addValue("Brazowe");
-    eyesColorColumn->addValue("Piwne");
+    eyesColorColumn->addValue("Zielone");
+    
+    //firstNameColumn->deleteValue(0);
+    //ageColumn->deleteValue(1);
+    //firstNameColumn->addValue("Piotr", 6);
     
 	// Add to table
 	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
 	firstTable->printTable();
+    //firstTable->printRow(3);
+    //firstTable->printRowWhereStringIs("Kolor oczu", "Zielone");
     
 	delete firstNameColumn;
 	delete ageColumn;	
     delete eyesColorColumn;
     delete firstTable;
+
 	return 0;
 }

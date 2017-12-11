@@ -28,6 +28,13 @@ public:
 	// Wyswietl cala tabele
 	void printTable();
 
+    // Wyswietla caly wiersz (przyjmuje indeks, ktory rzad ma wyswietlic oraz flage czy maja zostac wyswietlone nazwy kolumn)
+    void printRow(unsigned int index, bool printHeader = true);
+    
+    // Wyswietla wiersz, gdzie w danej kolumnie jest spelniony odpowiedni warunek dla typu tekstowego
+    // (przyjmuje nazwe kolumny i oczekiwana wartosc)
+    void printRowWhereStringIs(std::string name, std::string value);
+    
 	// Wyrownaj kolumny, rozmiar kolumn zostaje zwiekszony do
 	// rozmiaru najwiekszej kolumny w tabeli;
 	// puste miejsca sa wypelniane znakiem '-'

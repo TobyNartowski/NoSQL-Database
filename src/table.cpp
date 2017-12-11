@@ -47,15 +47,77 @@ void Table::printTable()
 		return;
 	}
     
+    std::cout << "| ";
+    for(int i = 0; i < columns.size(); i++)
+        std::cout << columns[i]->getName() << " | ";
+    std::cout << std::endl;
+    
 	// TODO: Curses
 	for(int i = 0; i < tableSize; i++){
         std::cout << "| ";
 		for(int j = 0; j < columns.size(); j++){
-            columns[j]->printValueAtPos(i);
+            columns[j]->printValue(i);
             std::cout << " | ";
         }
 		std::cout << std::endl;
 	}
+}
+
+void Table::printRow(unsigned int index, bool printHeader)
+{
+    //TODO: Curses
+    if(index >= tableSize){
+        std::cout << "Niepoprawny indeks" << std::endl;
+        return;
+    }
+    
+    if(printHeader){
+        std::cout << "| ";
+        for(int i = 0; i < columns.size(); i++)
+            std::cout << columns[i]->getName() << " | ";
+        std::cout << std::endl;
+    }
+    
+    std::cout << "| ";
+    for(int i = 0; i < columns.size(); i++){
+        columns[i]->printValue(index);
+        std::cout << " | ";
+    }
+    std::cout << std::endl;
+}
+
+void Table::printRowWhereStringIs(std::string name, std::string value)
+{
+    // TODO: Curses
+    int whichColumn = -1;
+    std::string buffer;
+    bool found = false;
+    
+    for(int i = 0; i < columns.size(); i++)
+        if(columns[i]->getName() == name)
+            whichColumn = i;
+   
+    if(whichColumn == -1){
+        std::cout << "Nie znaleziono kolumny" << std::endl;
+        return;
+    }
+
+    for(int i = 0; i < columns[whichColumn]->getColumnSize(); i++){
+        buffer = columns[whichColumn]->streamPrint(i);
+        if(buffer == value){
+            if(!found){
+                std::cout << "| ";
+                for(int j = 0; j < columns.size(); j++)
+                    std::cout << columns[j]->getName() << " | ";
+                std::cout << std::endl;
+                found = true;
+            }
+            printRow(i, false);
+        }
+    }
+    
+    if(!found)
+        std::cout << "Nie znaleziono wynikow w kolumnie" << std::endl;
 }
 
 void Table::alignColumns()
@@ -69,7 +131,7 @@ void Table::alignColumns()
     
 	for(int i = 0; i < columns.size(); i++){
         while(tableSize > columns[i]->getColumnSize()){
-            columns[i]->addNullValue();
+            columns[i]->addNullValue(columns[i]->getColumnSize());
         }
 	}
 }

@@ -1,5 +1,7 @@
 #include "column.hpp"
 
+#include <sstream>
+
 // Implementacje metod
 template <typename T>
 Column<T>::Column(std::string nameOfColumn, bool nullable)
@@ -18,20 +20,32 @@ std::string Column<T>::getName()
 }
 
 template <typename T>
-void Column<T>::addValue(const T &value)
+void Column<T>::addValue(const T &value, unsigned int index)
 {
     T *buffer = &(const_cast<T&>(value));
-    values.push_back(buffer);
+    if(index == 0)
+        values.push_back(buffer);
+    else{
+        while(index > columnSize){
+            if(!nullable){
+                std::cout << "Blad przy dodawaniu: kolumna nie moze miec pustych pol" << std::endl;
+                return;
+            }
+            addNullValue(columnSize);
+        }
+            //TODO: Curses
+        values.insert(values.begin()+index, buffer);
+    }
 	columnSize++;
 }
 
 template <typename T>
-void Column<T>::addNullValue()
+void Column<T>::addNullValue(unsigned int index)
 {
     if(!nullable)
         return;
     
-    values.push_back(NULL);
+    values.insert(values.begin()+index, NULL);
     columnSize++;
 }
 
@@ -40,37 +54,31 @@ void Column<T>::printColumn()
 {
 	for(int i = 0; i < values.size(); i++)
 		std::cout << values[i] << std::endl;
+    //TODO: Curses
 }
 
 template <typename T>
-void Column<T>::deleteValueAtPos(unsigned int index)
+void Column<T>::deleteValue(unsigned int index)
 {
+    if(!nullable){
+        std::cout << "Blad przy usuwaniu: kolumna nie moze miec pustych pol" << std::endl;
+        return;
+        //TODO: Curses
+    }
 	if(values.size() < index){
 		std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
 		return;
 	}
-	else
-		values.erase(values.begin() + index - 1);
+    
+    addNullValue(index);
 	columnSize--;
 }
 
 template <typename T>
-std::vector<unsigned int> Column<T>::findValue(T value)
-{
-	std::vector <unsigned int>indexes;
-	for(int i = 0; i < values.size(); i++)
-		if((*values[i]) == value)
-			indexes.push_back(i);
-	std::cout << "Znaleziono " << indexes.size() << " razy" << std::endl; //TODO: Curses
-	
-	return indexes;
-}
-
-template <typename T>
-void Column<T>::printValueAtPos(unsigned int index)
+void Column<T>::printValue(unsigned int index)
 {
     if(index >= columnSize){
-        std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
+        std::cout << " ";
         return;
     }
     
@@ -79,6 +87,17 @@ void Column<T>::printValueAtPos(unsigned int index)
         return;
     }
     std::cout << *values[index];
+}
+
+template <typename T>
+std::string Column<T>::streamPrint(unsigned int index)
+{
+    if(values[index] == NULL)
+        return "";
+    
+    std::stringstream buffer;
+    buffer << *values[index];
+    return buffer.str();
 }
 
 template <typename T>
