@@ -29,7 +29,7 @@ template <typename T>
 void Column<T>::addValue(const T &value, unsigned int index)
 {
     T *buffer = &(const_cast<T&>(value));
-
+    
     if(unique){
         for(int i = 0; i < columnSize; i++){
             if(values[i] == buffer){
@@ -42,26 +42,22 @@ void Column<T>::addValue(const T &value, unsigned int index)
     if(index == ARG_NOT_PROVIDED)
         values.push_back(buffer);
     else{
-        while(index > columnSize){
+        while(index >= columnSize){
             if(!nullable){
                 std::cout << "Blad przy dodawaniu: kolumna nie moze miec pustych pol" << std::endl;
                 return;
             }
             addNullValue(columnSize);
         }
-            //TODO: Curses
         
-        std::cout << "Index: " << index << std::endl
-        << "ColSize: " << columnSize << std::endl << std::endl;
-        
-        if(index < columnSize){
+        if(index < columnSize)
             values.erase(values.begin()+index);
-            //addNullValue(index+(columnSize-index));
-            addNullValue(5);
-        }
         values.insert(values.begin()+index, buffer);
+        return;
+
     }
-	columnSize++;
+    columnSize++;
+    //TODO: Curses
 }
 
 template <typename T>
@@ -96,12 +92,11 @@ void Column<T>::deleteValue(unsigned int index)
         return;
         //TODO: Curses
     }
-	if(values.size() < index){
+	if(columnSize <= index){
 		std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
 		return;
 	}
     
-    //addNullValue(index);
     values[index] = NULL;
 }
 

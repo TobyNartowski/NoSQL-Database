@@ -9,6 +9,11 @@
 
 #include <iostream>
 
+// debugging!
+#include <time.h>
+#include <unistd.h>
+
+
 int main()
 {
 	// Pierwsza kolumna
@@ -33,19 +38,12 @@ int main()
     eyesColorColumn->addValue("Zielone");
     eyesColorColumn->addValue("Piwne");
     eyesColorColumn->addValue("Niebieskie");
-
-    // ERROR TODO WYPISYWANIE
-    //firstNameColumn->deleteValue(2);
-    firstNameColumn->addValue("Ktos", 1);
     
-	// Add to table
+    // Add to table
 	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
 	firstTable->printTable();
 
-    //    ERROR TODO!
-    //    firstNameColumn->addValue("asdasdasd", 1);
-    //    firstTable->printTable();
-    // Tabele przyjmujace wskazniki na kolumny?
+    srand(time((time_t *)NULL));
     
 	delete firstNameColumn;
 	delete ageColumn;	

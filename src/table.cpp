@@ -129,6 +129,10 @@ void Table::alignColumns()
             return;
         }
     
+    for(int i = 0; i < columns.size(); i++)
+        if(tableSize < columns[i]->getColumnSize())
+            tableSize = columns[i]->getColumnSize();
+
 	for(int i = 0; i < columns.size(); i++){
         while(tableSize > columns[i]->getColumnSize()){
             columns[i]->addNullValue(columns[i]->getColumnSize());
