@@ -4,12 +4,18 @@
 
 // Implementacje metod
 template <typename T>
-Column<T>::Column(std::string nameOfColumn, bool nullable)
+Column<T>::Column(std::string nameOfColumn, bool nullable, bool unique, bool pk, bool fk)
 {
     if(nullable)
         this->nullable = true;
-    
-	this->nameOfColumn = nameOfColumn;
+    if(unique)
+        this->unique = true;
+    if(pk)
+        this->unique = this->pk = true;
+    if(fk)
+        this->fk = true;
+
+    this->nameOfColumn = nameOfColumn;
 	columnSize = 0;
 }
 
@@ -23,7 +29,17 @@ template <typename T>
 void Column<T>::addValue(const T &value, unsigned int index)
 {
     T *buffer = &(const_cast<T&>(value));
-    if(index == 0)
+
+    if(unique){
+        for(int i = 0; i < columnSize; i++){
+            if(values[i] == buffer){
+                std::cout << "Blad przy dodawaniu: kolumna musi miec unikalne pola" << std::endl;
+                return;
+            }
+        }
+    }
+    
+    if(index == ARG_NOT_PROVIDED)
         values.push_back(buffer);
     else{
         while(index > columnSize){
@@ -34,6 +50,15 @@ void Column<T>::addValue(const T &value, unsigned int index)
             addNullValue(columnSize);
         }
             //TODO: Curses
+        
+        std::cout << "Index: " << index << std::endl
+        << "ColSize: " << columnSize << std::endl << std::endl;
+        
+        if(index < columnSize){
+            values.erase(values.begin()+index);
+            //addNullValue(index+(columnSize-index));
+            addNullValue(5);
+        }
         values.insert(values.begin()+index, buffer);
     }
 	columnSize++;
@@ -44,16 +69,22 @@ void Column<T>::addNullValue(unsigned int index)
 {
     if(!nullable)
         return;
-    
-    values.insert(values.begin()+index, NULL);
+    if(index <= columnSize)
+        values.push_back(NULL);
+    else
+        values.insert(values.begin()+index, NULL);
     columnSize++;
 }
 
 template <typename T>
 void Column<T>::printColumn()
 {
-	for(int i = 0; i < values.size(); i++)
-		std::cout << values[i] << std::endl;
+    for(int i = 0; i < values.size(); i++){
+            if(values[i] == NULL)
+                std::cout << " " << std::endl;
+            else
+                std::cout << *values[i] << std::endl;
+    }
     //TODO: Curses
 }
 
@@ -70,8 +101,8 @@ void Column<T>::deleteValue(unsigned int index)
 		return;
 	}
     
-    addNullValue(index);
-	columnSize--;
+    //addNullValue(index);
+    values[index] = NULL;
 }
 
 template <typename T>

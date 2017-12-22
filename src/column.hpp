@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+#define ARG_NOT_PROVIDED -1
+
 // Klasa bazowa (dodatkowa)
 // Jest zaimplementowana w celu ulatwienia przechowywania kolumn w tabelach
 // (kolumny przechowywane sa w kontenerze Vector, ktory nie przechowuje szablonow klas)
@@ -21,7 +23,7 @@ public:
 };
 
 // Klasa pochodna (glowna)
-// Implementuje podstawowe operacje na kolumnie i jej rekordach
+// Implementuje podstawowe operacje na kolumnie i jej polach
 template <typename T> class Column : public ColumnHandler
 {
 private:
@@ -29,7 +31,10 @@ private:
     std::string nameOfColumn;
     
     // Atrybuty kolumn
+    bool unique;
     bool nullable;
+    bool pk;
+    bool fk;
     
 	// Wartosci przechowywane w kolumnie
 	std::vector<T*> values;
@@ -38,13 +43,13 @@ private:
 	unsigned int columnSize;
 public:
 	// Konstruktor kolumny inicjalizujacy jej nazwe (przyjmuje nazwe nowej kolumny)
-    Column(std::string nameOfColumn, bool nullable = true);
+    Column(std::string nameOfColumn, bool nullable = true, bool unique = false, bool pk = false, bool fk = false);
     
     // Zwraca nazwe kolumny
     std::string getName();
     
 	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana oraz odpowiedni indeks)
-	void addValue(const T &value, unsigned int index = 0);
+	void addValue(const T &value, unsigned int index = ARG_NOT_PROVIDED);
 	
     // Dodaj puste pole (przyjmuje opdowiedni indeks)
     void addNullValue(unsigned int index);

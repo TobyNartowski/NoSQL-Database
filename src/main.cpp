@@ -1,12 +1,13 @@
 /*
  TODO: Laczenie tabel
+ // Usuwanie dodawanie z tabeli, a nie kolumny
+ // Przesuwanie w dodawaniu wartosci!!
 */
 
 #include "column.hpp"
 #include "table.hpp"
 
 #include <iostream>
-#include <vector>
 
 int main()
 {
@@ -30,16 +31,21 @@ int main()
     eyesColorColumn->addValue("Niebieskie");
     eyesColorColumn->addValue("Brazowe");
     eyesColorColumn->addValue("Zielone");
-    
-    //firstNameColumn->deleteValue(0);
-    //ageColumn->deleteValue(1);
-    //firstNameColumn->addValue("Piotr", 6);
+    eyesColorColumn->addValue("Piwne");
+    eyesColorColumn->addValue("Niebieskie");
+
+    // ERROR TODO WYPISYWANIE
+    //firstNameColumn->deleteValue(2);
+    firstNameColumn->addValue("Ktos", 1);
     
 	// Add to table
 	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
 	firstTable->printTable();
-    //firstTable->printRow(3);
-    //firstTable->printRowWhereStringIs("Kolor oczu", "Zielone");
+
+    //    ERROR TODO!
+    //    firstNameColumn->addValue("asdasdasd", 1);
+    //    firstTable->printTable();
+    // Tabele przyjmujace wskazniki na kolumny?
     
 	delete firstNameColumn;
 	delete ageColumn;	
