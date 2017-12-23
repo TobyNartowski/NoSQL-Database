@@ -4,17 +4,23 @@
 
 // Implementacje metod
 template <typename T>
-Column<T>::Column(std::string nameOfColumn, bool nullable, bool unique, bool pk, bool fk)
+Column<T>::Column(std::string nameOfColumn, bool pk, bool fk, bool nullable, bool unique)
 {
-    if(nullable)
-        this->nullable = true;
+    this->pk = this->fk = false;
+    this->nullable = true;
+    this->unique = false;
+    
+    if(!nullable)
+        this->nullable = false;
     if(unique)
         this->unique = true;
-    if(pk)
+    if(pk){
         this->unique = this->pk = true;
+        this->nullable = false;
+    }
     if(fk)
         this->fk = true;
-
+    
     this->nameOfColumn = nameOfColumn;
 	columnSize = 0;
 }
@@ -29,10 +35,10 @@ template <typename T>
 void Column<T>::addValue(const T &value, unsigned int index)
 {
     T *buffer = &(const_cast<T&>(value));
-    
+
     if(unique){
         for(int i = 0; i < columnSize; i++){
-            if(values[i] == buffer){
+            if((*values[i]) == (*buffer)){
                 std::cout << "Blad przy dodawaniu: kolumna musi miec unikalne pola" << std::endl;
                 return;
             }
@@ -138,6 +144,17 @@ bool Column<T>::isNullable()
     return nullable;
 }
 
+template <typename T>
+bool Column<T>::isPk()
+{
+    return pk;
+}
+
+template <typename T>
+bool Column<T>::isFk()
+{
+    return fk;
+}
 
 // Dozwolone typy przechowywane w kolumnach
 template class Column<bool>;

@@ -9,7 +9,7 @@ BIN_DIR    = ./bin
 SRC_LIST  = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_LIST  = $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_LIST:.cpp=.o)))
 
-SUCCESS_COMPILE_TEXT="\033[1;32mProgram has been successfully compiled!\033[0m"
+SUCCESS_COMPILE_TEXT="\033[1;32mProgram skompilowany pomyślnie!\033[0m"
 
 $(PROG_NAME): $(OBJ_LIST)
 	$(CC) $(OBJ_LIST) -o $(BIN_DIR)/$(PROG_NAME)

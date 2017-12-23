@@ -1,7 +1,5 @@
 /*
  TODO: Laczenie tabel
- // Usuwanie dodawanie z tabeli, a nie kolumny
- // Przesuwanie w dodawaniu wartosci!!
 */
 
 #include "column.hpp"
@@ -9,45 +7,43 @@
 
 #include <iostream>
 
-// debugging!
-#include <time.h>
-#include <unistd.h>
-
-
 int main()
 {
 	// Pierwsza kolumna
-	Column<std::string> *firstNameColumn = new Column<std::string>("Imie");
+	Column<std::string> *firstNameColumn = new Column<std::string>("Imie", false, false, false);
 	firstNameColumn->addValue("Krzysztof");
 	firstNameColumn->addValue("Marek");
 	firstNameColumn->addValue("Pawel");
 	firstNameColumn->addValue("Andrzej");
+    firstNameColumn->addValue("Maciej");
 
-	// Druga kolumna
-	Column<unsigned int> *ageColumn = new Column<unsigned int>("Wiek");
+	
+    // Druga kolumna
+	Column<unsigned int> *ageColumn = new Column<unsigned int>("Wiek", true);
 	ageColumn->addValue(32);
 	ageColumn->addValue(54);
 	ageColumn->addValue(18);
 	ageColumn->addValue(28);
-    ageColumn->addValue(28);
-    ageColumn->addValue(28);
-
+    ageColumn->addValue(21);
+    
+    // Add to table
+    Table *firstTable = new Table({firstNameColumn, ageColumn});
+    firstTable->printTable();
+    
+    std::cout << std::endl;
+    
     // Trzecia kolumna
-    Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu");
+    Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu", false, true);
     eyesColorColumn->addValue("Zielone");
     eyesColorColumn->addValue("Niebieskie");
     eyesColorColumn->addValue("Brazowe");
     eyesColorColumn->addValue("Zielone");
     eyesColorColumn->addValue("Piwne");
-    eyesColorColumn->addValue("Niebieskie");
+
+    firstTable->addColumnToTable(eyesColorColumn);
+    firstTable->printTable();
     
-    // Add to table
-	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
-	firstTable->printTable();
-    
-    srand(time((time_t *)NULL));
-    
-	delete firstNameColumn;
+    delete firstNameColumn;
 	delete ageColumn;	
     delete eyesColorColumn;
     delete firstTable;

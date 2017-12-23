@@ -19,6 +19,8 @@ public:
     virtual void printValue(unsigned int index) = 0;
     virtual std::string streamPrint(unsigned int index) = 0;
     virtual bool isNullable() = 0;
+    virtual bool isPk() = 0;
+    virtual bool isFk() = 0;
     virtual ~ColumnHandler() {};
 };
 
@@ -31,8 +33,8 @@ private:
     std::string nameOfColumn;
     
     // Atrybuty kolumn
-    bool unique;
     bool nullable;
+    bool unique;
     bool pk;
     bool fk;
     
@@ -43,7 +45,7 @@ private:
 	unsigned int columnSize;
 public:
 	// Konstruktor kolumny inicjalizujacy jej nazwe (przyjmuje nazwe nowej kolumny)
-    Column(std::string nameOfColumn, bool nullable = true, bool unique = false, bool pk = false, bool fk = false);
+    Column(std::string nameOfColumn, bool pk = false, bool fk = false, bool nullable = true, bool unique = false);
     
     // Zwraca nazwe kolumny
     std::string getName();
@@ -71,4 +73,10 @@ public:
     
     // Zwraca czy kolumna moze miec puste pola
     bool isNullable();
+    
+    // Zwraca czy kolumna jest kluczem glownym
+    bool isPk();
+    
+    // Zwraca czy kolumna jest kluczem obcym
+    bool isFk();
 };

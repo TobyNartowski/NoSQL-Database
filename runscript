@@ -6,5 +6,5 @@ file="./bin/$file"
 if [ -e "$file" ]; then
 	./$file	
 else 
-	echo -e "\033[1;31mProgram is not compiled! Run: 'make'!\033[0m"
+	echo -e "\033[1;31mProgram nie jest jeszcze skompilowany! Uruchom: 'make'!\033[0m"
 fi 
