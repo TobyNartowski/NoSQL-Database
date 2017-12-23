@@ -29,6 +29,8 @@ int main()
 	ageColumn->addValue(54);
 	ageColumn->addValue(18);
 	ageColumn->addValue(28);
+    ageColumn->addValue(28);
+    ageColumn->addValue(28);
 
     // Trzecia kolumna
     Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu");
@@ -42,7 +44,7 @@ int main()
     // Add to table
 	Table *firstTable = new Table({firstNameColumn, ageColumn, eyesColorColumn});
 	firstTable->printTable();
-
+    
     srand(time((time_t *)NULL));
     
 	delete firstNameColumn;
