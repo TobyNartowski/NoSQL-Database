@@ -31,31 +31,32 @@ template <typename T> class Column : public ColumnHandler
 private:
     // Nazwa kolumny
     std::string nameOfColumn;
-    
+
     // Atrybuty kolumn
     bool nullable;
     bool unique;
     bool pk;
     bool fk;
-    
+
 	// Wartosci przechowywane w kolumnie
 	std::vector<T*> values;
-	
+
 	// Rozmiar kolumny
 	unsigned int columnSize;
 public:
-	// Konstruktor kolumny inicjalizujacy jej nazwe (przyjmuje nazwe nowej kolumny)
+	// Konstruktor kolumny inicjalizujacy jej parametry
+    // (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry)
     Column(std::string nameOfColumn, bool pk = false, bool fk = false, bool nullable = true, bool unique = false);
-    
+
     // Zwraca nazwe kolumny
     std::string getName();
-    
+
 	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana oraz odpowiedni indeks)
-	void addValue(const T &value, unsigned int index = ARG_NOT_PROVIDED);
-	
+	void addValue(const T &value, int index = ARG_NOT_PROVIDED);
+
     // Dodaj puste pole (przyjmuje opdowiedni indeks)
     void addNullValue(unsigned int index);
-    
+
 	// Usun wartosc (przyjmuje odpowiedni indeks)
 	void deleteValue(unsigned int index);
 
@@ -64,19 +65,19 @@ public:
 
     // Wyswietla wartosc (przyjmuje odpowiedni indeks)
     void printValue(unsigned int index);
-    
-    // TESTOWANIE
+
+    // Zwraca wartosc (przyjmuje odpowiedni indeks)
     std::string streamPrint(unsigned int index);
-    
+
 	// Zwraca rozmiar kolumny
 	unsigned int getColumnSize();
-    
+
     // Zwraca czy kolumna moze miec puste pola
     bool isNullable();
-    
+
     // Zwraca czy kolumna jest kluczem glownym
     bool isPk();
-    
+
     // Zwraca czy kolumna jest kluczem obcym
     bool isFk();
 };

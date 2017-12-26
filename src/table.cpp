@@ -1,47 +1,24 @@
 #include "table.hpp"
 
 //Implementacje metod
-Table::Table(std::initializer_list<ColumnHandler*> columns)
+Table::Table(std::string nameOfTable)
 {
+    this->nameOfTable = nameOfTable;
     pkIndex = -1;
     fkIndexes.clear();
-    
-	// TODO: Curses
-	if(columns.size() == 0){
-		tableSize = 0;
-		return;
-	}
+    tableSize = 0;
+}
 
-	unsigned int columnMaxSize = (*columns.begin())->getColumnSize();
-    int iterator = 0;
-    
-	for(auto it = columns.begin(); it != columns.end(); it++){
-        if((*it)->isPk() && (this->pkIndex != -1)){
-            std::cout << "Wiecej niz jeden klucz glowny, kolumna \"" << (*it)->getName() << "\" nie zostala dodana" << std::endl;
-            continue;
-        }
-        
-        if((*it)->isPk())
-            pkIndex = iterator;
-        if((*it)->isFk())
-            fkIndexes.push_back(iterator);
-        
-        this->columns.push_back(*it);
-		
-        if(columnMaxSize < (*it)->getColumnSize())
-			columnMaxSize = (*it)->getColumnSize();
-        
-        iterator++;
-	}
-
-	tableSize = columnMaxSize;
+std::string Table::getName()
+{
+    return nameOfTable;
 }
 
 bool Table::vectorContains(std::vector<int> vector, int index)
 {
     if(vector.empty())
         return false;
-    for(int i = 0; i < vector.size(); i++)
+    for(unsigned int i = 0; i < vector.size(); i++)
         if(vector[i] == index)
             return true;
     return false;
@@ -49,24 +26,25 @@ bool Table::vectorContains(std::vector<int> vector, int index)
 
 void Table::printTable()
 {
+    std::cout << "---- " << nameOfTable << " ----" << std::endl;
     alignColumns();
-    
-    for(int i = 0; i < columns.size(); i++)
-        if(tableSize != columns[i]->getColumnSize()){
-            //TODO: Curses
-            std::cout << "Tabela nie jest spojna" << std::endl;
-            return;
-        }
-    
+
 	// TODO: Curses
 	if(columns.size() == 0){
 		std::cout << "Tabela jest pusta" << std::endl;
 		return;
 	}
-    
+
+    for(unsigned int i = 0; i < columns.size(); i++)
+        if(tableSize != columns[i]->getColumnSize()){
+            //TODO: Curses
+            std::cout << "Tabela nie jest spojna" << std::endl;
+            return;
+        }
+
     std::cout << "| ";
-    for(int i = 0; i < columns.size(); i++){
-        if(i == pkIndex)
+    for(unsigned int i = 0; i < columns.size(); i++){
+        if(i == (unsigned)pkIndex)
             std::cout << columns[i]->getName() << " (PK) | ";
         else if(vectorContains(fkIndexes, i))
             std::cout << columns[i]->getName() << " (FK) | ";
@@ -74,11 +52,11 @@ void Table::printTable()
             std::cout << columns[i]->getName() << " | ";
     }
     std::cout << std::endl;
-    
+
 	// TODO: Curses
-	for(int i = 0; i < tableSize; i++){
+	for(unsigned int i = 0; i < tableSize; i++){
         std::cout << "| ";
-		for(int j = 0; j < columns.size(); j++){
+		for(unsigned int j = 0; j < columns.size(); j++){
             columns[j]->printValue(i);
             std::cout << " | ";
         }
@@ -93,11 +71,11 @@ void Table::printRow(unsigned int index, bool printHeader)
         std::cout << "Niepoprawny indeks" << std::endl;
         return;
     }
-    
+
     if(printHeader){
         std::cout << "| ";
-        for(int i = 0; i < columns.size(); i++){
-            if(i == pkIndex)
+        for(unsigned int i = 0; i < columns.size(); i++){
+            if(i == (unsigned)pkIndex)
                 std::cout << columns[i]->getName() << " (PK) | ";
             else if(vectorContains(fkIndexes, i))
                 std::cout << columns[i]->getName() << " (FK) | ";
@@ -106,9 +84,9 @@ void Table::printRow(unsigned int index, bool printHeader)
         }
         std::cout << std::endl;
     }
-    
+
     std::cout << "| ";
-    for(int i = 0; i < columns.size(); i++){
+    for(unsigned int i = 0; i < columns.size(); i++){
         columns[i]->printValue(index);
         std::cout << " | ";
     }
@@ -121,23 +99,23 @@ void Table::printRowWhereStringIs(std::string name, std::string value)
     int whichColumn = -1;
     std::string buffer;
     bool found = false;
-    
-    for(int i = 0; i < columns.size(); i++)
+
+    for(unsigned int i = 0; i < columns.size(); i++)
         if(columns[i]->getName() == name)
             whichColumn = i;
-   
+
     if(whichColumn == -1){
         std::cout << "Nie znaleziono kolumny" << std::endl;
         return;
     }
 
-    for(int i = 0; i < columns[whichColumn]->getColumnSize(); i++){
+    for(unsigned int i = 0; i < columns[whichColumn]->getColumnSize(); i++){
         buffer = columns[whichColumn]->streamPrint(i);
         if(buffer == value){
             if(!found){
                 std::cout << "| ";
-                for(int i = 0; i < columns.size(); i++){
-                    if(i == pkIndex)
+                for(unsigned int i = 0; i < columns.size(); i++){
+                    if(i == (unsigned)pkIndex)
                         std::cout << columns[i]->getName() << " (PK) | ";
                     else if(vectorContains(fkIndexes, i))
                         std::cout << columns[i]->getName() << " (FK) | ";
@@ -150,29 +128,26 @@ void Table::printRowWhereStringIs(std::string name, std::string value)
             printRow(i, false);
         }
     }
-    
+
     if(!found)
         std::cout << "Nie znaleziono wynikow w kolumnie" << std::endl;
 }
 
 void Table::alignColumns()
 {
-    for(int i = 0; i < columns.size(); i++)
-        if((!columns[i]->isNullable()) && (columns[i]->getColumnSize() != tableSize)){
+    for(unsigned int i = 0; i < columns.size(); i++)
+        if((!columns[i]->isNullable()) && (columns[i]->getColumnSize() < tableSize)){
             std::cout << "Brak mozliwosci wyrownania kolumn, kolumna: \"" << columns[i]->getName() << "\" nie miec pustych pol" << std::endl;
             // TODO: Curses
             return;
         }
-    
-    for(int i = 0; i < columns.size(); i++)
+
+    for(unsigned int i = 0; i < columns.size(); i++){
         if(tableSize < columns[i]->getColumnSize())
             tableSize = columns[i]->getColumnSize();
-
-	for(int i = 0; i < columns.size(); i++){
-        while(tableSize > columns[i]->getColumnSize()){
-            columns[i]->addNullValue(columns[i]->getColumnSize());
-        }
-	}
+        while(tableSize > columns[i]->getColumnSize())
+                columns[i]->addNullValue(columns[i]->getColumnSize());
+    }
 }
 
 void Table::addColumnToTable(ColumnHandler* column)
@@ -184,7 +159,7 @@ void Table::addColumnToTable(ColumnHandler* column)
         }
         pkIndex = columns.size();
     }
-    
+
     if(column->isFk())
         fkIndexes.push_back(columns.size());
 
@@ -192,4 +167,3 @@ void Table::addColumnToTable(ColumnHandler* column)
         tableSize = column->getColumnSize();
     columns.push_back(column);
 }
-

@@ -9,7 +9,7 @@ Column<T>::Column(std::string nameOfColumn, bool pk, bool fk, bool nullable, boo
     this->pk = this->fk = false;
     this->nullable = true;
     this->unique = false;
-    
+
     if(!nullable)
         this->nullable = false;
     if(unique)
@@ -20,7 +20,7 @@ Column<T>::Column(std::string nameOfColumn, bool pk, bool fk, bool nullable, boo
     }
     if(fk)
         this->fk = true;
-    
+
     this->nameOfColumn = nameOfColumn;
 	columnSize = 0;
 }
@@ -32,36 +32,43 @@ std::string Column<T>::getName()
 }
 
 template <typename T>
-void Column<T>::addValue(const T &value, unsigned int index)
+void Column<T>::addValue(const T &value, int index)
 {
-    T *buffer = &(const_cast<T&>(value));
+    T *buffer = new T;
+    *buffer = const_cast<T&>(value);
 
     if(unique){
-        for(int i = 0; i < columnSize; i++){
+        for(unsigned int i = 0; i < columnSize; i++){
             if((*values[i]) == (*buffer)){
                 std::cout << "Blad przy dodawaniu: kolumna musi miec unikalne pola" << std::endl;
                 return;
             }
         }
     }
-    
-    if(index == ARG_NOT_PROVIDED)
+
+    if(index == ARG_NOT_PROVIDED){
         values.push_back(buffer);
+    }
     else{
-        while(index >= columnSize){
+        while((unsigned)index >= columnSize){
             if(!nullable){
                 std::cout << "Blad przy dodawaniu: kolumna nie moze miec pustych pol" << std::endl;
                 return;
             }
             addNullValue(columnSize);
         }
-        
-        if(index < columnSize)
+
+        if((unsigned)index < columnSize)
             values.erase(values.begin()+index);
         values.insert(values.begin()+index, buffer);
-        return;
 
+        buffer = NULL;
+        delete buffer;
+        return;
     }
+
+    buffer = NULL;
+    delete buffer;
     columnSize++;
     //TODO: Curses
 }
@@ -81,7 +88,7 @@ void Column<T>::addNullValue(unsigned int index)
 template <typename T>
 void Column<T>::printColumn()
 {
-    for(int i = 0; i < values.size(); i++){
+    for(unsigned int i = 0; i < values.size(); i++){
             if(values[i] == NULL)
                 std::cout << " " << std::endl;
             else
@@ -102,19 +109,14 @@ void Column<T>::deleteValue(unsigned int index)
 		std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
 		return;
 	}
-    
+
     values[index] = NULL;
 }
 
 template <typename T>
 void Column<T>::printValue(unsigned int index)
 {
-    if(index >= columnSize){
-        std::cout << " ";
-        return;
-    }
-    
-    if(values[index] == NULL){
+    if((values[index] == NULL) || (index >= columnSize)){
         std::cout << " "; // TODO: Curses
         return;
     }
@@ -126,7 +128,7 @@ std::string Column<T>::streamPrint(unsigned int index)
 {
     if(values[index] == NULL)
         return "";
-    
+
     std::stringstream buffer;
     buffer << *values[index];
     return buffer.str();

@@ -20,4 +20,3 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 clean:
 	rm -f $(BIN_DIR)/* $(BUILD_DIR)/*.o
-
