@@ -13,6 +13,8 @@ class ColumnHandler
 {
 public:
     virtual std::string getName() = 0;
+    virtual void setTableName(std::string tableName) = 0;
+    virtual std::string getTableName() = 0;
     virtual void printColumn() = 0;
     virtual void addNullValue(unsigned int index) = 0;
     virtual void deleteValue(unsigned int index) = 0;
@@ -44,6 +46,9 @@ private:
 
 	// Rozmiar kolumny
 	unsigned int columnSize;
+
+    // Nazwa tabeli obejmujacej
+    std::string tableName;
 public:
 	// Konstruktor kolumny inicjalizujacy jej parametry
     // (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry)
@@ -51,6 +56,12 @@ public:
 
     // Zwraca nazwe kolumny
     std::string getName();
+
+    // Ustala nazwe tabeli obejmujacej (przyjmuje nazwe tabeli)
+    void setTableName(std::string tableName);
+
+    // Zwraca nazwe tabeli obejmujacej
+    std::string getTableName();
 
 	// Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana oraz odpowiedni indeks)
 	void addValue(const T &value, int index = ARG_NOT_PROVIDED);

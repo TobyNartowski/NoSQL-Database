@@ -172,13 +172,18 @@ void Table::attachColumnToTable(ColumnHandler* column)
             return;
         }
         pkIndex = columns.size();
+        database->setPk(column);
     }
 
-    if(column->isFk())
+    if(column->isFk()){
         fkIndexes.push_back(columns.size());
+        database->setFk(column);
+    }
 
     if(tableSize < column->getColumnSize())
         tableSize = column->getColumnSize();
+
+    column->setTableName(getName());
     columns.push_back(column);
 }
 
@@ -186,6 +191,7 @@ void Table::detachColumnFromTable(std::string nameOfColumn)
 {
     for(unsigned int i = 0; i < columns.size(); i++)
         if(columns[i]->getName() == nameOfColumn){
+            columns[i]->setTableName("NULL");
             columns.erase(columns.begin() + i);
             std::cout << "Odlaczono kolumne \"" << nameOfColumn << "\" z tabeli" << std::endl;
             return;

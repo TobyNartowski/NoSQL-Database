@@ -37,9 +37,6 @@ public:
 	// Zwraca nazwe tabeli
 	std::string getName();
 
-	// Zwraca ile kolumn znajduje sie w tabeli
-	unsigned int howMuchColumns();
-
 	// Wyswietl cala tabele
 	void printTable();
 

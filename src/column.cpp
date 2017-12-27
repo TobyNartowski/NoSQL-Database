@@ -22,6 +22,7 @@ Column<T>::Column(std::string nameOfColumn, bool pk, bool fk, bool nullable, boo
         this->fk = true;
 
     this->nameOfColumn = nameOfColumn;
+    tableName = "NULL";
 	columnSize = 0;
 }
 
@@ -29,6 +30,18 @@ template <typename T>
 std::string Column<T>::getName()
 {
     return nameOfColumn;
+}
+
+template <typename T>
+void Column<T>::setTableName(std::string tableName)
+{
+    this->tableName = tableName;
+}
+
+template <typename T>
+std::string Column<T>::getTableName()
+{
+    return tableName;
 }
 
 template <typename T>
