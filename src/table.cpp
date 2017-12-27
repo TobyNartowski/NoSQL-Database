@@ -1,5 +1,9 @@
 #include "table.hpp"
 
+#include "database.hpp"
+
+extern Database *database;
+
 //Implementacje metod
 Table::Table(std::string nameOfTable)
 {
@@ -7,6 +11,9 @@ Table::Table(std::string nameOfTable)
     pkIndex = -1;
     fkIndexes.clear();
     tableSize = 0;
+
+    if(!database->attachTableToDatabase(this))
+        return;
 }
 
 std::string Table::getName()
@@ -150,8 +157,15 @@ void Table::alignColumns()
     }
 }
 
-void Table::addColumnToTable(ColumnHandler* column)
+void Table::attachColumnToTable(ColumnHandler* column)
 {
+    for(unsigned int i = 0; i < columns.size(); i++){
+        if(columns[i]->getName() == column->getName()){
+            std::cout << "Kolumna o podanej nazwie juz istnieje" << std::endl;
+            return;
+        }
+    }
+
     if(column->isPk()){
         if(pkIndex != -1){
             std::cout << "Wiecej niz jeden klucz glowny, kolumna \"" << column->getName() << "\" nie zostala dodana" << std::endl;
@@ -166,4 +180,31 @@ void Table::addColumnToTable(ColumnHandler* column)
     if(tableSize < column->getColumnSize())
         tableSize = column->getColumnSize();
     columns.push_back(column);
+}
+
+void Table::detachColumnFromTable(std::string nameOfColumn)
+{
+    for(unsigned int i = 0; i < columns.size(); i++)
+        if(columns[i]->getName() == nameOfColumn){
+            columns.erase(columns.begin() + i);
+            std::cout << "Odlaczono kolumne \"" << nameOfColumn << "\" z tabeli" << std::endl;
+            return;
+        }
+    std::cout << "Nie znaleziono kolumny: \"" << nameOfColumn << "\" w tabeli" << std::endl;
+}
+
+ColumnHandler *Table::getColumn(std::string nameOfColumn)
+{
+    for(unsigned int i = 0; i < columns.size(); i++)
+        if(columns[i]->getName() == nameOfColumn)
+            return columns[i];
+    std::cout << "Nie znaleziono kolumny o nazwie \"" << nameOfColumn << "\"" << std::endl;
+    return NULL;
+}
+
+ColumnHandler *Table::getColumn(unsigned int index)
+{
+    if(index > columns.size())
+        return NULL;
+    return columns[index];
 }

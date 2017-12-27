@@ -27,14 +27,18 @@ private:
     // sprawdza czy w wektorze znajduje sie podany indeks
     bool vectorContains(std::vector<int> vector, int index);
 public:
+	// Konstruktor tworzacy pusta tabele
+	// (przyjmuje baze danych, do ktorej ma zostac dolaczona oraz nazwe tabeli)
+	Table(std::string nameOfTable);
+
 	// Nazwa tabeli
 	std::string name;
 
-	// Konstruktor tworzacy pusta tabele (przyjmuje nazwe tabeli)
-	Table(std::string nameOfTable);
-
 	// Zwraca nazwe tabeli
 	std::string getName();
+
+	// Zwraca ile kolumn znajduje sie w tabeli
+	unsigned int howMuchColumns();
 
 	// Wyswietl cala tabele
 	void printTable();
@@ -51,6 +55,14 @@ public:
 	// puste miejsca sa wypelniane znakiem '-'
 	void alignColumns();
 
-    // Dodaj kolumne do tabeli (przyjmuje kolumne do dodania)
-    void addColumnToTable(ColumnHandler* column);
+    // Podlacz kolumne do tabeli (przyjmuje kolumne do dodania)
+    void attachColumnToTable(ColumnHandler* column);
+
+	// Odlacz kolumne z tabeli (przyjmuje nazwe kolumny do usuniecia)
+	void detachColumnFromTable(std::string nameOfColumn);
+
+	// Zwraca wskaznik na dana kolumne
+	// (przyjmuje nazwe kolumny lub odpowiedni indeks)
+	ColumnHandler *getColumn(std::string nameOfColumn);
+	ColumnHandler *getColumn(unsigned int index);
 };

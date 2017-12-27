@@ -1,9 +1,14 @@
+
 #include "column.hpp"
 #include "table.hpp"
+#include "database.hpp"
 
 #include <iostream>
 
-int main()
+Database *database;
+
+// DO TESTOWANIA
+Table *create_table_with_columns()
 {
 	// Pierwsza kolumna
 	Column<std::string> *firstNameColumn = new Column<std::string>("Imie");
@@ -11,40 +16,45 @@ int main()
 	firstNameColumn->addValue("Marek");
 	firstNameColumn->addValue("Pawel");
 	firstNameColumn->addValue("Andrzej");
-    firstNameColumn->addValue("Maciej");
+	firstNameColumn->addValue("Maciej");
 
-    // Druga kolumna
+	// Druga kolumna
 	Column<unsigned int> *ageColumn = new Column<unsigned int>("Wiek", true);
 	ageColumn->addValue(32);
 	ageColumn->addValue(33);
 	ageColumn->addValue(18);
 	ageColumn->addValue(28);
-    ageColumn->addValue(21);
+	ageColumn->addValue(21);
 	ageColumn->addValue(11);
 
-    // Stworz i dodaj do tabeli
-    Table *firstTable = new Table("Osoba");
-	firstTable->addColumnToTable(ageColumn);
-	firstTable->addColumnToTable(firstNameColumn);
-    firstTable->printTable();
-	std::cout << std::endl;
+	// Trzecia kolumna
+	Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu", false, true);
+	eyesColorColumn->addValue("Zielone");
+	eyesColorColumn->addValue("Niebieskie");
+	eyesColorColumn->addValue("Brazowe");
+	eyesColorColumn->addValue("Zielone");
+	eyesColorColumn->addValue("Piwne");
 
-    // Trzecia kolumna
-    Column<std::string> *eyesColorColumn = new Column<std::string>("Kolor oczu", false, true);
-    eyesColorColumn->addValue("Zielone");
-    eyesColorColumn->addValue("Niebieskie");
-    eyesColorColumn->addValue("Brazowe");
-    eyesColorColumn->addValue("Zielone");
-    eyesColorColumn->addValue("Piwne");
+	// Stworz pusta tabele
+	Table *firstTable = new Table("Osoba");
 
-	// Dodaj do tabeli trzecia kolumne
-    firstTable->addColumnToTable(eyesColorColumn);
-    firstTable->printTable();
+	// Dodaj kolumny do tabeli
+	firstTable->attachColumnToTable(firstNameColumn);
+	firstTable->attachColumnToTable(ageColumn);
+	firstTable->attachColumnToTable(eyesColorColumn);
 
-    delete firstNameColumn;
-	delete ageColumn;
-    delete eyesColorColumn;
-    delete firstTable;
+	// Zwroc wskaznik na utworzona tabele
+	return firstTable;
+}
 
+int main()
+{
+ 	database = new Database("Baza danych");
+
+	Table *table = create_table_with_columns();
+	database->printDatabase();
+
+	delete table;
+	delete database;
 	return 0;
 }

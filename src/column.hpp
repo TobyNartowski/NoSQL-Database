@@ -15,6 +15,7 @@ public:
     virtual std::string getName() = 0;
     virtual void printColumn() = 0;
     virtual void addNullValue(unsigned int index) = 0;
+    virtual void deleteValue(unsigned int index) = 0;
     virtual unsigned int getColumnSize() = 0;
     virtual void printValue(unsigned int index) = 0;
     virtual std::string streamPrint(unsigned int index) = 0;
