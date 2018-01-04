@@ -1,9 +1,22 @@
 #include "database.hpp"
 
+#include <ctime>
+
 //Implementacje metod
-Database::Database(std::string nameOfDatabase)
+Database::Database(std::string nameOfDatabase, std::string databaseFilename)
 {
     this->nameOfDatabase = nameOfDatabase;
+    localFile.open(databaseFilename.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+
+    if(!localFile.good()){
+        std::cerr << "Blad przy otwieraniu pliku lokalnego" << std::endl;
+        exit(-1);
+    }
+}
+
+Database::~Database()
+{
+    localFile.close();
 }
 
 std::string Database::getName()
@@ -84,4 +97,70 @@ void Database::printKeys()
             std::cout << "(" << keys[i].second->getTableName() << ")" << keys[i].second->getName();
         std::cout << std::endl;
     }
+}
+
+Table *Database::getTable(std::string nameOfTable)
+{
+    for(unsigned int i = 0; i < tables.size(); i++)
+        if(tables[i]->getName() == nameOfTable)
+            return tables[i];
+    std::cout << "Nie znaleziono tabeli o nazwie \"" << nameOfTable << "\"" << std::endl;
+    return NULL;
+}
+
+Table *Database::getTable(unsigned int index)
+{
+    if(index > tables.size())
+        return NULL;
+    return tables[index];
+}
+
+void Database::saveDatabase()
+{
+    std::time_t localTime = std::time(nullptr);
+    localFile << "* " << std::asctime(std::localtime(&localTime)) << std::endl << std::endl;
+
+    localFile << "!" << getName() << std::endl;
+    for(unsigned int i = 0; i < tables.size(); i++){
+    localFile << "  #" << tables[i]->getName() << std::endl;
+        for(unsigned int j = 0; j < tables[i]->getTableSize(); j++){
+            localFile << "\t$" << tables[i]->getColumn(j)->getName() << std::endl;
+
+            localFile << "\t" << "@";
+            switch(tables[i]->getColumn(j)->whatType()){
+                case 'B':
+                    localFile << "BOOL";
+                    break;
+                case 'I':
+                    localFile << "INT";
+                    break;
+                case 'D':
+                    localFile << "DOUBLE";
+                    break;
+                case 'S':
+                    localFile << "STRING";
+                    break;
+                default:
+                    return;
+            }
+
+            localFile << std::endl << "\t^";
+            if(tables[i]->getColumn(j)->isPk())
+                localFile << "pk ";
+            if(tables[i]->getColumn(j)->isFk())
+                localFile << "fk ";
+            if(tables[i]->getColumn(j)->isNullable())
+                localFile << "nullable ";
+            if(tables[i]->getColumn(j)->isUnique())
+                localFile << "unique ";
+
+            localFile << std::endl << "\t\t";
+            for(unsigned int k = 0; k < tables[i]->getColumn(j)->getColumnSize(); k++){
+                localFile << tables[i]->getColumn(j)->streamPrint(k);
+                localFile << " ";
+            }
+            localFile << std::endl;
+        }
+    }
+    std::cout << "Zapisano baze danych!" << std::endl;
 }

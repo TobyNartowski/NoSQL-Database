@@ -21,6 +21,11 @@ std::string Table::getName()
     return nameOfTable;
 }
 
+unsigned int Table::getTableSize()
+{
+    return columns.size();
+}
+
 bool Table::vectorContains(std::vector<int> vector, int index)
 {
     if(vector.empty())

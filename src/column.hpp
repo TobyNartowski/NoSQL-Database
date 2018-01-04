@@ -24,6 +24,8 @@ public:
     virtual bool isNullable() = 0;
     virtual bool isPk() = 0;
     virtual bool isFk() = 0;
+    virtual bool isUnique() = 0;
+    virtual char whatType() = 0;
     virtual ~ColumnHandler() {};
 };
 
@@ -92,4 +94,10 @@ public:
 
     // Zwraca czy kolumna jest kluczem obcym
     bool isFk();
+
+    // Zwraca czy pola kolumny musza byc unikalne
+    bool isUnique();
+
+    // Zwraca typ kolumny w postaci odpowiedniego znaku
+    char whatType();
 };

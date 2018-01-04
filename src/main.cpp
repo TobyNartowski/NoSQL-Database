@@ -1,11 +1,34 @@
-
+// Kod glowny
 #include "column.hpp"
 #include "table.hpp"
 #include "database.hpp"
 
 #include <iostream>
 
+#define DATABASE_FILENAME ".local_database"
+
 Database *database;
+
+// Przykladowe tabele
+Table *create_person_table();
+Table *create_address_table();
+
+int main()
+{
+ 	database = new Database("Baza_danych", DATABASE_FILENAME);
+
+	Table *personTable = create_person_table();
+	Table *addressTable = create_address_table();
+
+	database->printDatabase();
+	database->saveDatabase();
+
+	delete addressTable;
+	delete personTable;
+	delete database;
+	return 0;
+}
+
 
 Table *create_person_table()
 {
@@ -33,7 +56,7 @@ Table *create_person_table()
 	secondNameColumn->addValue("Szymanski");
 
 	// Czwarta kolumna
-	Column<unsigned int> *ageColumn = new Column<unsigned int>("Wiek", false, false, false);
+	Column<int> *ageColumn = new Column<int>("Wiek", false, false, false);
 	ageColumn->addValue(25);
 	ageColumn->addValue(41);
 	ageColumn->addValue(38);
@@ -103,20 +126,4 @@ Table *create_address_table()
 	addressTable->attachColumnToTable(numberColumn);
 
 	return addressTable;
-}
-
-int main()
-{
- 	database = new Database("Baza_danych");
-
-	Table *personTable = create_person_table();
-	Table *addressTable = create_address_table();
-
-	database->printDatabase();
-	database->printKeys();
-
-	delete addressTable;
-	delete personTable;
-	delete database;
-	return 0;
 }

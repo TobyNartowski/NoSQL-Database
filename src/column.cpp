@@ -1,6 +1,7 @@
 #include "column.hpp"
 
 #include <sstream>
+#include <type_traits>
 
 // Implementacje metod
 template <typename T>
@@ -139,7 +140,7 @@ void Column<T>::printValue(unsigned int index)
 template <typename T>
 std::string Column<T>::streamPrint(unsigned int index)
 {
-    if(values[index] == NULL)
+    if(values[index] == NULL || (index >= columnSize))
         return "";
 
     std::stringstream buffer;
@@ -171,9 +172,28 @@ bool Column<T>::isFk()
     return fk;
 }
 
+template <typename T>
+bool Column<T>::isUnique()
+{
+    return unique;
+}
+
+template <typename T>
+char Column<T>::whatType()
+{
+    if(std::is_same<T, bool>::value)
+        return 'B';
+    if(std::is_same<T, int>::value)
+        return 'I';
+    if(std::is_same<T, double>::value)
+        return 'D';
+    if(std::is_same<T, std::string>::value)
+        return 'S';
+    return '0';
+}
+
 // Dozwolone typy przechowywane w kolumnach
 template class Column<bool>;
 template class Column<int>;
-template class Column<unsigned int>;
 template class Column<double>;
 template class Column<std::string>;

@@ -37,6 +37,9 @@ public:
 	// Zwraca nazwe tabeli
 	std::string getName();
 
+	// Zwraca rozmiar tabeli
+	unsigned int getTableSize();
+
 	// Wyswietl cala tabele
 	void printTable();
 

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <fstream>
 
 class Database
 {
@@ -19,9 +20,17 @@ private:
 
     // Zbior par kluczow glownych i obcych
     std::vector<std::pair<ColumnHandler*, ColumnHandler*>> keys;
+
+    // Plik lokalny bazy danych
+    std::fstream localFile;
 public:
-    // Konstruktor bazy danych (przyjmuje nazwe bazy danych)
-    Database(std::string nameOfDatabase);
+    // Konstruktor bazy danych
+    // (przyjmuje nazwe bazy danych, nazwe pliku lokalnego i wskaznik sprawdzajacy
+    // czy poprawnie otwarto plik)
+    Database(std::string nameOfDatabase, std::string databaseFilename);
+
+    // Destruktor bazy danych
+    ~Database();
 
     // Zwraca nazwe bazy bazy danych
     std::string getName();
@@ -44,4 +53,12 @@ public:
 
     // Wyswietla wszystkie polaczenia miedzy tabelami
     void printKeys();
+
+    // Zwraca wskaznik na dana tabele
+    // (przyjmuje nazwe tabeli lub odpowiedni indeks)
+    Table *getTable(std::string nameOfTable);
+    Table *getTable(unsigned int index);
+
+    // Zapisuje baze danych do pliku lokalnego
+    void saveDatabase();
 };
