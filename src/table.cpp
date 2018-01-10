@@ -69,8 +69,7 @@ void Table::printTable()
 	for(unsigned int i = 0; i < tableSize; i++){
         std::cout << "| ";
 		for(unsigned int j = 0; j < columns.size(); j++){
-            columns[j]->printValue(i);
-            std::cout << " | ";
+            std::cout << columns[j]->streamPrint(i) << " | ";
         }
 		std::cout << std::endl;
 	}
@@ -98,10 +97,8 @@ void Table::printRow(unsigned int index, bool printHeader)
     }
 
     std::cout << "| ";
-    for(unsigned int i = 0; i < columns.size(); i++){
-        columns[i]->printValue(index);
-        std::cout << " | ";
-    }
+    for(unsigned int i = 0; i < columns.size(); i++)
+        std::cout << columns[i]->streamPrint(index) << " | ";
     std::cout << std::endl;
 }
 

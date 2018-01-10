@@ -1,27 +1,25 @@
 #include "database.hpp"
 
 #include <ctime>
+#include <sstream>
 
 //Implementacje metod
 Database::Database(std::string nameOfDatabase, std::string databaseFilename)
 {
     this->nameOfDatabase = nameOfDatabase;
-    localFile.open(databaseFilename.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
-
-    if(!localFile.good()){
-        std::cerr << "Blad przy otwieraniu pliku lokalnego" << std::endl;
-        exit(-1);
-    }
-}
-
-Database::~Database()
-{
-    localFile.close();
+    this->databaseFilename = databaseFilename;
 }
 
 std::string Database::getName()
 {
     return nameOfDatabase;
+}
+
+void Database::clearDatabase()
+{
+    nameOfDatabase = "";
+    tables.clear();
+    keys.clear();
 }
 
 bool Database::attachTableToDatabase(Table *table)
@@ -48,6 +46,11 @@ void Database::detachTableFromDatabase(std::string nameOfTable)
 
 void Database::printDatabase()
 {
+    if(tables.empty()){
+        std::cout << "Baza danych jest pusta!" << std::endl;
+        return;
+    }
+
     std::cout << "==== " << nameOfDatabase << " ====" << std::endl;
     for(unsigned int i = 0; i < tables.size(); i++){
         tables[i]->printTable();
@@ -117,6 +120,13 @@ Table *Database::getTable(unsigned int index)
 
 void Database::saveDatabase()
 {
+    localFile.open(databaseFilename.c_str(), std::fstream::out | std::fstream::trunc);
+
+    if(!localFile.good()){
+        std::cerr << "Blad przy otwieraniu pliku lokalnego" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     std::time_t localTime = std::time(nullptr);
     localFile << "* " << std::asctime(std::localtime(&localTime)) << std::endl << std::endl;
 
@@ -128,23 +138,23 @@ void Database::saveDatabase()
 
             localFile << "\t" << "@";
             switch(tables[i]->getColumn(j)->whatType()){
-                case 'B':
+                case COL_BOOL:
                     localFile << "BOOL";
                     break;
-                case 'I':
+                case COL_INT:
                     localFile << "INT";
                     break;
-                case 'D':
+                case COL_DOUBLE:
                     localFile << "DOUBLE";
                     break;
-                case 'S':
+                case COL_STRING:
                     localFile << "STRING";
                     break;
                 default:
                     return;
             }
 
-            localFile << std::endl << "\t^";
+            localFile << std::endl << "\t^ ";
             if(tables[i]->getColumn(j)->isPk())
                 localFile << "pk ";
             if(tables[i]->getColumn(j)->isFk())
@@ -154,13 +164,151 @@ void Database::saveDatabase()
             if(tables[i]->getColumn(j)->isUnique())
                 localFile << "unique ";
 
-            localFile << std::endl << "\t\t";
+            localFile << " ; " << std::endl << "\t\t";
             for(unsigned int k = 0; k < tables[i]->getColumn(j)->getColumnSize(); k++){
                 localFile << tables[i]->getColumn(j)->streamPrint(k);
                 localFile << " ";
             }
-            localFile << std::endl;
+            localFile << ";" << std::endl;
         }
     }
     std::cout << "Zapisano baze danych!" << std::endl;
+    localFile.close();
+}
+
+bool Database::loadDatabase()
+{
+    std::ifstream readFile;
+    std::string buffer, columnNameBuffer, tableNameBuffer, typeBuffer;
+    bool pkFlag, fkFlag, nullableFlag, uniqueFlag;
+    bool databaseFileReaded = false;
+    std::string date;
+
+    Column<bool> *boolColumn;
+    Column<int> *intColumn;
+    Column<double> *doubleColumn;
+    Column<std::string> *stringColumn;
+
+    Table *tableBuffer;
+
+    readFile.open(databaseFilename.c_str());
+    if(!readFile.good())
+        return false;
+
+    clearDatabase();
+
+    readFile >> buffer;
+    if(buffer[0] == '*'){
+        readFile >> buffer;
+        while(buffer[0] != '!'){
+            date += buffer + " ";
+            readFile >> buffer;
+        }
+    }
+    else
+        return false;
+
+    if(!databaseFileReaded)
+        if(buffer[0] == '!'){
+            nameOfDatabase = buffer.substr(1);
+            databaseFileReaded = true;
+        }
+    readFile >> buffer;
+
+    while(!readFile.eof()){
+        tableBuffer = nullptr;
+
+        if(buffer[0] == '#'){
+            tableNameBuffer = buffer.substr(1);
+            tableBuffer = new Table(tableNameBuffer);
+
+            readFile >> buffer;
+            while(buffer[0] == '$'){
+                    pkFlag = fkFlag = nullableFlag = uniqueFlag = false;
+                    boolColumn = nullptr;
+                    intColumn = nullptr;
+                    doubleColumn = nullptr;
+                    stringColumn = nullptr;
+
+                    columnNameBuffer = buffer.substr(1);
+                    readFile >> buffer;
+                    if(buffer[0] == '@'){
+                        typeBuffer = buffer.substr(1);
+                        readFile >> buffer;
+                        if(buffer[0] == '^'){
+                            readFile >> buffer;
+                            while(buffer[0] != ';'){
+                                if(buffer == "pk")
+                                    pkFlag = true;
+                                else if(buffer == "fk")
+                                    fkFlag = true;
+                                else if(buffer == "nullable")
+                                    nullableFlag = true;
+                                else if(buffer == "unique")
+                                    uniqueFlag = true;
+                                else
+                                    return false;
+
+                                readFile >> buffer;
+                            }
+                        }
+                        else
+                            return false;
+
+                        if(typeBuffer == "BOOL")
+                            boolColumn = new Column<bool>(columnNameBuffer,
+                            pkFlag, fkFlag, nullableFlag, uniqueFlag);
+                        else if(typeBuffer == "INT")
+                            intColumn = new Column<int>(columnNameBuffer,
+                            pkFlag, fkFlag, nullableFlag, uniqueFlag);
+                        else if(typeBuffer == "DOUBLE")
+                            doubleColumn = new Column<double>(columnNameBuffer,
+                            pkFlag, fkFlag, nullableFlag, uniqueFlag);
+                        else if(typeBuffer == "STRING")
+                            stringColumn = new Column<std::string>(columnNameBuffer,
+                            pkFlag, fkFlag, nullableFlag, uniqueFlag);
+                        else
+                            return false;
+                    }
+                    else
+                        return false;
+                    readFile >> buffer;
+
+                    while(buffer[0] != ';'){
+                        if(typeBuffer == "BOOL"){
+                                if(buffer == "Tak")
+                                    boolColumn->addValue(1);
+                                else if(buffer == "Nie")
+                                    boolColumn->addValue(0);
+                        }
+                        else if(typeBuffer == "INT")
+                            intColumn->addValue(std::stoi(buffer));
+                        else if(typeBuffer == "DOUBLE")
+                            doubleColumn->addValue(std::stod(buffer));
+                        else if(typeBuffer == "STRING")
+                            stringColumn->addValue(buffer);
+                        else
+                            return false;
+                        readFile >> buffer;
+                    }
+
+                    if(boolColumn)
+                        tableBuffer->attachColumnToTable(boolColumn);
+                    if(intColumn)
+                        tableBuffer->attachColumnToTable(intColumn);
+                    if(doubleColumn)
+                        tableBuffer->attachColumnToTable(doubleColumn);
+                    if(stringColumn)
+                        tableBuffer->attachColumnToTable(stringColumn);
+
+                    readFile >> buffer;
+            }
+        }
+        else
+            return false;
+    }
+
+    std::cout << "Odczytano baze danych z: " + date << std::endl;
+    readFile.close();
+    return true;
 }

@@ -6,6 +6,10 @@
 
 #define ARG_NOT_PROVIDED -1
 
+typedef enum e_ColumnType {
+    COL_ERROR, COL_BOOL, COL_INT, COL_DOUBLE, COL_STRING
+} ColumnType;
+
 // Klasa bazowa (dodatkowa)
 // Jest zaimplementowana w celu ulatwienia przechowywania kolumn w tabelach
 // (kolumny przechowywane sa w kontenerze Vector, ktory nie przechowuje szablonow klas)
@@ -15,17 +19,15 @@ public:
     virtual std::string getName() = 0;
     virtual void setTableName(std::string tableName) = 0;
     virtual std::string getTableName() = 0;
-    virtual void printColumn() = 0;
     virtual void addNullValue(unsigned int index) = 0;
     virtual void deleteValue(unsigned int index) = 0;
     virtual unsigned int getColumnSize() = 0;
-    virtual void printValue(unsigned int index) = 0;
     virtual std::string streamPrint(unsigned int index) = 0;
     virtual bool isNullable() = 0;
     virtual bool isPk() = 0;
     virtual bool isFk() = 0;
     virtual bool isUnique() = 0;
-    virtual char whatType() = 0;
+    virtual ColumnType whatType() = 0;
     virtual ~ColumnHandler() {};
 };
 
@@ -74,12 +76,6 @@ public:
 	// Usun wartosc (przyjmuje odpowiedni indeks)
 	void deleteValue(unsigned int index);
 
-	// Wyswietl cala kolumne
-	void printColumn(); // TODO: Curses
-
-    // Wyswietla wartosc (przyjmuje odpowiedni indeks)
-    void printValue(unsigned int index);
-
     // Zwraca wartosc (przyjmuje odpowiedni indeks)
     std::string streamPrint(unsigned int index);
 
@@ -99,5 +95,5 @@ public:
     bool isUnique();
 
     // Zwraca typ kolumny w postaci odpowiedniego znaku
-    char whatType();
+    ColumnType whatType();
 };

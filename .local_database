@@ -1,42 +1,50 @@
-* Thu Jan  4 19:59:17 2018
+* Wed Jan 10 21:44:27 2018
 
 
 !Baza_danych
   #Osoby
 	$Id_osoby
 	@INT
-	^pk unique 
-		1 2 3 4 5 
+	^ pk unique  ; 
+		1 2 3 4 5 ;
 	$Imie
 	@STRING
-	^
-		Andrzej Maciej Krzysztof Anna Pawel 
+	^  ; 
+		Andrzej Maciej Krzysztof Anna Pawel ;
 	$Nazwisko
 	@STRING
-	^
-		Kowalski Krawczyk Duda Makowska Szymanski 
+	^  ; 
+		Kowalski Krawczyk Duda Makowska Szymanski ;
 	$Wiek
 	@INT
-	^
-		25 41 38 40 19 
+	^  ; 
+		25 41 38 40 19 ;
+	$Zatrudniony
+	@BOOL
+	^  ; 
+		Tak Tak Nie Tak Nie ;
+	$Zarobki
+	@DOUBLE
+	^ nullable  ; 
+		4137.12 2400 5999.99 3411.05 11030 ;
 	$Id_adresu
 	@INT
-	^fk nullable 
-		1 3 2 2 5 
+	^ fk nullable  ; 
+		1 3 2 2 5 ;
   #Adresy
 	$Id_adresu
 	@INT
-	^pk unique 
-		1 2 3 4 5 
+	^ pk unique  ; 
+		1 2 3 4 5 ;
 	$Miasto
 	@STRING
-	^
-		Kielce Warszawa Poznan Krakow Kielce 
+	^  ; 
+		Kielce Warszawa Poznan Krakow Kielce ;
 	$Ulica
 	@STRING
-	^nullable 
-		Swietokrzyska Domanska Krzywa Rakowska Sienkiewicza 
+	^ nullable  ; 
+		Swietokrzyska Domanska Krzywa Rakowska Sienkiewicza ;
 	$Nr_domu
 	@STRING
-	^
-		4 52a 211/2 22 19 
+	^  ; 
+		4 52a 211/2 22 19 ;

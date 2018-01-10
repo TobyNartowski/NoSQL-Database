@@ -23,17 +23,20 @@ private:
 
     // Plik lokalny bazy danych
     std::fstream localFile;
+
+    // Nazwa pliku bazy danych
+    std::string databaseFilename;
 public:
     // Konstruktor bazy danych
     // (przyjmuje nazwe bazy danych, nazwe pliku lokalnego i wskaznik sprawdzajacy
     // czy poprawnie otwarto plik)
     Database(std::string nameOfDatabase, std::string databaseFilename);
 
-    // Destruktor bazy danych
-    ~Database();
-
-    // Zwraca nazwe bazy bazy danych
+    // Zwraca nazwe bazy danych
     std::string getName();
+
+    // Wyczysc cala baze danych
+    void clearDatabase();
 
     // Podlacz tabele do bazy bazy danych
     // (zwraca flage, ktora mowi o tym czy udalo sie dolaczyc tabele)
@@ -61,4 +64,8 @@ public:
 
     // Zapisuje baze danych do pliku lokalnego
     void saveDatabase();
+
+    // Odczytuje baze danych z pliku lokalnego
+    // (zwraca flage czy powiodlo sie odczytywanie pliku)
+    bool loadDatabase();
 };

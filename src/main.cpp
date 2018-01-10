@@ -20,13 +20,14 @@ int main()
 	Table *personTable = create_person_table();
 	Table *addressTable = create_address_table();
 
-	database->printDatabase();
-	database->saveDatabase();
+    database->saveDatabase();
+    database->loadDatabase();
+    database->printDatabase();
 
-	delete addressTable;
+    delete addressTable;
 	delete personTable;
 	delete database;
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 
@@ -63,6 +64,20 @@ Table *create_person_table()
 	ageColumn->addValue(40);
 	ageColumn->addValue(19);
 
+    Column<bool> *employedColumn = new Column<bool>("Zatrudniony", false, false, false);
+    employedColumn->addValue(true);
+    employedColumn->addValue(true);
+    employedColumn->addValue(false);
+    employedColumn->addValue(true);
+    employedColumn->addValue(false);
+
+    Column<double> *earningsColumn = new Column<double>("Zarobki");
+    earningsColumn->addValue(4137.12);
+    earningsColumn->addValue(2400.00);
+    earningsColumn->addValue(5999.99);
+    earningsColumn->addValue(3411.05);
+    earningsColumn->addValue(11030.00);
+
 	// Piata kolumna
 	Column<int> *addressIdColumn = new Column<int>("Id_adresu", false, true);
 	addressIdColumn->addValue(1);
@@ -79,6 +94,8 @@ Table *create_person_table()
 	personTable->attachColumnToTable(firstNameColumn);
 	personTable->attachColumnToTable(secondNameColumn);
 	personTable->attachColumnToTable(ageColumn);
+    personTable->attachColumnToTable(employedColumn);
+    personTable->attachColumnToTable(earningsColumn);
 	personTable->attachColumnToTable(addressIdColumn);
 
 	// Zwroc wskaznik na utworzona tabele

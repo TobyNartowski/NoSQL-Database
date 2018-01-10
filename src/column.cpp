@@ -99,17 +99,6 @@ void Column<T>::addNullValue(unsigned int index)
     columnSize++;
 }
 
-template <typename T>
-void Column<T>::printColumn()
-{
-    for(unsigned int i = 0; i < values.size(); i++){
-            if(values[i] == NULL)
-                std::cout << " " << std::endl;
-            else
-                std::cout << *values[i] << std::endl;
-    }
-    //TODO: Curses
-}
 
 template <typename T>
 void Column<T>::deleteValue(unsigned int index)
@@ -128,16 +117,6 @@ void Column<T>::deleteValue(unsigned int index)
 }
 
 template <typename T>
-void Column<T>::printValue(unsigned int index)
-{
-    if((values[index] == NULL) || (index >= columnSize)){
-        std::cout << " "; // TODO: Curses
-        return;
-    }
-    std::cout << *values[index];
-}
-
-template <typename T>
 std::string Column<T>::streamPrint(unsigned int index)
 {
     if(values[index] == NULL || (index >= columnSize))
@@ -145,6 +124,15 @@ std::string Column<T>::streamPrint(unsigned int index)
 
     std::stringstream buffer;
     buffer << *values[index];
+
+    if(whatType() == COL_BOOL){
+        std::string a = buffer.str();
+        if(buffer.str().at(0) - '0')
+            return "Tak";
+        else
+            return "Nie";
+    }
+
     return buffer.str();
 }
 
@@ -179,17 +167,17 @@ bool Column<T>::isUnique()
 }
 
 template <typename T>
-char Column<T>::whatType()
+ColumnType Column<T>::whatType()
 {
     if(std::is_same<T, bool>::value)
-        return 'B';
+        return COL_BOOL;
     if(std::is_same<T, int>::value)
-        return 'I';
+        return COL_INT;
     if(std::is_same<T, double>::value)
-        return 'D';
+        return COL_DOUBLE;
     if(std::is_same<T, std::string>::value)
-        return 'S';
-    return '0';
+        return COL_STRING;
+    return COL_ERROR;
 }
 
 // Dozwolone typy przechowywane w kolumnach
