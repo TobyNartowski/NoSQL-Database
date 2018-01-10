@@ -117,10 +117,14 @@ void Column<T>::deleteValue(unsigned int index)
 }
 
 template <typename T>
-std::string Column<T>::streamPrint(unsigned int index)
+std::string Column<T>::streamPrint(unsigned int index, bool filePrint)
 {
-    if(values[index] == NULL || (index >= columnSize))
-        return "";
+    if(values[index] == NULL || (index >= columnSize)){
+        if(filePrint)
+            return "NULL";
+        else
+            return "";
+    }
 
     std::stringstream buffer;
     buffer << *values[index];

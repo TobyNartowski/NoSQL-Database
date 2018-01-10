@@ -22,7 +22,7 @@ public:
     virtual void addNullValue(unsigned int index) = 0;
     virtual void deleteValue(unsigned int index) = 0;
     virtual unsigned int getColumnSize() = 0;
-    virtual std::string streamPrint(unsigned int index) = 0;
+    virtual std::string streamPrint(unsigned int index, bool filePrint = false) = 0;
     virtual bool isNullable() = 0;
     virtual bool isPk() = 0;
     virtual bool isFk() = 0;
@@ -71,13 +71,15 @@ public:
 	void addValue(const T &value, int index = ARG_NOT_PROVIDED);
 
     // Dodaj puste pole (przyjmuje opdowiedni indeks)
-    void addNullValue(unsigned int index);
+    void addNullValue(unsigned int index = 0);
 
 	// Usun wartosc (przyjmuje odpowiedni indeks)
 	void deleteValue(unsigned int index);
 
-    // Zwraca wartosc (przyjmuje odpowiedni indeks)
-    std::string streamPrint(unsigned int index);
+    // Zwraca wartosc
+    // (przyjmuje odpowiedni indeks oraz flage okreslajaca typ zwracania
+    //  wartosci null do plikow)
+    std::string streamPrint(unsigned int index, bool filePrint = false);
 
 	// Zwraca rozmiar kolumny
 	unsigned int getColumnSize();

@@ -166,7 +166,7 @@ void Database::saveDatabase()
 
             localFile << " ; " << std::endl << "\t\t";
             for(unsigned int k = 0; k < tables[i]->getColumn(j)->getColumnSize(); k++){
-                localFile << tables[i]->getColumn(j)->streamPrint(k);
+                localFile << tables[i]->getColumn(j)->streamPrint(k, true);
                 localFile << " ";
             }
             localFile << ";" << std::endl;
@@ -276,17 +276,31 @@ bool Database::loadDatabase()
 
                     while(buffer[0] != ';'){
                         if(typeBuffer == "BOOL"){
-                                if(buffer == "Tak")
-                                    boolColumn->addValue(1);
-                                else if(buffer == "Nie")
-                                    boolColumn->addValue(0);
+                            if(buffer == "NULL")
+                                boolColumn->addNullValue();
+                            else if(buffer == "Tak")
+                                boolColumn->addValue(1);
+                            else if(buffer == "Nie")
+                                boolColumn->addValue(0);
                         }
-                        else if(typeBuffer == "INT")
-                            intColumn->addValue(std::stoi(buffer));
-                        else if(typeBuffer == "DOUBLE")
-                            doubleColumn->addValue(std::stod(buffer));
-                        else if(typeBuffer == "STRING")
-                            stringColumn->addValue(buffer);
+                        else if(typeBuffer == "INT"){
+                            if(buffer == "NULL")
+                                intColumn->addNullValue();
+                            else
+                                intColumn->addValue(std::stoi(buffer));
+                        }
+                        else if(typeBuffer == "DOUBLE"){
+                            if(buffer == "NULL")
+                                doubleColumn->addNullValue();
+                            else
+                                doubleColumn->addValue(std::stod(buffer));
+                        }
+                        else if(typeBuffer == "STRING"){
+                            if(buffer == "NULL")
+                                stringColumn->addNullValue();
+                            else
+                                stringColumn->addValue(buffer);
+                        }
                         else
                             return false;
                         readFile >> buffer;
