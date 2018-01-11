@@ -26,6 +26,19 @@ unsigned int Table::getTableSize()
     return columns.size();
 }
 
+unsigned int Table::getHeight()
+{
+    return tableSize;
+}
+
+unsigned int Table::getLength(unsigned int index)
+{
+    if(index > columnLengths.size())
+        return 0;
+    else
+        return columnLengths[index];
+}
+
 bool Table::vectorContains(std::vector<int> vector, int index)
 {
     if(vector.empty())
@@ -159,6 +172,15 @@ void Table::alignColumns()
     }
 }
 
+void Table::calculateLength(ColumnHandler* column)
+{
+    unsigned int max = (column->streamPrint(0)).length();
+    for(unsigned int i = 1; i < column->getColumnSize(); i++)
+        if((column->streamPrint(i)).length() > max)
+            max = (column->streamPrint(i)).length();
+    columnLengths.push_back(max);
+}
+
 void Table::attachColumnToTable(ColumnHandler* column)
 {
     for(unsigned int i = 0; i < columns.size(); i++){
@@ -187,6 +209,7 @@ void Table::attachColumnToTable(ColumnHandler* column)
 
     column->setTableName(getName());
     columns.push_back(column);
+    calculateLength(column);
 }
 
 void Table::detachColumnFromTable(std::string nameOfColumn)
@@ -195,6 +218,7 @@ void Table::detachColumnFromTable(std::string nameOfColumn)
         if(columns[i]->getName() == nameOfColumn){
             columns[i]->setTableName("NULL");
             columns.erase(columns.begin() + i);
+            columnLengths.erase(columnLengths.begin() + i);
             std::cout << "Odlaczono kolumne \"" << nameOfColumn << "\" z tabeli" << std::endl;
             return;
         }

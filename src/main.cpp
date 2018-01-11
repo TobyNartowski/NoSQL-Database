@@ -2,6 +2,7 @@
 #include "column.hpp"
 #include "table.hpp"
 #include "database.hpp"
+#include "display.hpp"
 
 #include <iostream>
 
@@ -15,21 +16,28 @@ Table *create_address_table();
 
 int main()
 {
- 	database = new Database("Baza_danych", DATABASE_FILENAME);
-
+ 	database = new Database("Baza_danych_1", DATABASE_FILENAME);
+/*
 	Table *personTable = create_person_table();
 	Table *addressTable = create_address_table();
 
     database->saveDatabase();
     database->loadDatabase();
     database->printDatabase();
+*/
 
-    delete addressTable;
-	delete personTable;
-	delete database;
-	return EXIT_SUCCESS;
+    database->loadDatabase();
+
+    Display *display = Display::initDisplay(database);
+    display->drawMainMenu();
+
+    display->destroyDisplay();
+
+    //delete addressTable;
+    //delete personTable;
+    delete database;
+    return EXIT_SUCCESS;
 }
-
 
 Table *create_person_table()
 {

@@ -15,6 +15,11 @@ std::string Database::getName()
     return nameOfDatabase;
 }
 
+unsigned int Database::getDatabaseSize()
+{
+    return tables.size();
+}
+
 void Database::clearDatabase()
 {
     nameOfDatabase = "";

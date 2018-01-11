@@ -15,6 +15,9 @@ private:
 	// Kolumny zawierajace sie w tabeli
 	std::vector<ColumnHandler*> columns;
 
+	// Maksymalna dlugosc kolumny
+	std::vector<unsigned int> columnLengths;
+
 	// Rozmiar tabeli
 	unsigned int tableSize;
 
@@ -40,6 +43,12 @@ public:
 	// Zwraca rozmiar tabeli
 	unsigned int getTableSize();
 
+	// Zwraca wysokosc tabeli
+	unsigned int getHeight();
+
+	// Zwraca dlugosc danej kolumny (przyjmuje odpowiedni indeks)
+	unsigned int getLength(unsigned int index);
+
 	// Wyswietl cala tabele
 	void printTable();
 
@@ -54,6 +63,9 @@ public:
 	// rozmiaru najwiekszej kolumny w tabeli;
 	// puste miejsca sa wypelniane znakiem '-'
 	void alignColumns();
+
+	// Oblicza maksymalna dlugosc kolumny i zapisuje do wektora
+	void calculateLength(ColumnHandler* column);
 
     // Podlacz kolumne do tabeli (przyjmuje kolumne do dodania)
     void attachColumnToTable(ColumnHandler* column);

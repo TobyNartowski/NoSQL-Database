@@ -35,6 +35,9 @@ public:
     // Zwraca nazwe bazy danych
     std::string getName();
 
+    // Zwraca ilosc tabel w bazie danych
+    unsigned int getDatabaseSize();
+
     // Wyczysc cala baze danych
     void clearDatabase();
 
