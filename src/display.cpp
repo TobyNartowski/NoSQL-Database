@@ -42,67 +42,70 @@ void Display::destroyDisplay()
     delete instance;
 }
 
-void Display::drawMainMenu()
+void Display::startMainMenu()
 {
-    int highlight = 1;
-    int choice = 0;
-    int buffer;
-
-    box(mainMenuWindow, 0, 0);
-
-    refresh();
-    printMenu(mainMenuWindow, "Menu glowne", highlight);
-
     while(true){
-        buffer = wgetch(mainMenuWindow);
-        switch(buffer){
-            case KEY_UP:
-                if(highlight == 1)
-                    highlight = MENU_WYJDZ;
-                else
-                    highlight--;
-                break;
-            case KEY_DOWN:
-                if(highlight == MENU_WYJDZ)
-                    highlight = MENU_WYSWIETL;
-                else
-                    highlight++;
-                break;
-            case 10:
-                choice = highlight;
-                break;
-            default:
-                refresh();
-                break;
-        }
+        int highlight = 1;
+        int choice = 0;
+        int buffer;
+
+        box(mainMenuWindow, 0, 0);
+
+        refresh();
         printMenu(mainMenuWindow, "Menu glowne", highlight);
 
-        if(choice != 0)
-            break;
-    }
+        while(true){
+            buffer = wgetch(mainMenuWindow);
+            switch(buffer){
+                case KEY_UP:
+                    if(highlight == 1)
+                        highlight = MENU_WYJDZ;
+                    else
+                        highlight--;
+                    break;
+                case KEY_DOWN:
+                    if(highlight == MENU_WYJDZ)
+                        highlight = MENU_WYSWIETL;
+                    else
+                        highlight++;
+                    break;
+                case 10:
+                    choice = highlight;
+                    break;
+                default:
+                    refresh();
+                    break;
+            }
+            printMenu(mainMenuWindow, "Menu glowne", highlight);
 
-    switch(choice){
-        case MENU_WYSWIETL:
-            drawDatabase();
-            break;
-        case MENU_DODAJ:
-            getch();
-            break;
-        case MENU_USUN:
-            getch();
-            break;
-        case MENU_ZAPISZ:
-            getch();
-            break;
-        case MENU_WCZYTAJ:
-            getch();
-            break;
-        case MENU_WYJDZ:
-        default:
-            break;
+            if(choice != 0)
+                break;
+        }
+
+        switch(choice){
+            case MENU_WYSWIETL:
+                drawDatabase();
+                break;
+            case MENU_DODAJ:
+                getch();
+                break;
+            case MENU_USUN:
+                getch();
+                break;
+            case MENU_ZAPISZ:
+                getch();
+                break;
+            case MENU_WCZYTAJ:
+                getch();
+                break;
+            case MENU_WYJDZ:
+                return;
+            default:
+                break;
+        }
+        clrtoeol();
+        refresh();
     }
-    clrtoeol();
-    refresh();
 }
 
 void Display::printMenu(WINDOW *menuWindow, std::string windowName, int highlight)
@@ -154,22 +157,47 @@ void Display::drawDatabase()
         }
 
         std::string readBuffer;
+        std::string headerBuffer;
         unsigned int horizontalIndex;
         unsigned int verticalIndex = 0;
+        bool printHeader = true;
 
-        for(int i = 0; i < database->getDatabaseSize(); i++){
+        for(unsigned int i = 0; i < database->getDatabaseSize(); i++){
+            std::string lineHeader = "";
             horizontalIndex = 0;
-            for(int j = 0; j < database->getTable(i)->getTableSize(); j++){
-                for(int k = 0; k < database->getTable(i)->getColumn(j)->getColumnSize(); k++){
-                    readBuffer.clear();
-                    readBuffer = database->getTable(i)->getColumn(j)->streamPrint(k);
-                    mvwprintw(drawDatabaseWindow, verticalIndex+k+2, horizontalIndex+3, readBuffer.c_str());
+            for(unsigned int j = 0; j < database->getTable(i)->getTableSize(); j++){
+                printHeader = true;
+                for(unsigned int k = 0; k < database->getTable(i)->getColumn(j)->getColumnSize(); k++){
+                    if(printHeader){
+                        headerBuffer = database->getTable(i)->getColumn(j)->getName();
+                        mvwprintw(drawDatabaseWindow, verticalIndex+k+2, horizontalIndex+3, headerBuffer.c_str());
+                        printHeader = false;
 
+                        std::string tableName = database->getTable(i)->getName();
+                        for(unsigned int l = 0; l < tableName.length(); l++)
+                            tableName[l] = std::toupper(tableName[l]);
+
+                        mvwprintw(drawDatabaseWindow, verticalIndex+k+2,
+                                  getmaxx(drawDatabaseWindow)-6-tableName.length(), tableName.c_str());
+                    }
+
+                    readBuffer = database->getTable(i)->getColumn(j)->streamPrint(k);
+                    mvwprintw(drawDatabaseWindow, verticalIndex+k+4, horizontalIndex+3, readBuffer.c_str());
+
+                    /*
+                    // DEBUG ERROR!
                     wrefresh(drawDatabaseWindow);
+                    usleep(50000);
+                    */
                 }
                 horizontalIndex += database->getTable(i)->getLength(j) + 3;
             }
+            for(unsigned int l = 0; l < getmaxx(drawDatabaseWindow)-6; l++)
+                lineHeader += "-";
+            mvwprintw(drawDatabaseWindow, verticalIndex+3, 3, lineHeader.c_str());
             verticalIndex += database->getTable(i)->getHeight() + 3;
+            wrefresh(drawDatabaseWindow);
+
         }
         if(getch() == 10)
             break;

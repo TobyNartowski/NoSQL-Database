@@ -17,19 +17,18 @@ Table *create_address_table();
 int main()
 {
  	database = new Database("Baza_danych_1", DATABASE_FILENAME);
-/*
+
 	Table *personTable = create_person_table();
 	Table *addressTable = create_address_table();
 
+/*
     database->saveDatabase();
     database->loadDatabase();
     database->printDatabase();
 */
-
-    database->loadDatabase();
-
+    //database->printDatabase();
     Display *display = Display::initDisplay(database);
-    display->drawMainMenu();
+    display->startMainMenu();
 
     display->destroyDisplay();
 
@@ -47,9 +46,11 @@ Table *create_person_table()
 	idColumn->addValue(3);
 	idColumn->addValue(4);
 	idColumn->addValue(5);
+    idColumn->addValue(6);
+    idColumn->addValue(7);
 
 	// Druga kolumna
-	Column<std::string> *firstNameColumn = new Column<std::string>("Imie", false, false, false);
+	Column<std::string> *firstNameColumn = new Column<std::string>("Imie", false, false);
 	firstNameColumn->addValue("Andrzej");
 	firstNameColumn->addValue("Maciej");
 	firstNameColumn->addValue("Krzysztof");
@@ -57,7 +58,7 @@ Table *create_person_table()
 	firstNameColumn->addValue("Pawel");
 
 	// Trzecia kolumna
-	Column<std::string> *secondNameColumn = new Column<std::string>("Nazwisko", false, false, false);
+	Column<std::string> *secondNameColumn = new Column<std::string>("Nazwisko", false, false);
 	secondNameColumn->addValue("Kowalski");
 	secondNameColumn->addValue("Krawczyk");
 	secondNameColumn->addValue("Duda");
@@ -65,14 +66,14 @@ Table *create_person_table()
 	secondNameColumn->addValue("Szymanski");
 
 	// Czwarta kolumna
-	Column<int> *ageColumn = new Column<int>("Wiek", false, false, false);
+	Column<int> *ageColumn = new Column<int>("Wiek", false, false);
 	ageColumn->addValue(25);
 	ageColumn->addValue(41);
 	ageColumn->addValue(38);
 	ageColumn->addValue(40);
 	ageColumn->addValue(19);
 
-    Column<bool> *employedColumn = new Column<bool>("Zatrudniony", false, false, false);
+    Column<bool> *employedColumn = new Column<bool>("Zatrudniony", false, false);
     employedColumn->addValue(true);
     employedColumn->addValue(true);
     employedColumn->addValue(false);
@@ -85,6 +86,9 @@ Table *create_person_table()
     earningsColumn->addValue(5999.99);
     earningsColumn->addValue(3411.05);
     earningsColumn->addValue(11030.00);
+    earningsColumn->deleteValue(2);
+
+
 
 	// Piata kolumna
 	Column<int> *addressIdColumn = new Column<int>("Id_adresu", false, true);
@@ -93,6 +97,7 @@ Table *create_person_table()
 	addressIdColumn->addValue(2);
 	addressIdColumn->addValue(2);
 	addressIdColumn->addValue(5);
+    addressIdColumn->deleteValue(0);
 
 	// Stworz pusta tabele
 	Table *personTable = new Table("Osoby");

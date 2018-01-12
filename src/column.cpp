@@ -84,7 +84,6 @@ void Column<T>::addValue(const T &value, int index)
     buffer = NULL;
     delete buffer;
     columnSize++;
-    //TODO: Curses
 }
 
 template <typename T>
@@ -106,10 +105,9 @@ void Column<T>::deleteValue(unsigned int index)
     if(!nullable){
         std::cout << "Blad przy usuwaniu: kolumna nie moze miec pustych pol" << std::endl;
         return;
-        //TODO: Curses
     }
 	if(columnSize <= index){
-		std::cerr << "Niepoprawny indeks" << std::endl; //TODO: Curses
+		std::cerr << "Niepoprawny indeks" << std::endl;
 		return;
 	}
 
@@ -123,7 +121,7 @@ std::string Column<T>::streamPrint(unsigned int index, bool filePrint)
         if(filePrint)
             return "NULL";
         else
-            return "";
+            return "-";
     }
 
     std::stringstream buffer;

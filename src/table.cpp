@@ -52,9 +52,7 @@ bool Table::vectorContains(std::vector<int> vector, int index)
 void Table::printTable()
 {
     std::cout << "---- " << nameOfTable << " ----" << std::endl;
-    alignColumns();
 
-	// TODO: Curses
 	if(columns.size() == 0){
 		std::cout << "Tabela jest pusta" << std::endl;
 		return;
@@ -62,7 +60,6 @@ void Table::printTable()
 
     for(unsigned int i = 0; i < columns.size(); i++)
         if(tableSize != columns[i]->getColumnSize()){
-            //TODO: Curses
             std::cout << "Tabela nie jest spojna" << std::endl;
             return;
         }
@@ -78,7 +75,6 @@ void Table::printTable()
     }
     std::cout << std::endl;
 
-	// TODO: Curses
 	for(unsigned int i = 0; i < tableSize; i++){
         std::cout << "| ";
 		for(unsigned int j = 0; j < columns.size(); j++){
@@ -90,7 +86,6 @@ void Table::printTable()
 
 void Table::printRow(unsigned int index, bool printHeader)
 {
-    //TODO: Curses
     if(index >= tableSize){
         std::cout << "Niepoprawny indeks" << std::endl;
         return;
@@ -117,7 +112,6 @@ void Table::printRow(unsigned int index, bool printHeader)
 
 void Table::printRowWhereStringIs(std::string name, std::string value)
 {
-    // TODO: Curses
     int whichColumn = -1;
     std::string buffer;
     bool found = false;
@@ -160,7 +154,6 @@ void Table::alignColumns()
     for(unsigned int i = 0; i < columns.size(); i++)
         if((!columns[i]->isNullable()) && (columns[i]->getColumnSize() < tableSize)){
             std::cout << "Brak mozliwosci wyrownania kolumn, kolumna: \"" << columns[i]->getName() << "\" nie miec pustych pol" << std::endl;
-            // TODO: Curses
             return;
         }
 
@@ -174,8 +167,8 @@ void Table::alignColumns()
 
 void Table::calculateLength(ColumnHandler* column)
 {
-    unsigned int max = (column->streamPrint(0)).length();
-    for(unsigned int i = 1; i < column->getColumnSize(); i++)
+    unsigned int max = (column->getName()).length();
+    for(unsigned int i = 0; i < column->getColumnSize(); i++)
         if((column->streamPrint(i)).length() > max)
             max = (column->streamPrint(i)).length();
     columnLengths.push_back(max);
@@ -210,6 +203,7 @@ void Table::attachColumnToTable(ColumnHandler* column)
     column->setTableName(getName());
     columns.push_back(column);
     calculateLength(column);
+    alignColumns();
 }
 
 void Table::detachColumnFromTable(std::string nameOfColumn)

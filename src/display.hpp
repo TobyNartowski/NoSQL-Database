@@ -65,7 +65,7 @@ public:
     void destroyDisplay();
 
     // Rysuje menu glowne
-    void drawMainMenu();
+    void startMainMenu();
 
     // Rysuje cala baze danych
     void drawDatabase();
