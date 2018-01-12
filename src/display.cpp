@@ -16,13 +16,9 @@ Display::Display(Database *database)
     curs_set(0);
     cbreak();
 
-    mainMenuWindow = newwin(LINES-mainMenuSizeFactor, COLS-mainMenuSizeFactor,
+    mainWindow = newwin(LINES-mainMenuSizeFactor, COLS-mainMenuSizeFactor,
         mainMenuSizeFactor/2, mainMenuSizeFactor/2);
-    keypad(mainMenuWindow, true);
-
-    drawDatabaseWindow = newwin(LINES-mainMenuSizeFactor, COLS-mainMenuSizeFactor,
-        mainMenuSizeFactor/2, mainMenuSizeFactor/2);
-    keypad(drawDatabaseWindow, true);
+    keypad(mainWindow, true);
 }
 
 Display *Display::initDisplay(Database *database)
@@ -42,114 +38,123 @@ void Display::destroyDisplay()
     delete instance;
 }
 
+void Display::printMenu(choices::choices_t whichMenu, int highlight)
+{
+    wclear(mainWindow);
+
+    int x, y, xBuffer;
+    getmaxyx(mainWindow, y, x);
+    xBuffer = x;
+
+    x = x/2 - 6;
+    y = y/2 - ((choices::choices[whichMenu]).size()/2);
+
+    box(mainWindow, 0, 0);
+    mvwprintw(mainWindow, 0, 3, "%s", choices::names[choices::MAIN].c_str());
+    mvwprintw(mainWindow, 0, xBuffer-3-strlen(database->getName().c_str()),
+              "%s", database->getName().c_str());
+
+    for(int i = 0; i < choices::choices[whichMenu].size(); i++){
+        if(highlight == i){
+            wattron(mainWindow, A_REVERSE);
+            mvwprintw(mainWindow, y, x, "%s", choices::choices[whichMenu][i].c_str());
+            wattroff(mainWindow, A_REVERSE);
+        }
+        else
+            mvwprintw(mainWindow, y, x, "%s", choices::choices[whichMenu][i].c_str());
+            y++;
+    }
+    wrefresh(mainWindow);
+}
+
+unsigned int Display::drawMenu(choices::choices_t whichMenu)
+{
+    int highlight = 0;
+    int choice = -1;
+    int buffer;
+
+    box(mainWindow, 0, 0);
+
+    refresh();
+    printMenu(whichMenu, highlight);
+
+    while(true){
+        buffer = wgetch(mainWindow);
+        switch(buffer){
+            case KEY_UP:
+                if(highlight == 0)
+                    highlight = choices::choices[whichMenu].size()-1;
+                else
+                    highlight--;
+                break;
+            case KEY_DOWN:
+                if(highlight == choices::choices[whichMenu].size()-1)
+                    highlight = 0;
+                else
+                    highlight++;
+                break;
+            case 10:
+                choice = highlight;
+                break;
+            default:
+                break;
+        }
+        printMenu(whichMenu, highlight);
+
+        if(choice != -1)
+            break;
+    }
+    return choice;
+}
+
 void Display::startMainMenu()
 {
     while(true){
-        int highlight = 1;
-        int choice = 0;
-        int buffer;
-
-        box(mainMenuWindow, 0, 0);
-
-        refresh();
-        printMenu(mainMenuWindow, "Menu glowne", highlight);
-
-        while(true){
-            buffer = wgetch(mainMenuWindow);
-            switch(buffer){
-                case KEY_UP:
-                    if(highlight == 1)
-                        highlight = MENU_WYJDZ;
-                    else
-                        highlight--;
-                    break;
-                case KEY_DOWN:
-                    if(highlight == MENU_WYJDZ)
-                        highlight = MENU_WYSWIETL;
-                    else
-                        highlight++;
-                    break;
-                case 10:
-                    choice = highlight;
-                    break;
-                default:
-                    refresh();
-                    break;
-            }
-            printMenu(mainMenuWindow, "Menu glowne", highlight);
-
-            if(choice != 0)
-                break;
-        }
-
-        switch(choice){
-            case MENU_WYSWIETL:
+        switch(drawMenu(choices::MAIN)){
+            case choices::MAIN_WYSWIETL:
+                wclear(mainWindow);
                 drawDatabase();
                 break;
-            case MENU_DODAJ:
+            case choices::MAIN_DODAJ:
+                wclear(mainWindow);
+                drawAddMenu();
+                break;
+            case choices::MAIN_USUN:
+                wclear(mainWindow);
                 getch();
                 break;
-            case MENU_USUN:
+            case choices::MAIN_ZAPISZ:
+                wclear(mainWindow);
                 getch();
                 break;
-            case MENU_ZAPISZ:
+            case choices::MAIN_WCZYTAJ:
+                wclear(mainWindow);
                 getch();
                 break;
-            case MENU_WCZYTAJ:
-                getch();
-                break;
-            case MENU_WYJDZ:
+            case choices::MAIN_WYJDZ:
                 return;
             default:
                 break;
         }
-        clrtoeol();
-        refresh();
     }
-}
-
-void Display::printMenu(WINDOW *menuWindow, std::string windowName, int highlight)
-{
-    int x, y, xBuffer;
-    getmaxyx(menuWindow, y, x);
-    xBuffer = x;
-
-    x = x/2 - 6;
-    y = y/2 - (choicesNumber/2);
-
-    box(menuWindow, 0, 0);
-    mvwprintw(menuWindow, 0, 3, "%s", windowName.c_str());
-    mvwprintw(menuWindow, 0, xBuffer-3-strlen(database->getName().c_str()),
-              "%s", database->getName().c_str());
-    for(int i = 0; i < choicesNumber; i++){
-        if(highlight == i + 1){
-            wattron(menuWindow, A_REVERSE);
-            mvwprintw(menuWindow, y, x, "%s", menuChoices[i].c_str());
-            wattroff(menuWindow, A_REVERSE);
-        }
-        else
-            mvwprintw(menuWindow, y, x, "%s", menuChoices[i].c_str());
-            y++;
-    }
-    wrefresh(menuWindow);
 }
 
 void Display::drawDatabase()
 {
-    int xBuffer = getmaxx(drawDatabaseWindow);
+    int xBuffer = getmaxx(mainWindow);
 
-    box(drawDatabaseWindow, 0, 0);
-    mvwprintw(drawDatabaseWindow, 0, 3, "%s", menuChoices[0].c_str());
-    mvwprintw(drawDatabaseWindow, 0, xBuffer-3-strlen(database->getName().c_str()),
+    box(mainWindow, 0, 0);
+    mvwprintw(mainWindow, 0, 3, "%s", choices::main_v[0].c_str());
+    mvwprintw(mainWindow, 0, xBuffer-3-strlen(database->getName().c_str()),
               "%s", database->getName().c_str());
 
     while(true){
         if(!database->getDatabaseSize()) {
-            mvwprintw(drawDatabaseWindow, getmaxy(drawDatabaseWindow)/2,
-                      getmaxx(drawDatabaseWindow)/2-strlen("Baza danych jest pusta!")/2, "Baza danych jest pusta!");
-                      mvwprintw(drawDatabaseWindow, getmaxy(drawDatabaseWindow)-3,
-                                getmaxx(drawDatabaseWindow)/2-strlen("(Wcisnij RETURN, aby wyjsc)")/2, "(Wcisnij RETURN, aby wyjsc)");
-            wrefresh(drawDatabaseWindow);
+            mvwprintw(mainWindow, getmaxy(mainWindow)/2,
+                      getmaxx(mainWindow)/2-strlen("Baza danych jest pusta!")/2, "Baza danych jest pusta!");
+                      mvwprintw(mainWindow, getmaxy(mainWindow)-3,
+                                getmaxx(mainWindow)/2-strlen("(Wcisnij RETURN, aby wyjsc)")/2, "(Wcisnij RETURN, aby wyjsc)");
+            wrefresh(mainWindow);
             while(true){
                 if(getch() == 10)
                     return;
@@ -170,36 +175,44 @@ void Display::drawDatabase()
                 for(unsigned int k = 0; k < database->getTable(i)->getColumn(j)->getColumnSize(); k++){
                     if(printHeader){
                         headerBuffer = database->getTable(i)->getColumn(j)->getName();
-                        mvwprintw(drawDatabaseWindow, verticalIndex+k+2, horizontalIndex+3, headerBuffer.c_str());
+                        mvwprintw(mainWindow, verticalIndex+k+2, horizontalIndex+3, headerBuffer.c_str());
                         printHeader = false;
 
                         std::string tableName = database->getTable(i)->getName();
                         for(unsigned int l = 0; l < tableName.length(); l++)
                             tableName[l] = std::toupper(tableName[l]);
 
-                        mvwprintw(drawDatabaseWindow, verticalIndex+k+2,
-                                  getmaxx(drawDatabaseWindow)-6-tableName.length(), tableName.c_str());
+                        mvwprintw(mainWindow, verticalIndex+k+2,
+                                  getmaxx(mainWindow)-6-tableName.length(), tableName.c_str());
                     }
 
                     readBuffer = database->getTable(i)->getColumn(j)->streamPrint(k);
-                    mvwprintw(drawDatabaseWindow, verticalIndex+k+4, horizontalIndex+3, readBuffer.c_str());
-
-                    /*
-                    // DEBUG ERROR!
-                    wrefresh(drawDatabaseWindow);
-                    usleep(50000);
-                    */
+                    mvwprintw(mainWindow, verticalIndex+k+4, horizontalIndex+3, readBuffer.c_str());
                 }
                 horizontalIndex += database->getTable(i)->getLength(j) + 3;
             }
-            for(unsigned int l = 0; l < getmaxx(drawDatabaseWindow)-6; l++)
+            for(unsigned int l = 0; l < getmaxx(mainWindow)-6; l++)
                 lineHeader += "-";
-            mvwprintw(drawDatabaseWindow, verticalIndex+3, 3, lineHeader.c_str());
+            mvwprintw(mainWindow, verticalIndex+3, 3, lineHeader.c_str());
             verticalIndex += database->getTable(i)->getHeight() + 3;
-            wrefresh(drawDatabaseWindow);
-
+            wrefresh(mainWindow);
         }
+        std::string enterText = "(ENTER, aby wyjsc)";
+        mvwprintw(mainWindow, getmaxy(mainWindow)-2, getmaxx(mainWindow)/2-(enterText.length()/2), enterText.c_str());
+        wrefresh(mainWindow);
+
         if(getch() == 10)
             break;
     }
+}
+
+void Display::drawAddMenu()
+{
+
+    box(mainWindow, 0, 0);
+    mvwprintw(mainWindow, 0, 3, "%s", choices::names[choices::ADD].c_str());
+
+    wrefresh(mainWindow);
+    getch();
+
 }

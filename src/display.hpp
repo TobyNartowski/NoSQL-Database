@@ -5,27 +5,39 @@
 
 #include <ncurses.h>
 #include <iostream>
+#include <vector>
+#include <map>
 
-#define MENU_CHOICES_SIZE 6
+namespace choices {
+    typedef enum {
+        MAIN = 0,
+        ADD
+    } choices_t;
 
-// Pozycje w menu
-const std::string menuChoices[MENU_CHOICES_SIZE] = {
-    "Wyswietl",
-    "Dodaj",
-    "Usun",
-    "Zapisz",
-    "Wczytaj",
-    "Wyjdz",
-};
+    static const std::vector<std::string> main_v = {
+        "Wyswietl", "Dodaj", "Usun", "Zapisz",
+        "Wczytaj", "Wyjdz"
+    };
+    static const std::vector<std::string> add_v = {
+        "Tabele", "Kolumne", "Rekord"
+    };
 
-typedef enum e_menuChoices {
-    MENU_WYSWIETL = 1,
-    MENU_DODAJ,
-    MENU_USUN,
-    MENU_ZAPISZ,
-    MENU_WCZYTAJ,
-    MENU_WYJDZ
-} MenuChoices;
+    static const std::vector<std::string> names = {
+        "Menu glowne", "Wyswietl", "Dodaj"
+    };
+
+    static std::map<choices_t, std::vector<std::string>> choices = {
+        {MAIN, main_v}, {ADD, add_v}
+    };
+
+    typedef enum {
+        MAIN_WYSWIETL = 0, MAIN_DODAJ, MAIN_USUN,
+        MAIN_ZAPISZ, MAIN_WCZYTAJ, MAIN_WYJDZ
+    } main_t;
+    typedef enum {
+        ADD_TABELE = 0, ADD_KOLUMNE, ADD_REKORD
+    } add_t;
+}
 
 class Display
 {
@@ -39,21 +51,19 @@ private:
     // Prywatny konstruktor
     Display(Database *database);
 
-    // Wskaznik na okno z menu glownym
-    WINDOW *mainMenuWindow;
-
-    // Wskaznik na okno rysujace baze danych
-    WINDOW *drawDatabaseWindow;
+    // Wskaznik na okno glowne
+    WINDOW *mainWindow;
 
     // Rysuje menu
-    // (Przyjmuje wskaznik na menu, nazwe okna i odpowiednie podswietlenie)
-    void printMenu(WINDOW *menuWindow, std::string windowName, int highlight);
-public:
+    // (Przyjmuje argument, ktore okno ma rysowac i odpowiednie podswietlenie)
+    void printMenu(choices::choices_t whichMenu, int highlight);
+
+    // Rysuje menu (Przyjmuje argument, ktore okno ma rysowac,
+    // zwraca liczbe calkowita oznaczajaca wybor)
+    unsigned int drawMenu(choices::choices_t whichMenu);
+
     // Prywatny destruktor
     ~Display();
-
-    // Liczba elementow w menu
-    const int choicesNumber = MENU_CHOICES_SIZE;
 public:
     // Atrybuty okien
     static const int mainMenuSizeFactor = 10;
@@ -64,9 +74,13 @@ public:
     // Wywoluje destruktor obiektu - konczy prace klasy wyjscia
     void destroyDisplay();
 
-    // Rysuje menu glowne
+    // Uruchamia menu glowne
     void startMainMenu();
+
 
     // Rysuje cala baze danych
     void drawDatabase();
+
+    // Rysuje menu dodawania
+    void drawAddMenu();
 };
