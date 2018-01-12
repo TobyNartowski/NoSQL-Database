@@ -10,8 +10,7 @@
 
 namespace choices {
     typedef enum {
-        MAIN = 0,
-        ADD
+        MAIN, ADD
     } choices_t;
 
     static const std::vector<std::string> main_v = {
@@ -19,11 +18,11 @@ namespace choices {
         "Wczytaj", "Wyjdz"
     };
     static const std::vector<std::string> add_v = {
-        "Tabele", "Kolumne", "Rekord"
+        "Tabele", "Kolumne", "Rekord", "Anuluj"
     };
 
     static const std::vector<std::string> names = {
-        "Menu glowne", "Wyswietl", "Dodaj"
+        "Menu glowne", "Dodaj"
     };
 
     static std::map<choices_t, std::vector<std::string>> choices = {
@@ -31,11 +30,12 @@ namespace choices {
     };
 
     typedef enum {
-        MAIN_WYSWIETL = 0, MAIN_DODAJ, MAIN_USUN,
+        MAIN_WYSWIETL, MAIN_DODAJ, MAIN_USUN,
         MAIN_ZAPISZ, MAIN_WCZYTAJ, MAIN_WYJDZ
     } main_t;
     typedef enum {
-        ADD_TABELE = 0, ADD_KOLUMNE, ADD_REKORD
+        ADD_TABELE, ADD_KOLUMNE, ADD_REKORD,
+        ADD_ANULUJ
     } add_t;
 }
 
@@ -54,13 +54,32 @@ private:
     // Wskaznik na okno glowne
     WINDOW *mainWindow;
 
+    // Wskaznik na okno informacyjne
+    WINDOW *infoWindow;
+
+    // Wskaznik na okno bledu
+    WINDOW *errorWindow;
+
     // Rysuje menu
     // (Przyjmuje argument, ktore okno ma rysowac i odpowiednie podswietlenie)
-    void printMenu(choices::choices_t whichMenu, int highlight);
+    void printMenuChoices(choices::choices_t whichMenu, int highlight);
 
     // Rysuje menu (Przyjmuje argument, ktore okno ma rysowac,
     // zwraca liczbe calkowita oznaczajaca wybor)
     unsigned int drawMenu(choices::choices_t whichMenu);
+
+    // Rysuje podstawowe, puste okno z nazwami
+    // (przyjmuje nazwe okna)
+    void drawBasicWindow(std::string windowName);
+
+    // Rysuje okno informacyjne
+    void drawInfoWindow();
+
+    // Rysuje okno bledu
+    void drawErrorWindow(std::string errorMessage);
+
+    // Wypisuje informacje o operacji
+    inline void printInfo(std::string info);
 
     // Prywatny destruktor
     ~Display();
@@ -77,10 +96,18 @@ public:
     // Uruchamia menu glowne
     void startMainMenu();
 
-
     // Rysuje cala baze danych
     void drawDatabase();
 
     // Rysuje menu dodawania
     void drawAddMenu();
+
+    // Dodaje tabele
+    void addTable();
+
+    // Dodaj kolumne
+    void addColumn();
+
+    // Dodaje rekord
+    void addRecord();
 };

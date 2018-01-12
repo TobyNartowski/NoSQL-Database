@@ -30,12 +30,10 @@ void Database::clearDatabase()
 bool Database::attachTableToDatabase(Table *table)
 {
     for(unsigned int i = 0; i < tables.size(); i++)
-        if(tables[i]->getName() == table->getName()){
-            std::cout << "Table o podanej nazwie juz znajduje sie w bazie danych" << std::endl;
-            return true;
-        }
+        if(tables[i]->getName() == table->getName())
+            return false;
     tables.push_back(table);
-    return false;
+    return true;
 }
 
 void Database::detachTableFromDatabase(std::string nameOfTable)
@@ -121,6 +119,23 @@ Table *Database::getTable(unsigned int index)
     if(index > tables.size())
         return NULL;
     return tables[index];
+}
+
+bool Database::containsTable(std::string nameOfTable)
+{
+    std::string lowercaseName = nameOfTable;
+
+    for(unsigned int i = 0; i < nameOfTable.length(); i++)
+        lowercaseName[i] = std::tolower(nameOfTable[i]);
+
+    for(unsigned int i = 0; i < tables.size(); i++){
+        std::string lowercaseNameBuffer = tables[i]->getName();
+        for(unsigned int j = 0; j < (tables[i]->getName()).length(); j++)
+            lowercaseNameBuffer[j] = std::tolower(tables[i]->getName().at(j));
+        if(lowercaseNameBuffer == lowercaseName)
+            return true;
+    }
+    return false;
 }
 
 void Database::saveDatabase()

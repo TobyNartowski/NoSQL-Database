@@ -65,6 +65,10 @@ public:
     Table *getTable(std::string nameOfTable);
     Table *getTable(unsigned int index);
 
+    // Sprawdza czy tabela znajduje sie w bazie danych
+    // (przyjmuje nazwe tabeli, zwraca prawde lub falsz)
+    bool containsTable(std::string nameOfTable);
+
     // Zapisuje baze danych do pliku lokalnego
     void saveDatabase();
 

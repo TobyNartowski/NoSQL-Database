@@ -20,7 +20,6 @@ int main()
 
 	Table *personTable = create_person_table();
 	Table *addressTable = create_address_table();
-
 /*
     database->saveDatabase();
     database->loadDatabase();
