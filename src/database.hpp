@@ -69,6 +69,9 @@ public:
     // (przyjmuje nazwe tabeli, zwraca prawde lub falsz)
     bool containsTable(std::string nameOfTable);
 
+    // Sprawdza czy baza danych jest pusta (Zwraca prawde lub falsz)
+    bool empty();
+
     // Zapisuje baze danych do pliku lokalnego
     void saveDatabase();
 

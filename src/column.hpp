@@ -58,6 +58,10 @@ public:
     // (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry)
     Column(std::string nameOfColumn, bool pk = false, bool fk = false, bool nullable = true, bool unique = false);
 
+    // Opcjonalny konstruktor kolumny inicjalizujacy jej parametry
+    // (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry)
+    Column(std::string nameOfColumn, bool *flags);
+
     // Zwraca nazwe kolumny
     std::string getName();
 

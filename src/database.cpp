@@ -131,10 +131,17 @@ bool Database::containsTable(std::string nameOfTable)
     for(unsigned int i = 0; i < tables.size(); i++){
         std::string lowercaseNameBuffer = tables[i]->getName();
         for(unsigned int j = 0; j < (tables[i]->getName()).length(); j++)
-            lowercaseNameBuffer[j] = std::tolower(tables[i]->getName().at(j));
+            lowercaseNameBuffer[j] = std::tolower(tables[i]->getName()[j]);
         if(lowercaseNameBuffer == lowercaseName)
             return true;
     }
+    return false;
+}
+
+bool Database::empty()
+{
+    if(!tables.size())
+        return true;
     return false;
 }
 

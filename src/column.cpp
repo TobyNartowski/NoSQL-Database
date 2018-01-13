@@ -28,6 +28,29 @@ Column<T>::Column(std::string nameOfColumn, bool pk, bool fk, bool nullable, boo
 }
 
 template <typename T>
+Column<T>::Column(std::string nameOfColumn, bool *flags)
+{
+    this->pk = this->fk = false;
+    this->nullable = true;
+    this->unique = false;
+
+    if(flags[2])
+        this->nullable = false;
+    if(flags[3])
+        this->unique = true;
+    if(flags[0]){
+        this->unique = this->pk = true;
+        this->nullable = false;
+    }
+    if(flags[1])
+        this->fk = true;
+
+    this->nameOfColumn = nameOfColumn;
+    tableName = "NULL";
+	columnSize = 0;
+}
+
+template <typename T>
 std::string Column<T>::getName()
 {
     return nameOfColumn;

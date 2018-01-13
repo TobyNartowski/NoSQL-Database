@@ -31,8 +31,8 @@ int main()
 
     display->destroyDisplay();
 
-    //delete addressTable;
-    //delete personTable;
+    delete addressTable;
+    delete personTable;
     delete database;
     return EXIT_SUCCESS;
 }
@@ -86,8 +86,6 @@ Table *create_person_table()
     earningsColumn->addValue(3411.05);
     earningsColumn->addValue(11030.00);
     earningsColumn->deleteValue(2);
-
-
 
 	// Piata kolumna
 	Column<int> *addressIdColumn = new Column<int>("Id_adresu", false, true);

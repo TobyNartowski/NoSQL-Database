@@ -77,4 +77,11 @@ public:
 	// (przyjmuje nazwe kolumny lub odpowiedni indeks)
 	ColumnHandler *getColumn(std::string nameOfColumn);
 	ColumnHandler *getColumn(unsigned int index);
+
+	// Sprawdza czy kolumna znajduje sie w tabeli
+    // (przyjmuje nazwe kolumny, zwraca prawde lub falsz)
+	bool containsColumn(std::string nameOfColumn);
+
+	// Sprawdza czy tabeli znajduje sie aktualnie klucz glowny (Zwraca prawde lub falsz)
+	bool isAlreadyPk();
 };

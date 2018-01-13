@@ -167,10 +167,16 @@ void Table::alignColumns()
 
 void Table::calculateLength(ColumnHandler* column)
 {
-    unsigned int max = (column->getName()).length();
+    unsigned int max;
+    if(column->isPk() || column->isFk())
+        max = (column->getName()).length() + 5;
+    else
+        max = (column->getName()).length();
+
     for(unsigned int i = 0; i < column->getColumnSize(); i++)
         if((column->streamPrint(i)).length() > max)
-            max = (column->streamPrint(i)).length();
+                max = (column->streamPrint(i)).length();
+
     columnLengths.push_back(max);
 }
 
@@ -233,4 +239,28 @@ ColumnHandler *Table::getColumn(unsigned int index)
     if(index > columns.size())
         return NULL;
     return columns[index];
+}
+
+bool Table::containsColumn(std::string nameOfColumn)
+{
+    std::string lowercaseName = nameOfColumn;
+
+    for(unsigned int i = 0; i < nameOfColumn.length(); i++)
+        lowercaseName[i] = std::tolower(nameOfColumn[i]);
+
+    for(unsigned int i = 0; i < columns.size(); i++){
+        std::string lowercaseNameBuffer = columns[i]->getName();
+        for(unsigned int j = 0; j < (columns[i]->getName()).length(); j++)
+            lowercaseNameBuffer[j] = std::tolower(columns[i]->getName()[j]);
+        if(lowercaseNameBuffer == lowercaseName)
+            return true;
+    }
+    return false;
+}
+
+bool Table::isAlreadyPk()
+{
+    if(pkIndex == -1)
+        return false;
+    return true;
 }
