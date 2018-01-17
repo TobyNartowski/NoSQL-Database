@@ -1,8 +1,6 @@
 // Klasa implementujaca obsluge okien ncurses
 #pragma once
 
-#include "database.hpp"
-
 #include <ncurses.h>
 #include <iostream>
 
@@ -36,4 +34,9 @@ public:
 
     // Wypisuje informacje o operacji
     static void printInfo(std::string info);
+
+    // Pobiera zmienna od uzytkownika (Przyjmuje odpowiednie okno, nazwe pobieranego
+    // parametru, przesuniecie oraz ewentualnie domyslna wartosc, zwraca pobrany bufor
+    static std::string drawInputWindow(WINDOW *window, std::string name,
+                                       unsigned int shift, std::string defaultText = "");
 };

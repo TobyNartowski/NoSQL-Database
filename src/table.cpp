@@ -149,12 +149,11 @@ void Table::printRowWhereStringIs(std::string name, std::string value)
         std::cout << "Nie znaleziono wynikow w kolumnie" << std::endl;
 }
 
-void Table::alignColumns()
+bool Table::alignColumns()
 {
     for(unsigned int i = 0; i < columns.size(); i++)
         if((!columns[i]->isNullable()) && (columns[i]->getColumnSize() < tableSize)){
-            std::cout << "Brak mozliwosci wyrownania kolumn, kolumna: \"" << columns[i]->getName() << "\" nie miec pustych pol" << std::endl;
-            return;
+            return false;
         }
 
     for(unsigned int i = 0; i < columns.size(); i++){
@@ -163,6 +162,7 @@ void Table::alignColumns()
         while(tableSize > columns[i]->getColumnSize())
                 columns[i]->addNullValue(columns[i]->getColumnSize());
     }
+    return true;
 }
 
 void Table::calculateLength(ColumnHandler* column)

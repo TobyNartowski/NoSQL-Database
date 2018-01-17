@@ -64,10 +64,10 @@ void Display::startMainMenu()
                 getch();
                 break;
             case Choices::MAIN_ZAPISZ:
-                getch();
+                Operations::saveDatabase(database);
                 break;
             case Choices::MAIN_WCZYTAJ:
-                getch();
+                Operations::loadDatabase(database);
                 break;
             case Choices::MAIN_WYJDZ:
                 return;

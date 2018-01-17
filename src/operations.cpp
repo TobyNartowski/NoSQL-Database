@@ -1,10 +1,10 @@
 #include "operations.hpp"
 #include "windows.hpp"
 #include "menu.hpp"
+#include "column.hpp"
 
-#include <iostream>
+#include <algorithm>
 #include <cstring>
-#include <ncurses.h>
 #include <unistd.h>
 
 //Implementacje metod
@@ -116,8 +116,9 @@ void Operations::drawAddMenu(Database *database)
 
         switch(Menu::drawMenu(Windows::mainWindow, Choices::ADD, database->getName())){
             case Choices::ADD_TABELE:
-                addTable(database);
+                if(addTable(database))
                     return;
+                break;
             case Choices::ADD_KOLUMNE:
                 if(addColumn(database))
                     return;
@@ -133,51 +134,39 @@ void Operations::drawAddMenu(Database *database)
     }
 }
 
-void Operations::addTable(Database *database)
+bool Operations::addTable(Database *database)
 {
     while(true){
         Windows::drawBasicWindow(database->getName(), "Dodaj tabele");
 
         std::string message = "Podaj nazwe nowej tabeli";
-        char inputBuffer[32];
-        std::string convertBuffer;
-        int maxx = getmaxx(Windows::mainWindow);
-        int maxy = getmaxy(Windows::mainWindow);
 
-        mvwprintw(Windows::mainWindow, maxy/2, (maxx-strlen(message.c_str()))/2+1, "%s", message.c_str());
-        mvwprintw(Windows::mainWindow, maxy/2+1, (maxx/2+17), ":");
-        mvwprintw(Windows::mainWindow, maxy/2+1, (maxx/2-17), "                                  ");
-        mvwprintw(Windows::mainWindow, maxy/2+1, (maxx/2-16), ":");
-        wrefresh(Windows::mainWindow);
+        std::string stringBuffer = Windows::drawInputWindow(Windows::mainWindow, message, getmaxy(Windows::mainWindow)/2);
 
-        echo();
-        curs_set(1);
-
-        wgetnstr(Windows::mainWindow, inputBuffer, 32);
-
-        noecho();
-        curs_set(0);
-
-        convertBuffer = inputBuffer;
-
-        if(convertBuffer.empty()){
+        if(stringBuffer.empty()){
             Windows::drawErrorWindow("Nazwa tabeli nie moze byc pusta!");
             continue;
         }
-        if(database->containsTable(convertBuffer)){
+        if(database->containsTable(stringBuffer)){
             Windows::drawErrorWindow("Tabela o podanej nazwie juz znajduje sie w bazie danych!");
             continue;
         }
 
-        Table *table = new Table(convertBuffer);
+        std::string questionBuffer = "Czy na pewno chcesz dodac tabele: ";
+        questionBuffer += stringBuffer;
+        questionBuffer += "?";
+        if(!Windows::drawChoiceWindow(questionBuffer))
+            return false;
+
+        Table *table = new Table(stringBuffer);
         database->attachTableToDatabase(table);
 
         std::string infoBuffer = "Dodano tabele: ";
-        infoBuffer += inputBuffer;
+        infoBuffer += stringBuffer;
         Windows::printInfo(infoBuffer);
 
         sleep(1);
-        break;
+        return true;
     }
 }
 
@@ -211,32 +200,16 @@ bool Operations::addColumn(Database *database)
         const std::string attribMessage = "Zaznacz odpowiednie atrybuty (SPACJA, aby zaznaczyc)";
         const std::string types[4] = {"BOOL", "INT", "DOUBLE", "TEKST"};
         const std::string attribs[4] = {"PK", "FK", "NOT NULL", "UNIQUE"};
+        const int maxx = getmaxx(Windows::mainWindow);
+        const int maxy = getmaxy(Windows::mainWindow);
 
-        char inputBuffer[32];
-        std::string convertBuffer;
-        int maxx = getmaxx(Windows::mainWindow);
-        int maxy = getmaxy(Windows::mainWindow);
+        std::string stringBuffer = Windows::drawInputWindow(Windows::mainWindow, message, getmaxy(Windows::mainWindow)/3-1);
 
-        mvwprintw(Windows::mainWindow, maxy/3-1, (maxx-strlen(message.c_str()))/2+1, "%s", message.c_str());
-        mvwprintw(Windows::mainWindow, maxy/3, (maxx/2+17), ":");
-        mvwprintw(Windows::mainWindow, maxy/3, (maxx/2-17), "                                  ");
-        mvwprintw(Windows::mainWindow, maxy/3, (maxx/2-16), ":");
-        wrefresh(Windows::mainWindow);
-
-        echo();
-        curs_set(1);
-
-        wgetnstr(Windows::mainWindow, inputBuffer, 32);
-        convertBuffer = inputBuffer;
-
-        noecho();
-        curs_set(0);
-
-        if(convertBuffer.empty()){
+        if(stringBuffer.empty()){
             Windows::drawErrorWindow("Nazwa kolumny nie moze byc pusta!");
             continue;
         }
-        if(database->getTable(tableChoice)->containsColumn(convertBuffer)){
+        if(database->getTable(tableChoice)->containsColumn(stringBuffer)){
             Windows::drawErrorWindow("Kolumna o podanej nazwie juz znajduje sie w tabeli!");
             continue;
         }
@@ -253,7 +226,7 @@ bool Operations::addColumn(Database *database)
         }
 
         std::string questionBuffer = "Czy na pewno chcesz dodac kolumne: ";
-        questionBuffer += convertBuffer;
+        questionBuffer += stringBuffer;
         questionBuffer += " <";
         questionBuffer += types[typeChoice];
         if((attribChoices[0] && attribChoices[1] && attribChoices[2] && attribChoices[3]))
@@ -271,26 +244,26 @@ bool Operations::addColumn(Database *database)
         questionBuffer += "?";
 
         if(!Windows::drawChoiceWindow(questionBuffer))
-            continue;
+            return false;
 
         switch(typeChoice){
             case 0:{
-                Column<bool> *newColumnBool = new Column<bool>(convertBuffer, attribChoices);
+                Column<bool> *newColumnBool = new Column<bool>(stringBuffer, attribChoices);
                 database->getTable(tableChoice)->attachColumnToTable(newColumnBool);
                 break;
             }
             case 1:{
-                Column<int> *newColumnInt = new Column<int>(convertBuffer, attribChoices);
+                Column<int> *newColumnInt = new Column<int>(stringBuffer, attribChoices);
                 database->getTable(tableChoice)->attachColumnToTable(newColumnInt);
                 break;
             }
             case 2:{
-                Column<double> *newColumnDouble = new Column<double>(convertBuffer, attribChoices);
+                Column<double> *newColumnDouble = new Column<double>(stringBuffer, attribChoices);
                 database->getTable(tableChoice)->attachColumnToTable(newColumnDouble);
                 break;
             }
             case 3:{
-                Column<std::string> *newColumnString = new Column<std::string>(convertBuffer, attribChoices);
+                Column<std::string> *newColumnString = new Column<std::string>(stringBuffer, attribChoices);
                 database->getTable(tableChoice)->attachColumnToTable(newColumnString);
                 break;
             }
@@ -299,7 +272,7 @@ bool Operations::addColumn(Database *database)
         }
 
         std::string infoBuffer = "Dodano kolumne: ";
-        infoBuffer += inputBuffer;
+        infoBuffer += stringBuffer;
         infoBuffer += " do tabeli ";
         infoBuffer += database->getTable(tableChoice)->getName();
 
@@ -313,5 +286,169 @@ bool Operations::addColumn(Database *database)
 
 bool Operations::addRecord(Database *database)
 {
+    ColumnHandler **columnHandlers;
+    Column<bool> *boolColumn;
+    Column<int> *intColumn;
+    Column<double> *doubleColumn;
+    Column<std::string> *stringColumn;
+
+    int tableChoice;
+    std::string columnNameBuffer;
+    std::string *choiceBuffers = nullptr;
+    ColumnType *columnTypes = nullptr;
+
+    std::string *tableNames = new std::string[database->getDatabaseSize()+1];
+    for(unsigned int i = 0; i < database->getDatabaseSize(); i++)
+        tableNames[i] = database->getTable(i)->getName();
+
+    tableChoice = Menu::drawMenu(Windows::mainWindow, tableNames, database->getDatabaseSize(),
+                                     "Dodaj rekord", database->getName());
+    if(tableChoice == -1)
+        return false;
+
+    if(database->getTable(tableChoice)->getTableSize() == 0){
+        Windows::drawErrorWindow("Tabela nie ma zadnych kolumn!");
+        return true;
+    }
+
+    std::string *columnNames = new std::string[database->getTable(tableChoice)->getTableSize()+1];
+    for(unsigned int i = 0; i < database->getTable(tableChoice)->getTableSize(); i++){
+        columnNames[i] = database->getTable(tableChoice)->getColumn(i)->getName();
+    }
+
+    std::string headerName = "Dodaj rekord do ";
+    headerName += database->getTable(tableChoice)->getName();
+
+    columnNames = new std::string[database->getTable(tableChoice)->getTableSize()+1];
+    columnTypes = new ColumnType[database->getTable(tableChoice)->getTableSize()+1];
+    columnHandlers = new ColumnHandler*[database->getTable(tableChoice)->getTableSize()+1];
+    choiceBuffers = new std::string[database->getTable(tableChoice)->getTableSize()+1];
+
+    Windows::drawBasicWindow(database->getName(), headerName);
+    for(unsigned int i = 0; i < database->getTable(tableChoice)->getTableSize(); i++){
+        bool pkFlag, nullableFlag, uniqueFlag;
+        pkFlag = false;
+        nullableFlag = true;
+        uniqueFlag = false;
+
+        columnNameBuffer = database->getTable(tableChoice)->getColumn(i)->getName();
+        columnTypes[i] = database->getTable(tableChoice)->getColumn(i)->whatType();
+
+        pkFlag = database->getTable(tableChoice)->getColumn(i)->isPk();
+        nullableFlag = database->getTable(tableChoice)->getColumn(i)->isNullable();
+        uniqueFlag = database->getTable(tableChoice)->getColumn(i)->isUnique();
+
+        columnHandlers[i] = database->getTable(tableChoice)->getColumn(i);
+
+        if(pkFlag){
+            choiceBuffers[i] = Windows::drawInputWindow(Windows::mainWindow, columnNameBuffer, i*3+2,
+                                                    std::to_string(database->getTable(tableChoice)->getColumn(i)->getColumnSize()+1));
+        }
+        else
+            choiceBuffers[i] = Windows::drawInputWindow(Windows::mainWindow, columnNameBuffer, i*3+2);
+
+        if(choiceBuffers[i].empty() && !nullableFlag){
+            Windows::drawErrorWindow("Pole nie moze byc puste!");
+            return false;
+        }
+
+        if(!choiceBuffers[i].empty() && nullableFlag){
+            if(columnTypes[i] == COL_INT){
+                try{
+                    std::stoi(choiceBuffers[i]);
+                }
+                catch(...){
+                    Windows::drawErrorWindow("Niepoprawny typ danych!");
+                    return false;
+                }
+            }
+
+            if(columnTypes[i] == COL_DOUBLE){
+                try{
+                    std::stod(choiceBuffers[i]);
+                }
+                catch(...){
+                    Windows::drawErrorWindow("Niepoprawny typ danych!");
+                    return false;
+                }
+            }
+        }
+    }
+
+    if(database->getTable(tableChoice)->alignColumns()){
+            if(!Windows::drawChoiceWindow("Czy na pewno chcesz dodac nowy rekord?"))
+                return false;
+            std::string infoBuffer = "Dodano rekord do tabeli ";
+            infoBuffer += database->getTable(tableChoice)->getName();
+            Windows::printInfo(infoBuffer);
+    }
+    else{
+        Windows::drawErrorWindow("Blad przy dodawaniu rekordu!");
+        return true;
+    }
+
+    for(unsigned int i = 0; i < database->getTable(tableChoice)->getTableSize(); i++){
+        boolColumn = nullptr;
+        intColumn = nullptr;
+        doubleColumn = nullptr;
+        stringColumn = nullptr;
+
+        switch(columnTypes[i]){
+            case COL_BOOL:
+                boolColumn = dynamic_cast<Column<bool> *>(columnHandlers[i]);
+                std::transform(choiceBuffers[i].begin(), choiceBuffers[i].end(), choiceBuffers[i].begin(), ::tolower);
+                if(choiceBuffers[i] == "")
+                    boolColumn->addNullValue();
+                else{
+                    if(choiceBuffers[i] == "tak" || choiceBuffers[i] == "1")
+                        boolColumn->addValue(true);
+                        else
+                        boolColumn->addValue(false);
+                    }
+                break;
+            case COL_INT:
+                intColumn = dynamic_cast<Column<int> *>(columnHandlers[i]);
+                if(choiceBuffers[i] == "")
+                    intColumn->addNullValue();
+                else
+                    intColumn->addValue(std::stoi(choiceBuffers[i]));
+                break;
+            case COL_DOUBLE:
+                doubleColumn = dynamic_cast<Column<double> *>(columnHandlers[i]);
+                if(choiceBuffers[i] == "")
+                    doubleColumn->addNullValue();
+                else
+                    doubleColumn->addValue(std::stod(choiceBuffers[i]));
+                break;
+            case COL_STRING:
+                stringColumn = dynamic_cast<Column<std::string> *>(columnHandlers[i]);
+                if(choiceBuffers[i] == "")
+                    stringColumn->addNullValue();
+                else
+                    stringColumn->addValue(choiceBuffers[i]);
+                break;
+            case COL_ERROR:
+            default:
+                return true;
+        }
+    }
+
+    database->getTable(tableChoice)->alignColumns();
     return true;
+}
+
+void Operations::loadDatabase(Database *database)
+{
+    if(database->loadDatabase()){
+        Windows::drawErrorWindow("Wczytano baze danych z pliku lokalnego");
+        Windows::printInfo("Wczytano baze danych");
+    }
+    else
+        Windows::drawErrorWindow("Nie udalo sie wczytac bazy danych!");
+}
+void Operations::saveDatabase(Database *database)
+{
+    database->saveDatabase();
+    Windows::drawErrorWindow("Zapisano baze danych do pliku lokalnego");
+    Windows::printInfo("Zapisano baze danych");
 }

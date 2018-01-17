@@ -1,5 +1,7 @@
 #include "windows.hpp"
 
+#include <cstring>
+
 WINDOW *Windows::mainWindow = nullptr;
 WINDOW *Windows::infoWindow = nullptr;
 WINDOW *Windows::errorWindow = nullptr;
@@ -25,7 +27,7 @@ void Windows::drawInfoWindow()
 
 void Windows::drawErrorWindow(std::string errorMessage)
 {
-    std::string enterText = "(ENTER, aby pominac)";
+    std::string enterText = "(ENTER, aby kontynuowac)";
     wclear(errorWindow);
     box(errorWindow, 0, 0);
 
@@ -168,4 +170,33 @@ void Windows::printInfo(std::string info)
     drawInfoWindow();
     mvwprintw(infoWindow, 1, 2, "%s", info.c_str());
     wrefresh(infoWindow);
+}
+
+std::string Windows::drawInputWindow(WINDOW *window, std::string name,
+                                     unsigned int shift, std::string defaultText)
+{
+    char buffer[32];
+    std::string stringBuffer;
+    const int maxx = getmaxx(window);
+
+    mvwprintw(window, shift, (maxx-strlen(name.c_str()))/2+1, "%s", name.c_str());
+    mvwprintw(window, shift+1, (maxx/2+17), ":");
+    mvwprintw(window, shift+1, (maxx/2-17), "                                  ");
+    mvwprintw(window, shift+1, (maxx/2-16), ":");
+    wrefresh(window);
+    if(defaultText != ""){
+        mvwprintw(window, shift+1, (maxx/2-15), defaultText.c_str());
+        return defaultText;
+    }
+
+    echo();
+    curs_set(1);
+
+    wgetnstr(window, buffer, 32);
+
+    noecho();
+    curs_set(0);
+
+    stringBuffer = buffer;
+    return stringBuffer;
 }

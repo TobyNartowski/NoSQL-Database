@@ -19,7 +19,7 @@ public:
     virtual std::string getName() = 0;
     virtual void setTableName(std::string tableName) = 0;
     virtual std::string getTableName() = 0;
-    virtual void addNullValue(unsigned int index) = 0;
+    virtual void addNullValue(unsigned int index = 0) = 0;
     virtual void deleteValue(unsigned int index) = 0;
     virtual unsigned int getColumnSize() = 0;
     virtual std::string streamPrint(unsigned int index, bool filePrint = false) = 0;

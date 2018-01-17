@@ -61,8 +61,8 @@ public:
 
 	// Wyrownaj kolumny, rozmiar kolumn zostaje zwiekszony do
 	// rozmiaru najwiekszej kolumny w tabeli;
-	// puste miejsca sa wypelniane znakiem '-'
-	void alignColumns();
+	// puste miejsca sa wypelniane znakiem '-', zwraca flage czy udalo sie wyrownac
+	bool alignColumns();
 
 	// Oblicza maksymalna dlugosc kolumny i zapisuje do wektora
 	void calculateLength(ColumnHandler* column);

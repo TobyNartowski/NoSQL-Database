@@ -57,7 +57,7 @@ public:
     static int drawMenu(WINDOW *window, Choices::choices_t whichMenu, std::string databaseName);
     // Przeciazona wersja rysowania menu
     // (Przyjmuje pozycje menu, rozmiar tabeli, nazwe okna oraz nazwe bazy danych)
-    static int drawMenu(WINDOW *window,const std::string menuChoices[],
+    static int drawMenu(WINDOW *window, const std::string menuChoices[],
                         unsigned int size, std::string windowName, std::string databaseName);
 
     // Wypisuje poziome menu (Przyjmuje odpowiednie okno pozycje menu,
@@ -68,7 +68,7 @@ public:
 
     // Rysuje poziome menu (Przyjmuje odpowiednie okno, pozycje menu,
     // rozmiar tabeli oraz pionowe polozenie)
-    static int drawHorizontalMenu(WINDOW *window,const std::string *menuChoices,
+    static int drawHorizontalMenu(WINDOW *window, const std::string *menuChoices,
                            unsigned int size, unsigned int shift);
 
     // Wypisuje menu z zaznaczeniem
@@ -83,6 +83,4 @@ public:
     // zwraca tablice flag zaznaczenia)
     static bool *drawMenuSelectable(WINDOW *window, const std::string *menuChoices,
                                     unsigned int size, unsigned int shift);
-
-
 };

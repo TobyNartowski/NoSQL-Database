@@ -18,21 +18,21 @@ int main()
 {
  	database = new Database("Baza_danych_1", DATABASE_FILENAME);
 
-	Table *personTable = create_person_table();
-	Table *addressTable = create_address_table();
-/*
-    database->saveDatabase();
-    database->loadDatabase();
+	//Table *personTable = create_person_table();
+	//Table *addressTable = create_address_table();
+
+    //database->saveDatabase();
+    //database->loadDatabase();
     database->printDatabase();
-*/
+
     //database->printDatabase();
     Display *display = Display::initDisplay(database);
     display->startMainMenu();
 
     display->destroyDisplay();
 
-    delete addressTable;
-    delete personTable;
+    //delete addressTable;
+    //delete personTable;
     delete database;
     return EXIT_SUCCESS;
 }
