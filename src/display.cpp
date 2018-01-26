@@ -61,7 +61,7 @@ void Display::startMainMenu()
                 Operations::drawAddMenu(database);
                 break;
             case Choices::MAIN_USUN:
-                getch();
+                Operations::drawDeleteMenu(database);
                 break;
             case Choices::MAIN_ZAPISZ:
                 Operations::saveDatabase(database);

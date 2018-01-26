@@ -23,6 +23,18 @@ public:
     // Dodaje rekord (Zwraca flage, ktora okresla powrot do menu)
     static bool addRecord(Database *database);
 
+    // Rysuje menu usuwania
+    static void drawDeleteMenu(Database *database);
+
+    // Usuwa tabele (Zwraca flage, ktora okresla powrot do menu)
+    static bool deleteTable(Database *database);
+
+    // Usuwa kolumne (Zwraca flage, ktora okresla powrot do menu)
+    static bool deleteColumn(Database *database);
+
+    // Czysci cala baze danych
+    static bool clearDatabase(Database *database);
+
     // Zaladuj baze danych
     static void loadDatabase(Database *database);
 

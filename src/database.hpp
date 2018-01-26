@@ -35,6 +35,9 @@ public:
     // Zwraca nazwe bazy danych
     std::string getName();
 
+    // Ustawia nazwe bazy danych
+    void setName(std::string databaseName);
+
     // Zwraca ilosc tabel w bazie danych
     unsigned int getDatabaseSize();
 
@@ -46,7 +49,7 @@ public:
     bool attachTableToDatabase(Table *table);
 
     // Odlacz tabele z bazy danych
-    void detachTableFromDatabase(std::string nameOfTable);
+    void detachTableFromDatabase(unsigned int index);
 
     // Wyswietla cala baze danych
     void printDatabase();

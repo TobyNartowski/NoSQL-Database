@@ -70,8 +70,8 @@ public:
     // Podlacz kolumne do tabeli (przyjmuje kolumne do dodania)
     void attachColumnToTable(ColumnHandler* column);
 
-	// Odlacz kolumne z tabeli (przyjmuje nazwe kolumny do usuniecia)
-	void detachColumnFromTable(std::string nameOfColumn);
+	// Odlacz kolumne z tabeli (przyjmuje odpowiedni indeks)
+	void detachColumnFromTable(unsigned int index);
 
 	// Zwraca wskaznik na dana kolumne
 	// (przyjmuje nazwe kolumny lub odpowiedni indeks)

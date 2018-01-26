@@ -19,8 +19,8 @@ int main()
 {
  	database = new Database("Baza_danych_1", DATABASE_FILENAME);
 
-	//Table *personTable = create_person_table();
-	//Table *addressTable = create_address_table();
+	Table *personTable = create_person_table();
+	Table *addressTable = create_address_table();
 
     Display *display = Display::initDisplay(database);
     display->startMainMenu();

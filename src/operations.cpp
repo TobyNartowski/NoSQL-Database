@@ -351,17 +351,15 @@ bool Operations::addRecord(Database *database)
 
     Windows::drawBasicWindow(database->getName(), headerName);
     for(unsigned int i = 0; i < database->getTable(tableChoice)->getTableSize(); i++){
-        bool pkFlag, nullableFlag, uniqueFlag;
+        bool pkFlag, nullableFlag;
         pkFlag = false;
         nullableFlag = true;
-        uniqueFlag = false;
 
         columnNameBuffer = database->getTable(tableChoice)->getColumn(i)->getName();
         columnTypes[i] = database->getTable(tableChoice)->getColumn(i)->whatType();
 
         pkFlag = database->getTable(tableChoice)->getColumn(i)->isPk();
         nullableFlag = database->getTable(tableChoice)->getColumn(i)->isNullable();
-        uniqueFlag = database->getTable(tableChoice)->getColumn(i)->isUnique();
 
         columnHandlers[i] = database->getTable(tableChoice)->getColumn(i);
 
@@ -460,6 +458,130 @@ bool Operations::addRecord(Database *database)
 
     database->getTable(tableChoice)->alignColumns();
     return true;
+}
+
+void Operations::drawDeleteMenu(Database *database)
+{
+    while(true){
+        Windows::drawBasicWindow(database->getName(), "Usun");
+
+        switch(Menu::drawMenu(Windows::mainWindow, Choices::DELETE, database->getName())){
+            case Choices::DELETE_TABELE:
+                if(deleteTable(database))
+                    return;
+                break;
+            case Choices::DELETE_KOLUMNE:
+                if(deleteColumn(database))
+                    return;
+                break;
+            case Choices::CLEAR_DATABASE:
+                if(clearDatabase(database))
+                    return;
+                break;
+            case -1:
+            default:
+                return;
+        }
+    }
+}
+
+bool Operations::deleteTable(Database *database)
+{
+    if(database->empty()){
+        Windows::drawErrorWindow("Baza danych jest pusta!");
+        return false;
+    }
+
+    int tableChoice;
+
+    std::string *tableNames = new std::string[database->getDatabaseSize()+1];
+    for(unsigned int i = 0; i < database->getDatabaseSize(); i++)
+        tableNames[i] = database->getTable(i)->getName();
+
+    tableChoice = Menu::drawMenu(Windows::mainWindow, tableNames, database->getDatabaseSize(),
+                                 "Usun tabele", database->getName());
+    if(tableChoice == -1)
+        return false;
+
+    std::string choiceString = "Czy na pewno chcesz usunac tabele ";
+    choiceString += database->getTable(tableChoice)->getName();
+    choiceString += "?";
+
+    if(Windows::drawChoiceWindow(choiceString)){
+        database->detachTableFromDatabase(tableChoice);
+        Windows::drawErrorWindow("Tabela zostala usunieta");
+
+        std::string infoString = "Usunieto tabele: ";
+        infoString += database->getTable(tableChoice)->getName();
+        Windows::printInfo(infoString);
+        return true;
+    }
+    return false;
+}
+
+bool Operations::deleteColumn(Database *database)
+{
+    if(database->empty()){
+        Windows::drawErrorWindow("Baza danych jest pusta!");
+        return false;
+    }
+
+    int tableChoice, columnChoice;
+
+    std::string *tableNames = new std::string[database->getDatabaseSize()+1];
+    for(unsigned int i = 0; i < database->getDatabaseSize(); i++)
+        tableNames[i] = database->getTable(i)->getName();
+    tableChoice = Menu::drawMenu(Windows::mainWindow, tableNames, database->getDatabaseSize(),
+                                 "Usun kolumne (Wybierz tabele)", database->getName());
+    if(tableChoice == -1)
+        return false;
+
+    if(!database->getTable(tableChoice)->getTableSize()){
+        Windows::drawErrorWindow("Tabela jest pusta!");
+        return false;
+    }
+
+    std::string *columnNames = new std::string[database->getTable(tableChoice)->getTableSize()+1];
+    for(unsigned int i = 0; i < database->getTable(tableChoice)->getTableSize(); i++)
+        columnNames[i] = database->getTable(tableChoice)->getColumn(i)->getName();
+
+    columnChoice = Menu::drawMenu(Windows::mainWindow, columnNames, database->getTable(tableChoice)->getTableSize(),
+                                 "Usun kolumne (Wybierz kolumne)", database->getName());
+    if(columnChoice == -1)
+        return false;
+
+    std::string choiceString = "Czy na pewno chcesz usunac kolumne ";
+    choiceString += database->getTable(tableChoice)->getColumn(columnChoice)->getName();
+    choiceString += "?";
+
+    if(Windows::drawChoiceWindow(choiceString)){
+        database->getTable(tableChoice)->detachColumnFromTable(columnChoice);
+        Windows::drawErrorWindow("Kolumna zostala usunieta");
+
+        std::string infoString = "Usunieto kolumne: ";
+        infoString += database->getTable(tableChoice)->getColumn(columnChoice)->getName();
+        Windows::printInfo(infoString);
+        return true;
+    }
+    return false;
+}
+
+bool Operations::clearDatabase(Database *database)
+{
+    if(database->empty()){
+        Windows::drawErrorWindow("Baza danych aktualnie jest juz pusta!");
+        return false;
+    }
+
+    if(Windows::drawChoiceWindow("Czy na pewno chcesz wyczyscic baze danych?")){
+        std::string nameBuffer = database->getName();
+        database->clearDatabase();
+        database->setName(nameBuffer);
+        Windows::drawErrorWindow("Baza danych zostala wyczyszczona!");
+        Windows::printInfo("Wyczyszczono baze danych");
+        return true;
+    }
+    return false;
 }
 
 void Operations::loadDatabase(Database *database)

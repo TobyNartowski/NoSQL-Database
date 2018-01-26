@@ -190,7 +190,7 @@ void Table::calculateLength(ColumnHandler* column, bool overrideLength)
         for(unsigned int i = 0; i < columns.size(); i++)
             if(column->getName() == columns[i]->getName())
                 findIndex = i;
-        if((findIndex != -1) && (columnLengths.size() > findIndex)){
+        if((findIndex != -1) && (columnLengths.size() > (unsigned)findIndex)){
             columnLengths[findIndex] = max;
             return;
         }
@@ -229,17 +229,20 @@ void Table::attachColumnToTable(ColumnHandler* column)
     alignColumns();
 }
 
-void Table::detachColumnFromTable(std::string nameOfColumn)
+void Table::detachColumnFromTable(unsigned int index)
 {
-    for(unsigned int i = 0; i < columns.size(); i++)
-        if(columns[i]->getName() == nameOfColumn){
-            columns[i]->setTableName("NULL");
-            columns.erase(columns.begin() + i);
-            columnLengths.erase(columnLengths.begin() + i);
-            std::cout << "Odlaczono kolumne \"" << nameOfColumn << "\" z tabeli" << std::endl;
-            return;
-        }
-    std::cout << "Nie znaleziono kolumny: \"" << nameOfColumn << "\" w tabeli" << std::endl;
+    if(index > columns.size())
+        return;
+
+    if(columns[index]->isPk())
+        pkIndex = -1;
+    if(columns[index]->isFk())
+        fkIndexes.erase(fkIndexes.begin() + index);
+
+    columns[index]->setTableName("NULL");
+    columns.erase(columns.begin() + index);
+    columnLengths.erase(columnLengths.begin() + index);
+    alignColumns();
 }
 
 ColumnHandler *Table::getColumn(std::string nameOfColumn)

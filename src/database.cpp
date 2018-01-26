@@ -15,6 +15,11 @@ std::string Database::getName()
     return nameOfDatabase;
 }
 
+void Database::setName(std::string databaseName)
+{
+    this->nameOfDatabase = databaseName;
+}
+
 unsigned int Database::getDatabaseSize()
 {
     return tables.size();
@@ -36,15 +41,11 @@ bool Database::attachTableToDatabase(Table *table)
     return true;
 }
 
-void Database::detachTableFromDatabase(std::string nameOfTable)
+void Database::detachTableFromDatabase(unsigned int index)
 {
-    for(unsigned int i = 0; i < tables.size(); i++)
-        if(tables[i]->getName() == nameOfTable){
-            tables.erase(tables.begin() + i);
-            return;
-        }
-    std::cout << "Nie znaleziono tabeli o podanej nazwie" << std::endl;
-    return;
+    if(index > tables.size())
+        return;
+    tables.erase(tables.begin() + index);
 }
 
 void Database::printDatabase()

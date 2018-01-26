@@ -8,7 +8,7 @@
 
 namespace Choices {
     typedef enum {
-        MAIN, ADD
+        MAIN, ADD, DELETE
     } choices_t;
 
     static const std::vector<std::string> main_v = {
@@ -19,12 +19,16 @@ namespace Choices {
         "Tabele", "Kolumne", "Rekord"
     };
 
+    static const std::vector<std::string> delete_v = {
+        "Tabele", "Kolumne", "Wyczysc"
+    };
+
     static const std::vector<std::string> names = {
-        "Menu glowne", "Dodaj"
+        "Menu glowne", "Dodaj", "Usun"
     };
 
     static std::map<choices_t, std::vector<std::string>> choices = {
-        {MAIN, main_v}, {ADD, add_v}
+        {MAIN, main_v}, {ADD, add_v}, {DELETE, delete_v}
     };
 
     typedef enum {
@@ -34,6 +38,9 @@ namespace Choices {
     typedef enum {
         ADD_TABELE, ADD_KOLUMNE, ADD_REKORD
     } add_t;
+    typedef enum {
+        DELETE_TABELE, DELETE_KOLUMNE, CLEAR_DATABASE
+    } delete_t;
 }
 
 class Menu
