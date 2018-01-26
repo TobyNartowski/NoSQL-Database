@@ -5,6 +5,7 @@
 #include "display.hpp"
 
 #include <iostream>
+#include <ncurses.h>
 
 #define DATABASE_FILENAME ".local_database"
 
@@ -21,11 +22,6 @@ int main()
 	//Table *personTable = create_person_table();
 	//Table *addressTable = create_address_table();
 
-    //database->saveDatabase();
-    //database->loadDatabase();
-    database->printDatabase();
-
-    //database->printDatabase();
     Display *display = Display::initDisplay(database);
     display->startMainMenu();
 

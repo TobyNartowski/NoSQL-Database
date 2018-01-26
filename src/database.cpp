@@ -203,7 +203,7 @@ void Database::saveDatabase()
     localFile.close();
 }
 
-bool Database::loadDatabase()
+bool Database::loadDatabase(std::string &time)
 {
     std::ifstream readFile;
     std::string buffer, columnNameBuffer, tableNameBuffer, typeBuffer;
@@ -348,8 +348,8 @@ bool Database::loadDatabase()
         else
             return false;
     }
+    time = date;
 
-    std::cout << "Odczytano baze danych z: " + date << std::endl;
     readFile.close();
     return true;
 }

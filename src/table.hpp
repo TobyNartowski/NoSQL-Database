@@ -65,7 +65,7 @@ public:
 	bool alignColumns();
 
 	// Oblicza maksymalna dlugosc kolumny i zapisuje do wektora
-	void calculateLength(ColumnHandler* column);
+	void calculateLength(ColumnHandler* column, bool overrideLength = false);
 
     // Podlacz kolumne do tabeli (przyjmuje kolumne do dodania)
     void attachColumnToTable(ColumnHandler* column);

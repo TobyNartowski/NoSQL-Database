@@ -77,5 +77,5 @@ public:
 
     // Odczytuje baze danych z pliku lokalnego
     // (zwraca flage czy powiodlo sie odczytywanie pliku)
-    bool loadDatabase();
+    bool loadDatabase(std::string &time);
 };

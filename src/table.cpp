@@ -33,6 +33,8 @@ unsigned int Table::getHeight()
 
 unsigned int Table::getLength(unsigned int index)
 {
+
+
     if(index > columnLengths.size())
         return 0;
     else
@@ -162,14 +164,20 @@ bool Table::alignColumns()
         while(tableSize > columns[i]->getColumnSize())
                 columns[i]->addNullValue(columns[i]->getColumnSize());
     }
+
+    for(unsigned int i = 0; i < columns.size(); i++)
+        calculateLength(columns[i], true);
+
     return true;
 }
 
-void Table::calculateLength(ColumnHandler* column)
+void Table::calculateLength(ColumnHandler* column, bool overrideLength)
 {
-    unsigned int max;
-    if(column->isPk() || column->isFk())
-        max = (column->getName()).length() + 5;
+    unsigned int max = 0;
+    if(column->isPk() && column->isFk())
+        max = (column->getName()).length() + 10;
+    else if(column->isPk() || column->isFk())
+        max = (column->getName().length()) + 5;
     else
         max = (column->getName()).length();
 
@@ -177,6 +185,16 @@ void Table::calculateLength(ColumnHandler* column)
         if((column->streamPrint(i)).length() > max)
                 max = (column->streamPrint(i)).length();
 
+    if(overrideLength){
+        int findIndex = -1;
+        for(unsigned int i = 0; i < columns.size(); i++)
+            if(column->getName() == columns[i]->getName())
+                findIndex = i;
+        if((findIndex != -1) && (columnLengths.size() > findIndex)){
+            columnLengths[findIndex] = max;
+            return;
+        }
+    }
     columnLengths.push_back(max);
 }
 
@@ -208,7 +226,6 @@ void Table::attachColumnToTable(ColumnHandler* column)
 
     column->setTableName(getName());
     columns.push_back(column);
-    calculateLength(column);
     alignColumns();
 }
 

@@ -5,7 +5,6 @@
 
 #include <algorithm>
 #include <cstring>
-#include <unistd.h>
 
 //Implementacje metod
 void Operations::drawDatabase(Database *database)
@@ -31,6 +30,9 @@ void Operations::drawDatabase(Database *database)
         unsigned int horizontalIndex;
         unsigned int verticalIndex = 0;
         bool printHeader = true;
+
+        for(unsigned int i = 0; i < database->getDatabaseSize(); i++)
+            database->getTable(i)->alignColumns();
 
         for(unsigned int i = 0; i < database->getDatabaseSize(); i++){
             std::string lineHeader = "";
@@ -165,7 +167,6 @@ bool Operations::addTable(Database *database)
         infoBuffer += stringBuffer;
         Windows::printInfo(infoBuffer);
 
-        sleep(1);
         return true;
     }
 }
@@ -225,6 +226,26 @@ bool Operations::addColumn(Database *database)
             continue;
         }
 
+        if(attribChoices[0] && (typeChoice == 0)){
+            Windows::drawErrorWindow("Typ BOOL nie moze byc kluczem glownym");
+            continue;
+        }
+
+        if(attribChoices[0] && (typeChoice == 3)){
+            Windows::drawErrorWindow("Typ STRING nie moze byc kluczem glownym");
+            continue;
+        }
+
+        if(attribChoices[2] && database->getTable(tableChoice)->getHeight()){
+            Windows::drawErrorWindow("Kolumna nie moze byc pusta, brak mozliwosci wyrownania tabel!");
+            continue;
+        }
+
+        if(attribChoices[0] && database->getTable(tableChoice)->getHeight()){
+            Windows::drawErrorWindow("Brak mozliwosci dodania klucza glownego!");
+            continue;
+        }
+
         std::string questionBuffer = "Czy na pewno chcesz dodac kolumne: ";
         questionBuffer += stringBuffer;
         questionBuffer += " <";
@@ -278,7 +299,6 @@ bool Operations::addColumn(Database *database)
 
         Windows::printInfo(infoBuffer);
 
-        sleep(1);
         break;
     }
     return true;
@@ -286,6 +306,11 @@ bool Operations::addColumn(Database *database)
 
 bool Operations::addRecord(Database *database)
 {
+    if(database->empty()){
+        Windows::drawErrorWindow("Baza danych jest pusta!");
+        return false;
+    }
+
     ColumnHandler **columnHandlers;
     Column<bool> *boolColumn;
     Column<int> *intColumn;
@@ -439,8 +464,13 @@ bool Operations::addRecord(Database *database)
 
 void Operations::loadDatabase(Database *database)
 {
-    if(database->loadDatabase()){
-        Windows::drawErrorWindow("Wczytano baze danych z pliku lokalnego");
+    std::string time;
+    if(!database->empty())
+        if(!Windows::drawChoiceWindow("Wczytanie bazy danych spowoduje nadpisanie aktualnej, Czy na pewno chcesz to zrobic?"))
+            return;
+
+    if(database->loadDatabase(time)){
+        Windows::drawErrorWindow("Wczytano baze danych z: " + time);
         Windows::printInfo("Wczytano baze danych");
     }
     else
@@ -448,6 +478,14 @@ void Operations::loadDatabase(Database *database)
 }
 void Operations::saveDatabase(Database *database)
 {
+    if(database->empty()){
+        Windows::drawErrorWindow("Baza danych jest pusta!");
+        return;
+    }
+
+    if(!Windows::drawChoiceWindow("Czy na pewno chcesz zapisac baze danych?"))
+        return;
+
     database->saveDatabase();
     Windows::drawErrorWindow("Zapisano baze danych do pliku lokalnego");
     Windows::printInfo("Zapisano baze danych");
