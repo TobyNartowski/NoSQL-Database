@@ -45,6 +45,7 @@ void Database::detachTableFromDatabase(unsigned int index)
 {
     if(index > tables.size())
         return;
+
     tables.erase(tables.begin() + index);
 }
 
@@ -78,6 +79,8 @@ void Database::setPk(ColumnHandler *pkColumn)
 void Database::setFk(ColumnHandler *fkColumn)
 {
     for(unsigned int i = 0; i < keys.size(); i++){
+        if((keys[i].first == NULL) && (keys[i].second->getName() == fkColumn->getName()))
+            keys.erase(keys.begin() + i);
         if(keys[i].first == NULL)
             continue;
         if(keys[i].first->getName() == fkColumn->getName()){
@@ -88,22 +91,51 @@ void Database::setFk(ColumnHandler *fkColumn)
     keys.push_back(std::make_pair((ColumnHandler *)NULL, fkColumn));
 }
 
-void Database::printKeys()
+void Database::deletePk(ColumnHandler *pkColumn)
 {
-    std::cout << "Polaczenia:" << std::endl;
     for(unsigned int i = 0; i < keys.size(); i++){
-        std::cout << "PK: ";
-        if(keys[i].first == NULL)
-            std::cout << "NULL";
-        else
-            std::cout << "(" << keys[i].first->getTableName() << ")" << keys[i].first->getName();
-        std::cout << " --> Fk: ";
+        if((keys[i].second == NULL) && (keys[i].first->getName() == pkColumn->getName()))
+            keys.erase(keys.begin() + i);
         if(keys[i].second == NULL)
-            std::cout << "NULL";
-        else
-            std::cout << "(" << keys[i].second->getTableName() << ")" << keys[i].second->getName();
-        std::cout << std::endl;
+            continue;
+        if(keys[i].second->getName() == pkColumn->getName()){
+            keys[i].first = NULL;
+            return;
+        }
     }
+}
+
+void Database::deleteFk(ColumnHandler *fkColumn)
+{
+    for(unsigned int i = 0; i < keys.size(); i++){
+        if((keys[i].first == NULL) && (keys[i].second->getName() == fkColumn->getName()))
+            keys.erase(keys.begin() + i);
+        if(keys[i].first == NULL)
+            continue;
+        if(keys[i].first->getName() == fkColumn->getName()){
+            keys[i].second = NULL;
+            return;
+        }
+    }
+}
+std::string Database::getKeysString()
+{
+    std::ostringstream stream;
+
+    stream << "Polaczenia miedzy tabelami" << std::endl << std::endl;
+    for(unsigned int i = 0; i < keys.size(); i++){
+        if(keys[i].first == NULL)
+            stream << "NULL";
+        else
+            stream << "(" << keys[i].first->getTableName() << ")" << keys[i].first->getName();
+        stream << " --> ";
+        if(keys[i].second == NULL)
+            stream << "NULL";
+        else
+            stream << "(" << keys[i].second->getTableName() << ")" << keys[i].second->getName();
+        stream << std::endl;
+    }
+    return stream.str();
 }
 
 Table *Database::getTable(std::string nameOfTable)
@@ -142,6 +174,13 @@ bool Database::containsTable(std::string nameOfTable)
 bool Database::empty()
 {
     if(!tables.size())
+        return true;
+    return false;
+}
+
+bool Database::keysEmpty()
+{
+    if(!keys.size())
         return true;
     return false;
 }

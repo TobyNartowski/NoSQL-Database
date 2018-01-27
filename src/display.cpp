@@ -10,10 +10,8 @@
 Display *Display::instance = nullptr;
 
 // Implementacje metod
-Display::Display(Database *database)
+Display::Display()
 {
-    this->database = database;
-
     initscr();
     noecho();
     keypad(stdscr, true);
@@ -33,11 +31,16 @@ Display::Display(Database *database)
     keypad(Windows::choiceWindow, true);
 }
 
-Display *Display::initDisplay(Database *database)
+Display *Display::initDisplay()
 {
     if(instance == 0)
-        instance = new Display(database);
+        instance = new Display();
     return instance;
+}
+
+void Display::connectDatabase(Database *database)
+{
+    this->database = database;
 }
 
 Display::~Display()
@@ -48,6 +51,33 @@ Display::~Display()
 void Display::destroyDisplay()
 {
     delete instance;
+}
+
+std::string Display::getDatabaseName()
+{
+    while(true){
+        bool spaceFlag = false;
+        Windows::drawBasicWindow("", "Nowa baza danych");
+
+        std::string message = "Podaj Nazwe bazy danych";
+        std::string stringBuffer = Windows::drawInputWindow(Windows::mainWindow, message, getmaxy(Windows::mainWindow)/2);
+
+        if(stringBuffer.empty()){
+            Windows::drawErrorWindow("Nazwa bazy danych nie moze byc pusta!");
+            continue;
+        }
+
+        for(unsigned int i = 0; i < stringBuffer.length(); i++)
+            if(isspace(stringBuffer[i]))
+                spaceFlag = true;
+
+        if(spaceFlag){
+            Windows::drawErrorWindow("Nazwa bazy danych nie moze zawierac spacji!");
+            continue;
+        }
+
+        return stringBuffer;
+    }
 }
 
 void Display::startMainMenu()

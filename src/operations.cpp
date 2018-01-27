@@ -5,13 +5,14 @@
 
 #include <algorithm>
 #include <cstring>
+#include <sstream>
 
 //Implementacje metod
 void Operations::drawDatabase(Database *database)
 {
-    Windows::drawBasicWindow(database->getName(), "Wyswietl");
-
     while(true){
+        Windows::drawBasicWindow(database->getName(), "Wyswietl baze danych");
+
         if(!database->getDatabaseSize()) {
             mvwprintw(Windows::mainWindow, getmaxy(Windows::mainWindow)/2,
                       getmaxx(Windows::mainWindow)/2-strlen("Baza danych jest pusta!")/2, "Baza danych jest pusta!");
@@ -101,14 +102,56 @@ void Operations::drawDatabase(Database *database)
             verticalIndex += database->getTable(i)->getHeight() + 3;
             wrefresh(Windows::mainWindow);
         }
-        std::string enterText = "(ENTER, aby wyjsc)";
+        std::string enterText = "(ENTER aby wyjsc; > aby wyswietlic klucze)";
         mvwprintw(Windows::mainWindow, getmaxy(Windows::mainWindow)-2, getmaxx(Windows::mainWindow)/2-(enterText.length()/2), enterText.c_str());
         wrefresh(Windows::mainWindow);
 
         int getchBuffer = getch();
+        if(getchBuffer == KEY_RIGHT){
+            if(drawDatabaseKeys(database)){
+                wclear(Windows::mainWindow);
+                continue;
+            }
+            else
+                break;
+        }
         if((getchBuffer == 10) || (getchBuffer == KEY_LEFT))
             break;
     }
+}
+
+bool Operations::drawDatabaseKeys(Database *database)
+{
+    Windows::drawBasicWindow(database->getName(), "Wyswietl klucze");
+
+    while(true){
+        std::string enterText = "(ENTER aby wyjsc; < aby wyswietlic baze danych)";
+        mvwprintw(Windows::mainWindow, getmaxy(Windows::mainWindow)-2, getmaxx(Windows::mainWindow)/2-(enterText.length()/2), enterText.c_str());
+
+        if(database->keysEmpty()){
+            std::string noConnectionsText = "Brak polaczen w bazie danych";
+            Windows::drawErrorWindow(noConnectionsText);
+            return true;
+        }
+
+        std::stringstream streamBuffer(database->getKeysString().c_str());
+        std::string textBuffer;
+        int i = 0;
+
+        while(std::getline(streamBuffer, textBuffer, '\n')){
+            i++;
+            mvwprintw(Windows::mainWindow, getmaxy(Windows::mainWindow)/3+i, getmaxx(Windows::mainWindow)/2-(textBuffer.length()/2), textBuffer.c_str());
+        }
+
+        wrefresh(Windows::mainWindow);
+
+        int getchBuffer = getch();
+        if(getchBuffer == KEY_LEFT)
+            return true;
+        if(getchBuffer == 10)
+            return false;
+    }
+    return true;
 }
 
 void Operations::drawAddMenu(Database *database)

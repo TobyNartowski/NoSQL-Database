@@ -8,7 +8,6 @@
 #include <ncurses.h>
 
 #define DATABASE_FILENAME ".local_database"
-
 Database *database;
 
 // Przykladowe tabele
@@ -17,18 +16,16 @@ Table *create_address_table();
 
 int main()
 {
- 	database = new Database("Baza_danych_1", DATABASE_FILENAME);
+    Display *display = Display::initDisplay();
 
-	Table *personTable = create_person_table();
-	Table *addressTable = create_address_table();
+    std::string databaseName = display->getDatabaseName();
+    database = new Database(databaseName, DATABASE_FILENAME);
+    display->connectDatabase(database);
 
-    Display *display = Display::initDisplay(database);
     display->startMainMenu();
 
     display->destroyDisplay();
 
-    //delete addressTable;
-    //delete personTable;
     delete database;
     return EXIT_SUCCESS;
 }

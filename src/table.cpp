@@ -208,10 +208,8 @@ void Table::attachColumnToTable(ColumnHandler* column)
     }
 
     if(column->isPk()){
-        if(pkIndex != -1){
-            std::cout << "Wiecej niz jeden klucz glowny, kolumna \"" << column->getName() << "\" nie zostala dodana" << std::endl;
+        if(pkIndex != -1)
             return;
-        }
         pkIndex = columns.size();
         database->setPk(column);
     }
@@ -234,14 +232,21 @@ void Table::detachColumnFromTable(unsigned int index)
     if(index > columns.size())
         return;
 
-    if(columns[index]->isPk())
+    if(columns[index]->isPk()){
         pkIndex = -1;
-    if(columns[index]->isFk())
-        fkIndexes.erase(fkIndexes.begin() + index);
+        database->deletePk(columns[index]);
+    }
+    if(columns[index]->isFk()){
+        for(unsigned int i = 0; i < fkIndexes.size(); i++)
+            if((unsigned)fkIndexes[i] == index)
+                fkIndexes.erase(fkIndexes.begin() + i);
+        database->deleteFk(columns[index]);
+    }
 
     columns[index]->setTableName("NULL");
     columns.erase(columns.begin() + index);
     columnLengths.erase(columnLengths.begin() + index);
+    tableSize = 0;
     alignColumns();
 }
 

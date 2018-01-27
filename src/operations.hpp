@@ -11,6 +11,9 @@ public:
     // Rysuje cala baze danych
     static void drawDatabase(Database *database);
 
+    // Wypisuje wszystkie klucze (Zwraca flage, ktora okresla powrot do menu)
+    static bool drawDatabaseKeys(Database *database);
+
     // Rysuje menu dodawania
     static void drawAddMenu(Database *database);
 

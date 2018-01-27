@@ -60,8 +60,14 @@ public:
     // Dodaje polaczenie klucza obcego (przyjmuje obca kolumne)
     void setFk(ColumnHandler *fkColumn);
 
-    // Wyswietla wszystkie polaczenia miedzy tabelami
-    void printKeys();
+    // Usuwa polaczenie klucza glownego (przyjmuje glowna kolumne)
+    void deletePk(ColumnHandler *pkColumn);
+
+    // Usuwa polaczenie klucza obcego (przyjmuje obca kolumne)
+    void deleteFk(ColumnHandler *fkColumn);
+
+    // Zwraca wszystkie polaczenia miedzy tabelami
+    std::string getKeysString();
 
     // Zwraca wskaznik na dana tabele
     // (przyjmuje nazwe tabeli lub odpowiedni indeks)
@@ -74,6 +80,9 @@ public:
 
     // Sprawdza czy baza danych jest pusta (Zwraca prawde lub falsz)
     bool empty();
+
+    // Sprawdza czy w bazie danych znajduja sie jakies polaczenia
+    bool keysEmpty();
 
     // Zapisuje baze danych do pliku lokalnego
     void saveDatabase();

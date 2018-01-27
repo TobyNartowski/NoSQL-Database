@@ -12,7 +12,7 @@ private:
     static Display *instance;
 
     // Prywatny konstruktor
-    Display(Database *database);
+    Display();
 
     // Wskaznik na baze danych
     Database *database;
@@ -21,10 +21,16 @@ private:
     ~Display();
 public:
     // Zainicjuj klase wyjscia (Zwraca pojedynczy obiekt)
-    static Display *initDisplay(Database *database);
+    static Display *initDisplay();
+
+    // Laczy baze danych
+    void connectDatabase(Database *database);
 
     // Wywoluje destruktor obiektu - konczy prace klasy wyjscia
     void destroyDisplay();
+
+    // Metoda pobierajaca nazwe bazy danych
+    std::string getDatabaseName();
 
     // Uruchamia menu glowne
     void startMainMenu();
