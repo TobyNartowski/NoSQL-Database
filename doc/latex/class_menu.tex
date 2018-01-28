@@ -1,0 +1,127 @@
+\hypertarget{class_menu}{}\section{Dokumentacja klasy Menu}
+\label{class_menu}\index{Menu@{Menu}}
+\subsection*{Statyczne metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_menu_ad413f4b72438f65886bc5f5e370ad426}{print\+Menu\+Choices}} (W\+I\+N\+D\+OW $\ast$window, Choices\+::choices\+\_\+t which\+Menu, unsigned int highlight, std\+::string database\+Name)
+\begin{DoxyCompactList}\small\item\em Implementacja metod. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_menu_a5faa9cd8e2be7ef81916032c64a1d460}{print\+Menu\+Choices}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string $\ast$menu\+Choices, unsigned int size, std\+::string window\+Name, std\+::string database\+Name, unsigned int highlight)
+\item 
+static int \mbox{\hyperlink{class_menu_a452bfc7ce14d367bdf38cee636f09b0c}{draw\+Menu}} (W\+I\+N\+D\+OW $\ast$window, Choices\+::choices\+\_\+t which\+Menu, std\+::string database\+Name)
+\item 
+static int \mbox{\hyperlink{class_menu_a8c2a73e33c0cbf1a8b09b2c4831ea2b8}{draw\+Menu}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string menu\+Choices\mbox{[}$\,$\mbox{]}, unsigned int size, std\+::string window\+Name, std\+::string database\+Name)
+\item 
+static void \mbox{\hyperlink{class_menu_aea098dfc2a133fae9e4b1c3c31bdc448}{print\+Horizontal\+Menu\+Choices}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string $\ast$menu\+Choices, unsigned int size, unsigned int shift, unsigned int highlight)
+\item 
+static int \mbox{\hyperlink{class_menu_a22e5c26ac2b73a702749a0229ad4fcba}{draw\+Horizontal\+Menu}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string $\ast$menu\+Choices, unsigned int size, unsigned int shift)
+\item 
+static void \mbox{\hyperlink{class_menu_afcf3606c830a65335e61b1d0bd4e432a}{print\+Menu\+Selectable}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string $\ast$menu\+Choices, unsigned int size, unsigned int shift, unsigned int highlight, bool $\ast$selected)
+\item 
+static bool $\ast$ \mbox{\hyperlink{class_menu_adf2ca061cdf65bd87500c74c1f1c2584}{draw\+Menu\+Selectable}} (W\+I\+N\+D\+OW $\ast$window, const std\+::string $\ast$menu\+Choices, unsigned int size, unsigned int shift)
+\end{DoxyCompactItemize}
+\subsection*{Statyczne atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_menu_a2b3a53b8e554105fd9cf078604f1d455}\label{class_menu_a2b3a53b8e554105fd9cf078604f1d455}} 
+static const int \mbox{\hyperlink{class_menu_a2b3a53b8e554105fd9cf078604f1d455}{main\+Menu\+Size\+Factor}} = 10
+\begin{DoxyCompactList}\small\item\em Atrybuty okien. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+
+
+Definicja w linii 46 pliku menu.\+hpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_menu_a22e5c26ac2b73a702749a0229ad4fcba}\label{class_menu_a22e5c26ac2b73a702749a0229ad4fcba}} 
+\index{Menu@{Menu}!draw\+Horizontal\+Menu@{draw\+Horizontal\+Menu}}
+\index{draw\+Horizontal\+Menu@{draw\+Horizontal\+Menu}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{draw\+Horizontal\+Menu()}{drawHorizontalMenu()}}
+{\footnotesize\ttfamily int Menu\+::draw\+Horizontal\+Menu (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string $\ast$}]{menu\+Choices,  }\item[{unsigned int}]{size,  }\item[{unsigned int}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Rysuje poziome menu (Przyjmuje odpowiednie okno, pozycje menu, rozmiar tabeli oraz pionowe polozenie) 
+
+Definicja w linii 167 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_a452bfc7ce14d367bdf38cee636f09b0c}\label{class_menu_a452bfc7ce14d367bdf38cee636f09b0c}} 
+\index{Menu@{Menu}!draw\+Menu@{draw\+Menu}}
+\index{draw\+Menu@{draw\+Menu}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{draw\+Menu()}{drawMenu()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Menu\+::draw\+Menu (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{Choices\+::choices\+\_\+t}]{which\+Menu,  }\item[{std\+::string}]{database\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Rysuje menu (Przyjmuje okno, argument, ktore okno ma rysowac oraz nazwe bazy danych, zwraca liczbe calkowita oznaczajaca wybor) 
+
+Definicja w linii 53 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_a8c2a73e33c0cbf1a8b09b2c4831ea2b8}\label{class_menu_a8c2a73e33c0cbf1a8b09b2c4831ea2b8}} 
+\index{Menu@{Menu}!draw\+Menu@{draw\+Menu}}
+\index{draw\+Menu@{draw\+Menu}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{draw\+Menu()}{drawMenu()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Menu\+::draw\+Menu (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string}]{menu\+Choices\mbox{[}$\,$\mbox{]},  }\item[{unsigned int}]{size,  }\item[{std\+::string}]{window\+Name,  }\item[{std\+::string}]{database\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Przeciazona wersja rysowania menu (Przyjmuje pozycje menu, rozmiar tabeli, nazwe okna oraz nazwe bazy danych) 
+
+Definicja w linii 97 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_adf2ca061cdf65bd87500c74c1f1c2584}\label{class_menu_adf2ca061cdf65bd87500c74c1f1c2584}} 
+\index{Menu@{Menu}!draw\+Menu\+Selectable@{draw\+Menu\+Selectable}}
+\index{draw\+Menu\+Selectable@{draw\+Menu\+Selectable}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{draw\+Menu\+Selectable()}{drawMenuSelectable()}}
+{\footnotesize\ttfamily bool $\ast$ Menu\+::draw\+Menu\+Selectable (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string $\ast$}]{menu\+Choices,  }\item[{unsigned int}]{size,  }\item[{unsigned int}]{shift }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Rysuje menu z zaznaczeniem (Przyjmuje pozycje menu, rozmiar tabeli, pionowe polozenie, zwraca tablice flag zaznaczenia) 
+
+Definicja w linii 237 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_aea098dfc2a133fae9e4b1c3c31bdc448}\label{class_menu_aea098dfc2a133fae9e4b1c3c31bdc448}} 
+\index{Menu@{Menu}!print\+Horizontal\+Menu\+Choices@{print\+Horizontal\+Menu\+Choices}}
+\index{print\+Horizontal\+Menu\+Choices@{print\+Horizontal\+Menu\+Choices}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{print\+Horizontal\+Menu\+Choices()}{printHorizontalMenuChoices()}}
+{\footnotesize\ttfamily void Menu\+::print\+Horizontal\+Menu\+Choices (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string $\ast$}]{menu\+Choices,  }\item[{unsigned int}]{size,  }\item[{unsigned int}]{shift,  }\item[{unsigned int}]{highlight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Wypisuje poziome menu (Przyjmuje odpowiednie okno pozycje menu, rozmiar tabeli, pionowe polozenie oraz odpowiednie podswietlenie) 
+
+Definicja w linii 142 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_ad413f4b72438f65886bc5f5e370ad426}\label{class_menu_ad413f4b72438f65886bc5f5e370ad426}} 
+\index{Menu@{Menu}!print\+Menu\+Choices@{print\+Menu\+Choices}}
+\index{print\+Menu\+Choices@{print\+Menu\+Choices}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{print\+Menu\+Choices()}{printMenuChoices()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Menu\+::print\+Menu\+Choices (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{Choices\+::choices\+\_\+t}]{which\+Menu,  }\item[{unsigned int}]{highlight,  }\item[{std\+::string}]{database\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Implementacja metod. 
+
+Wypisuje menu (Przyjmuje okno, argument, ktore okno ma wypisac, odpowiednie podswietlenie oraz nazwe bazy danych) 
+
+Definicja w linii 5 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_a5faa9cd8e2be7ef81916032c64a1d460}\label{class_menu_a5faa9cd8e2be7ef81916032c64a1d460}} 
+\index{Menu@{Menu}!print\+Menu\+Choices@{print\+Menu\+Choices}}
+\index{print\+Menu\+Choices@{print\+Menu\+Choices}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{print\+Menu\+Choices()}{printMenuChoices()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Menu\+::print\+Menu\+Choices (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string $\ast$}]{menu\+Choices,  }\item[{unsigned int}]{size,  }\item[{std\+::string}]{window\+Name,  }\item[{std\+::string}]{database\+Name,  }\item[{unsigned int}]{highlight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Przeciazona wersja rysowania menu (Przyjmuje okno, pozycje menu, rozmiar tabel, nazwe okna, nazwe bazy danych oraz odpowiednie podswietlenie) 
+
+Definicja w linii 29 pliku menu.\+cpp.
+
+\mbox{\Hypertarget{class_menu_afcf3606c830a65335e61b1d0bd4e432a}\label{class_menu_afcf3606c830a65335e61b1d0bd4e432a}} 
+\index{Menu@{Menu}!print\+Menu\+Selectable@{print\+Menu\+Selectable}}
+\index{print\+Menu\+Selectable@{print\+Menu\+Selectable}!Menu@{Menu}}
+\subsubsection{\texorpdfstring{print\+Menu\+Selectable()}{printMenuSelectable()}}
+{\footnotesize\ttfamily void Menu\+::print\+Menu\+Selectable (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{const std\+::string $\ast$}]{menu\+Choices,  }\item[{unsigned int}]{size,  }\item[{unsigned int}]{shift,  }\item[{unsigned int}]{highlight,  }\item[{bool $\ast$}]{selected }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Wypisuje menu z zaznaczeniem (Przyjmuje okno, pozycje menu, rozmiar tabeli, pionowe polozenie, odpowiednie podswietlenie i tablice flag zaznaczenia) 
+
+Definicja w linii 207 pliku menu.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/menu.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/menu.\+cpp\end{DoxyCompactItemize}

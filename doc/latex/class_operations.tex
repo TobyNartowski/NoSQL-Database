@@ -1,0 +1,79 @@
+\hypertarget{class_operations}{}\section{Dokumentacja klasy Operations}
+\label{class_operations}\index{Operations@{Operations}}
+
+
+Klasa implementujaca poszczegolne operacje na bazie danych.  
+
+
+
+
+{\ttfamily \#include $<$operations.\+hpp$>$}
+
+\subsection*{Statyczne metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_operations_a0d787c05e02fa042225975ffc31b84ad}{draw\+Database}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Rysuje cala baze danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a9db1b3adc8aeb0a297910b031065ca09}\label{class_operations_a9db1b3adc8aeb0a297910b031065ca09}} 
+static bool \mbox{\hyperlink{class_operations_a9db1b3adc8aeb0a297910b031065ca09}{draw\+Database\+Keys}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Wypisuje wszystkie klucze (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a08dcd1587e343a6ae8fb9499aa0d5e51}\label{class_operations_a08dcd1587e343a6ae8fb9499aa0d5e51}} 
+static void \mbox{\hyperlink{class_operations_a08dcd1587e343a6ae8fb9499aa0d5e51}{draw\+Add\+Menu}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Rysuje menu dodawania. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_aba6a02ac9ffff887460a1f7ea0423074}\label{class_operations_aba6a02ac9ffff887460a1f7ea0423074}} 
+static bool \mbox{\hyperlink{class_operations_aba6a02ac9ffff887460a1f7ea0423074}{add\+Table}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Dodaje tabele (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a20a8daf97c43a25ee11d4c208c14be3a}\label{class_operations_a20a8daf97c43a25ee11d4c208c14be3a}} 
+static bool \mbox{\hyperlink{class_operations_a20a8daf97c43a25ee11d4c208c14be3a}{add\+Column}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Dodaj kolumne (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_afd7a5917e3bf9d5400938bdf8b739835}\label{class_operations_afd7a5917e3bf9d5400938bdf8b739835}} 
+static bool \mbox{\hyperlink{class_operations_afd7a5917e3bf9d5400938bdf8b739835}{add\+Record}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Dodaje rekord (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_af80abbc0ef95dfe51598e17f090e5025}\label{class_operations_af80abbc0ef95dfe51598e17f090e5025}} 
+static void \mbox{\hyperlink{class_operations_af80abbc0ef95dfe51598e17f090e5025}{draw\+Delete\+Menu}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Rysuje menu usuwania. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a0264d0eab5834bb2a7c4bd1a3123750b}\label{class_operations_a0264d0eab5834bb2a7c4bd1a3123750b}} 
+static bool \mbox{\hyperlink{class_operations_a0264d0eab5834bb2a7c4bd1a3123750b}{delete\+Table}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Usuwa tabele (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a131a98d48f81a6795d545c6b5b018aaa}\label{class_operations_a131a98d48f81a6795d545c6b5b018aaa}} 
+static bool \mbox{\hyperlink{class_operations_a131a98d48f81a6795d545c6b5b018aaa}{delete\+Column}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Usuwa kolumne (Zwraca flage, ktora okresla powrot do menu) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_ad2594127002035dbb20a371e9f5c550a}\label{class_operations_ad2594127002035dbb20a371e9f5c550a}} 
+static bool \mbox{\hyperlink{class_operations_ad2594127002035dbb20a371e9f5c550a}{clear\+Database}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Czysci cala baze danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a9b7e9f4a8ec752d5119a084d8c36c45e}\label{class_operations_a9b7e9f4a8ec752d5119a084d8c36c45e}} 
+static void \mbox{\hyperlink{class_operations_a9b7e9f4a8ec752d5119a084d8c36c45e}{load\+Database}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Zaladuj baze danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_operations_a4a62590f4f25415a675818ad0501aaa7}\label{class_operations_a4a62590f4f25415a675818ad0501aaa7}} 
+static void \mbox{\hyperlink{class_operations_a4a62590f4f25415a675818ad0501aaa7}{save\+Database}} (\mbox{\hyperlink{class_database}{Database}} $\ast$database)
+\begin{DoxyCompactList}\small\item\em Zapisz baze danych. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Klasa implementujaca poszczegolne operacje na bazie danych. 
+
+Definicja w linii 8 pliku operations.\+hpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_operations_a0d787c05e02fa042225975ffc31b84ad}\label{class_operations_a0d787c05e02fa042225975ffc31b84ad}} 
+\index{Operations@{Operations}!draw\+Database@{draw\+Database}}
+\index{draw\+Database@{draw\+Database}!Operations@{Operations}}
+\subsubsection{\texorpdfstring{draw\+Database()}{drawDatabase()}}
+{\footnotesize\ttfamily void Operations\+::draw\+Database (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_database}{Database}} $\ast$}]{database }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Rysuje cala baze danych. 
+
+Implementacje metod. 
+
+Definicja w linii 11 pliku operations.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/operations.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/operations.\+cpp\end{DoxyCompactItemize}

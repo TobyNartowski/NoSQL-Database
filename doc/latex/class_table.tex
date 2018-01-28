@@ -1,0 +1,136 @@
+\hypertarget{class_table}{}\section{Dokumentacja klasy Table}
+\label{class_table}\index{Table@{Table}}
+
+
+Klasa tabeli w bazie danych zawierajacej kolumny.  
+
+
+
+
+{\ttfamily \#include $<$table.\+hpp$>$}
+
+\subsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_table_a13c865a29586d5b4b17518ea08b9bb17}{Table}} (std\+::string name\+Of\+Table)
+\begin{DoxyCompactList}\small\item\em Implementacje metod. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_a3a6049ceab7c12f75252590c8a3521df}\label{class_table_a3a6049ceab7c12f75252590c8a3521df}} 
+std\+::string \mbox{\hyperlink{class_table_a3a6049ceab7c12f75252590c8a3521df}{get\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca nazwe tabeli. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_a440a486d84477d646ef7c570c06fa1a6}\label{class_table_a440a486d84477d646ef7c570c06fa1a6}} 
+unsigned int \mbox{\hyperlink{class_table_a440a486d84477d646ef7c570c06fa1a6}{get\+Table\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca rozmiar tabeli. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_ae2cf6b2e397a0cc4ff6fea6b4c54e363}\label{class_table_ae2cf6b2e397a0cc4ff6fea6b4c54e363}} 
+unsigned int \mbox{\hyperlink{class_table_ae2cf6b2e397a0cc4ff6fea6b4c54e363}{get\+Height}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca wysokosc tabeli. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_a9142623a172710464598aaa309ebd54d}\label{class_table_a9142623a172710464598aaa309ebd54d}} 
+unsigned int \mbox{\hyperlink{class_table_a9142623a172710464598aaa309ebd54d}{get\+Length}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Zwraca dlugosc danej kolumny (przyjmuje odpowiedni indeks) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_ac34865b32c2d5c1d8132494b21b04e15}\label{class_table_ac34865b32c2d5c1d8132494b21b04e15}} 
+void \mbox{\hyperlink{class_table_ac34865b32c2d5c1d8132494b21b04e15}{print\+Table}} ()
+\begin{DoxyCompactList}\small\item\em Wyswietl cala tabele. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_a8c1485bde4c0ca46649d24fe737aeb70}\label{class_table_a8c1485bde4c0ca46649d24fe737aeb70}} 
+void \mbox{\hyperlink{class_table_a8c1485bde4c0ca46649d24fe737aeb70}{print\+Row}} (unsigned int index, bool print\+Header=true)
+\begin{DoxyCompactList}\small\item\em Wyswietla caly wiersz (przyjmuje indeks, ktory rzad ma wyswietlic oraz flage czy maja zostac wyswietlone nazwy kolumn) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_table_a77b0e0d729f4dcee457a7e00b2bbd47f}{print\+Row\+Where\+String\+Is}} (std\+::string \mbox{\hyperlink{class_table_a776e2cab59507b3b59d475a964e347b8}{name}}, std\+::string value)
+\item 
+bool \mbox{\hyperlink{class_table_a33f193d8b41d0f262bbd6fbcea777301}{align\+Columns}} ()
+\item 
+\mbox{\Hypertarget{class_table_a13020a54a789ce200774e6ccf09611ef}\label{class_table_a13020a54a789ce200774e6ccf09611ef}} 
+void \mbox{\hyperlink{class_table_a13020a54a789ce200774e6ccf09611ef}{calculate\+Length}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$column, bool override\+Length=false)
+\begin{DoxyCompactList}\small\item\em Oblicza maksymalna dlugosc kolumny i zapisuje do wektora. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_a7c61e72c0170dd36f81b15ebe0a1685f}\label{class_table_a7c61e72c0170dd36f81b15ebe0a1685f}} 
+void \mbox{\hyperlink{class_table_a7c61e72c0170dd36f81b15ebe0a1685f}{attach\+Column\+To\+Table}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$column)
+\begin{DoxyCompactList}\small\item\em Podlacz kolumne do tabeli (przyjmuje kolumne do dodania) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table_ac98476e2e556fa3d8c770548cf5db2cf}\label{class_table_ac98476e2e556fa3d8c770548cf5db2cf}} 
+void \mbox{\hyperlink{class_table_ac98476e2e556fa3d8c770548cf5db2cf}{detach\+Column\+From\+Table}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Odlacz kolumne z tabeli (przyjmuje odpowiedni indeks) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$ \mbox{\hyperlink{class_table_abf7854a77e6fa5f9421565a2acc34590}{get\+Column}} (std\+::string name\+Of\+Column)
+\item 
+\mbox{\Hypertarget{class_table_a411d2032c8134b8e3846a3921e826596}\label{class_table_a411d2032c8134b8e3846a3921e826596}} 
+\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$ {\bfseries get\+Column} (unsigned int index)
+\item 
+bool \mbox{\hyperlink{class_table_aa6b2d58e79fbfc9e2bc7a3f912c5157c}{contains\+Column}} (std\+::string name\+Of\+Column)
+\item 
+\mbox{\Hypertarget{class_table_a47c6260a9a8b769e630a0263f094ecff}\label{class_table_a47c6260a9a8b769e630a0263f094ecff}} 
+bool \mbox{\hyperlink{class_table_a47c6260a9a8b769e630a0263f094ecff}{is\+Already\+Pk}} ()
+\begin{DoxyCompactList}\small\item\em Sprawdza czy tabeli znajduje sie aktualnie klucz glowny (Zwraca prawde lub falsz) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_a776e2cab59507b3b59d475a964e347b8}\label{class_table_a776e2cab59507b3b59d475a964e347b8}} 
+std\+::string \mbox{\hyperlink{class_table_a776e2cab59507b3b59d475a964e347b8}{name}}
+\begin{DoxyCompactList}\small\item\em Nazwa tabeli. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Klasa tabeli w bazie danych zawierajacej kolumny. 
+
+Definicja w linii 9 pliku table.\+hpp.
+
+
+
+\subsection{Dokumentacja konstruktora i destruktora}
+\mbox{\Hypertarget{class_table_a13c865a29586d5b4b17518ea08b9bb17}\label{class_table_a13c865a29586d5b4b17518ea08b9bb17}} 
+\index{Table@{Table}!Table@{Table}}
+\index{Table@{Table}!Table@{Table}}
+\subsubsection{\texorpdfstring{Table()}{Table()}}
+{\footnotesize\ttfamily Table\+::\+Table (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Table }\end{DoxyParamCaption})}
+
+
+
+Implementacje metod. 
+
+Konstruktor tworzacy pusta tabele (przyjmuje baze danych, do ktorej ma zostac dolaczona oraz nazwe tabeli) 
+
+Definicja w linii 8 pliku table.\+cpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_table_a33f193d8b41d0f262bbd6fbcea777301}\label{class_table_a33f193d8b41d0f262bbd6fbcea777301}} 
+\index{Table@{Table}!align\+Columns@{align\+Columns}}
+\index{align\+Columns@{align\+Columns}!Table@{Table}}
+\subsubsection{\texorpdfstring{align\+Columns()}{alignColumns()}}
+{\footnotesize\ttfamily bool Table\+::align\+Columns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+/\+Wyrownaj kolumny, rozmiar kolumn zostaje zwiekszony do rozmiaru najwiekszej kolumny w tabeli; puste miejsca sa wypelniane znakiem \textquotesingle{}-\/\textquotesingle{}, zwraca flage czy udalo sie wyrownac 
+
+Definicja w linii 154 pliku table.\+cpp.
+
+\mbox{\Hypertarget{class_table_aa6b2d58e79fbfc9e2bc7a3f912c5157c}\label{class_table_aa6b2d58e79fbfc9e2bc7a3f912c5157c}} 
+\index{Table@{Table}!contains\+Column@{contains\+Column}}
+\index{contains\+Column@{contains\+Column}!Table@{Table}}
+\subsubsection{\texorpdfstring{contains\+Column()}{containsColumn()}}
+{\footnotesize\ttfamily bool Table\+::contains\+Column (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Column }\end{DoxyParamCaption})}
+
+Sprawdza czy kolumna znajduje sie w tabeli (przyjmuje nazwe kolumny, zwraca prawde lub falsz) 
+
+Definicja w linii 269 pliku table.\+cpp.
+
+\mbox{\Hypertarget{class_table_abf7854a77e6fa5f9421565a2acc34590}\label{class_table_abf7854a77e6fa5f9421565a2acc34590}} 
+\index{Table@{Table}!get\+Column@{get\+Column}}
+\index{get\+Column@{get\+Column}!Table@{Table}}
+\subsubsection{\texorpdfstring{get\+Column()}{getColumn()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$ Table\+::get\+Column (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Column }\end{DoxyParamCaption})}
+
+Zwraca wskaznik na dana kolumne (przyjmuje nazwe kolumny lub odpowiedni indeks) 
+
+Definicja w linii 253 pliku table.\+cpp.
+
+\mbox{\Hypertarget{class_table_a77b0e0d729f4dcee457a7e00b2bbd47f}\label{class_table_a77b0e0d729f4dcee457a7e00b2bbd47f}} 
+\index{Table@{Table}!print\+Row\+Where\+String\+Is@{print\+Row\+Where\+String\+Is}}
+\index{print\+Row\+Where\+String\+Is@{print\+Row\+Where\+String\+Is}!Table@{Table}}
+\subsubsection{\texorpdfstring{print\+Row\+Where\+String\+Is()}{printRowWhereStringIs()}}
+{\footnotesize\ttfamily void Table\+::print\+Row\+Where\+String\+Is (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{std\+::string}]{value }\end{DoxyParamCaption})}
+
+Wyswietla wiersz, gdzie w danej kolumnie jest spelniony odpowiedni warunek dla typu tekstowego /(przyjmuje nazwe kolumny i oczekiwana wartosc) 
+
+Definicja w linii 115 pliku table.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/table.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/table.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,120 @@
+\hypertarget{class_column}{}\section{Dokumentacja szablonu klasy Column$<$ T $>$}
+\label{class_column}\index{Column$<$ T $>$@{Column$<$ T $>$}}
+
+
+{\ttfamily \#include $<$column.\+hpp$>$}
+
+Diagram dziedziczenia dla Column$<$ T $>$\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_column}
+\end{center}
+\end{figure}
+\subsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_column_ac244a78d96a7a83cb2bf201a4b65cc60}{Column}} (std\+::string name\+Of\+Column, bool pk=false, bool fk=false, bool nullable=true, bool unique=false)
+\begin{DoxyCompactList}\small\item\em Implementacje metod. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_column_a2563bd8f764ee4423fdb8426e5ff3d2d}{Column}} (std\+::string name\+Of\+Column, bool $\ast$flags)
+\item 
+\mbox{\Hypertarget{class_column_ac4dff6048d07de37b640caa291765c28}\label{class_column_ac4dff6048d07de37b640caa291765c28}} 
+std\+::string \mbox{\hyperlink{class_column_ac4dff6048d07de37b640caa291765c28}{get\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca nazwe kolumny. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_afb265d4dd087deed41448b68cfc7bb76}\label{class_column_afb265d4dd087deed41448b68cfc7bb76}} 
+void \mbox{\hyperlink{class_column_afb265d4dd087deed41448b68cfc7bb76}{set\+Table\+Name}} (std\+::string table\+Name)
+\begin{DoxyCompactList}\small\item\em Ustala nazwe tabeli obejmujacej (przyjmuje nazwe tabeli) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_ae43964d7b88d4c9e7e357b285edc5ed5}\label{class_column_ae43964d7b88d4c9e7e357b285edc5ed5}} 
+std\+::string \mbox{\hyperlink{class_column_ae43964d7b88d4c9e7e357b285edc5ed5}{get\+Table\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca nazwe tabeli obejmujacej. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_a3e83b7a782fb92f5308122e522c8b8c4}\label{class_column_a3e83b7a782fb92f5308122e522c8b8c4}} 
+void \mbox{\hyperlink{class_column_a3e83b7a782fb92f5308122e522c8b8c4}{add\+Value}} (const T \&value, int index=A\+R\+G\+\_\+\+N\+O\+T\+\_\+\+P\+R\+O\+V\+I\+D\+ED)
+\begin{DoxyCompactList}\small\item\em Dodaj wartosc (przyjmuje wartosc, ktora ma zostac dodana oraz odpowiedni indeks) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_ae31c40b1f30b13e1f05694792bf84fe3}\label{class_column_ae31c40b1f30b13e1f05694792bf84fe3}} 
+void \mbox{\hyperlink{class_column_ae31c40b1f30b13e1f05694792bf84fe3}{add\+Null\+Value}} (unsigned int index=0)
+\begin{DoxyCompactList}\small\item\em Dodaj puste pole (przyjmuje opdowiedni indeks) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_ad451edfb49eca6136269ba885ba8f5f2}\label{class_column_ad451edfb49eca6136269ba885ba8f5f2}} 
+void \mbox{\hyperlink{class_column_ad451edfb49eca6136269ba885ba8f5f2}{delete\+Value}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Usun wartosc (przyjmuje odpowiedni indeks) \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_column_a01f68d75e582070faf9b53e49a50c740}{stream\+Print}} (unsigned int index, bool file\+Print=false)
+\item 
+\mbox{\Hypertarget{class_column_a28f0dc54b6248de35dbe980ff33e3e35}\label{class_column_a28f0dc54b6248de35dbe980ff33e3e35}} 
+unsigned int \mbox{\hyperlink{class_column_a28f0dc54b6248de35dbe980ff33e3e35}{get\+Column\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca rozmiar kolumny. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_ae82ecb46ea5e8a5849dd437d03c5dd18}\label{class_column_ae82ecb46ea5e8a5849dd437d03c5dd18}} 
+bool \mbox{\hyperlink{class_column_ae82ecb46ea5e8a5849dd437d03c5dd18}{is\+Nullable}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca czy kolumna moze miec puste pola. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_a02a49330774bf62536d686757e84873b}\label{class_column_a02a49330774bf62536d686757e84873b}} 
+bool \mbox{\hyperlink{class_column_a02a49330774bf62536d686757e84873b}{is\+Pk}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca czy kolumna jest kluczem glownym. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_a8ec7fb1f80b67714e6b4963ed7237788}\label{class_column_a8ec7fb1f80b67714e6b4963ed7237788}} 
+bool \mbox{\hyperlink{class_column_a8ec7fb1f80b67714e6b4963ed7237788}{is\+Fk}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca czy kolumna jest kluczem obcym. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_a739b9804e0543ca88f215a7a42f9efe9}\label{class_column_a739b9804e0543ca88f215a7a42f9efe9}} 
+bool \mbox{\hyperlink{class_column_a739b9804e0543ca88f215a7a42f9efe9}{is\+Unique}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca czy pola kolumny musza byc unikalne. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_column_a676736d57fd4a0b6ffc35f20ab65cdcf}\label{class_column_a676736d57fd4a0b6ffc35f20ab65cdcf}} 
+Column\+Type \mbox{\hyperlink{class_column_a676736d57fd4a0b6ffc35f20ab65cdcf}{what\+Type}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca typ kolumny w postaci odpowiedniego znaku. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+\subsubsection*{template$<$typename T$>$\newline
+class Column$<$ T $>$}
+
+Klasa pochodna (glowna) Implementuje podstawowe operacje na kolumnie i jej polach 
+
+Definicja w linii 36 pliku column.\+hpp.
+
+
+
+\subsection{Dokumentacja konstruktora i destruktora}
+\mbox{\Hypertarget{class_column_ac244a78d96a7a83cb2bf201a4b65cc60}\label{class_column_ac244a78d96a7a83cb2bf201a4b65cc60}} 
+\index{Column@{Column}!Column@{Column}}
+\index{Column@{Column}!Column@{Column}}
+\subsubsection{\texorpdfstring{Column()}{Column()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_column}{Column}}$<$ T $>$\+::\mbox{\hyperlink{class_column}{Column}} (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Column,  }\item[{bool}]{pk = {\ttfamily false},  }\item[{bool}]{fk = {\ttfamily false},  }\item[{bool}]{nullable = {\ttfamily true},  }\item[{bool}]{unique = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Implementacje metod. 
+
+Konstruktor kolumny inicjalizujacy jej parametry (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry) 
+
+Definicja w linii 8 pliku column.\+cpp.
+
+\mbox{\Hypertarget{class_column_a2563bd8f764ee4423fdb8426e5ff3d2d}\label{class_column_a2563bd8f764ee4423fdb8426e5ff3d2d}} 
+\index{Column@{Column}!Column@{Column}}
+\index{Column@{Column}!Column@{Column}}
+\subsubsection{\texorpdfstring{Column()}{Column()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_column}{Column}}$<$ T $>$\+::\mbox{\hyperlink{class_column}{Column}} (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Column,  }\item[{bool $\ast$}]{flags }\end{DoxyParamCaption})}
+
+Opcjonalny konstruktor kolumny inicjalizujacy jej parametry (przyjmuje nazwe nowej kolumny oraz opcjonalne odpowiednie parametry) 
+
+Definicja w linii 31 pliku column.\+cpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_column_a01f68d75e582070faf9b53e49a50c740}\label{class_column_a01f68d75e582070faf9b53e49a50c740}} 
+\index{Column@{Column}!stream\+Print@{stream\+Print}}
+\index{stream\+Print@{stream\+Print}!Column@{Column}}
+\subsubsection{\texorpdfstring{stream\+Print()}{streamPrint()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::string \mbox{\hyperlink{class_column}{Column}}$<$ T $>$\+::stream\+Print (\begin{DoxyParamCaption}\item[{unsigned int}]{index,  }\item[{bool}]{file\+Print = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zwraca wartosc (przyjmuje odpowiedni indeks oraz flage okreslajaca typ zwracania wartosci null do plikow) 
+
+Implementuje \mbox{\hyperlink{class_column_handler}{Column\+Handler}}.
+
+
+
+Definicja w linii 141 pliku column.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/column.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/column.\+cpp\end{DoxyCompactItemize}

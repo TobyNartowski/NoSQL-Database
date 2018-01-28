@@ -1,0 +1,63 @@
+\hypertarget{class_column_handler}{}\section{Dokumentacja klasy Column\+Handler}
+\label{class_column_handler}\index{Column\+Handler@{Column\+Handler}}
+
+
+{\ttfamily \#include $<$column.\+hpp$>$}
+
+Diagram dziedziczenia dla Column\+Handler\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_column_handler}
+\end{center}
+\end{figure}
+\subsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_column_handler_a020bbf00c5b3ece65cb6122b1f17c749}\label{class_column_handler_a020bbf00c5b3ece65cb6122b1f17c749}} 
+virtual std\+::string {\bfseries get\+Name} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a1b9efa4e5fcc8b788109772e59173a2a}\label{class_column_handler_a1b9efa4e5fcc8b788109772e59173a2a}} 
+virtual void {\bfseries set\+Table\+Name} (std\+::string table\+Name)=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a8dcfcbed92a3e1ed4d91ff88e5fcae6d}\label{class_column_handler_a8dcfcbed92a3e1ed4d91ff88e5fcae6d}} 
+virtual std\+::string {\bfseries get\+Table\+Name} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a3d2b864155ffb3daeba5337654a42a94}\label{class_column_handler_a3d2b864155ffb3daeba5337654a42a94}} 
+virtual void {\bfseries add\+Null\+Value} (unsigned int index=0)=0
+\item 
+\mbox{\Hypertarget{class_column_handler_aefd69e41261e8c0aa953c9f915762b80}\label{class_column_handler_aefd69e41261e8c0aa953c9f915762b80}} 
+virtual void {\bfseries delete\+Value} (unsigned int index)=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a184549518f6c45829b4b413d3b07055f}\label{class_column_handler_a184549518f6c45829b4b413d3b07055f}} 
+virtual unsigned int {\bfseries get\+Column\+Size} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_ab79c65f0e167f6c640f7d4daf92e9593}\label{class_column_handler_ab79c65f0e167f6c640f7d4daf92e9593}} 
+virtual std\+::string {\bfseries stream\+Print} (unsigned int index, bool file\+Print=false)=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a06482951220e9871cd7d51fcfd1d3729}\label{class_column_handler_a06482951220e9871cd7d51fcfd1d3729}} 
+virtual bool {\bfseries is\+Nullable} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_af296a21afca765c83e508038ba4bf070}\label{class_column_handler_af296a21afca765c83e508038ba4bf070}} 
+virtual bool {\bfseries is\+Pk} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a22e64016cb2e0b35094d192fbab0d416}\label{class_column_handler_a22e64016cb2e0b35094d192fbab0d416}} 
+virtual bool {\bfseries is\+Fk} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a375114cf104e5bd8147d66f30613ed6c}\label{class_column_handler_a375114cf104e5bd8147d66f30613ed6c}} 
+virtual bool {\bfseries is\+Unique} ()=0
+\item 
+\mbox{\Hypertarget{class_column_handler_a353fdaaa60e433b2dacb87144ad7f0dd}\label{class_column_handler_a353fdaaa60e433b2dacb87144ad7f0dd}} 
+virtual Column\+Type {\bfseries what\+Type} ()=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Klasa bazowa (dodatkowa) Jest zaimplementowana w celu ulatwienia przechowywania kolumn w tabelach (kolumny przechowywane sa w kontenerze Vector, ktory nie przechowuje szablonow klas) 
+
+Definicja w linii 16 pliku column.\+hpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/column.\+hpp\end{DoxyCompactItemize}

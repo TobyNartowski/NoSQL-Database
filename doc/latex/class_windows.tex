@@ -1,0 +1,85 @@
+\hypertarget{class_windows}{}\section{Dokumentacja klasy Windows}
+\label{class_windows}\index{Windows@{Windows}}
+
+
+Klasa implementujaca obsluge okien ncurses.  
+
+
+
+
+{\ttfamily \#include $<$windows.\+hpp$>$}
+
+\subsection*{Statyczne metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_windows_ac98bb248e4b0ca214f4d20ab656073d4}{draw\+Basic\+Window}} (std\+::string database\+Name, std\+::string window\+Name)
+\begin{DoxyCompactList}\small\item\em Implementacje metod. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_ae0e2230490fccfd42a83bd06803f7124}\label{class_windows_ae0e2230490fccfd42a83bd06803f7124}} 
+static void \mbox{\hyperlink{class_windows_ae0e2230490fccfd42a83bd06803f7124}{draw\+Info\+Window}} ()
+\begin{DoxyCompactList}\small\item\em Rysuje okno informacyjne. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_a9987c59a7d56996e59c4ff124ff5b279}\label{class_windows_a9987c59a7d56996e59c4ff124ff5b279}} 
+static void \mbox{\hyperlink{class_windows_a9987c59a7d56996e59c4ff124ff5b279}{draw\+Error\+Window}} (std\+::string error\+Message)
+\begin{DoxyCompactList}\small\item\em Rysuje okno bledu (Przyjmuje odpowiedni blad) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_a55e5f7592377477c2bbad673ae01b94e}\label{class_windows_a55e5f7592377477c2bbad673ae01b94e}} 
+static bool \mbox{\hyperlink{class_windows_a55e5f7592377477c2bbad673ae01b94e}{draw\+Choice\+Window}} (std\+::string choice\+Question)
+\begin{DoxyCompactList}\small\item\em Rysuje okno wyboru (Przyjmuje odpowiednia wiadomosc, zwraca wybor) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_a3c65349f0c3012ddca58989d31e9ce3b}\label{class_windows_a3c65349f0c3012ddca58989d31e9ce3b}} 
+static void \mbox{\hyperlink{class_windows_a3c65349f0c3012ddca58989d31e9ce3b}{print\+Info}} (std\+::string info)
+\begin{DoxyCompactList}\small\item\em Wypisuje informacje o operacji. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{class_windows_a4f328c05c0eabb280128ed123d99bf7c}{draw\+Input\+Window}} (W\+I\+N\+D\+OW $\ast$window, std\+::string name, unsigned int shift, std\+::string default\+Text=\char`\"{}\char`\"{})
+\end{DoxyCompactItemize}
+\subsection*{Statyczne atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_windows_a1a8a77907e7e33e9ba740e53cd5c229d}\label{class_windows_a1a8a77907e7e33e9ba740e53cd5c229d}} 
+static W\+I\+N\+D\+OW $\ast$ \mbox{\hyperlink{class_windows_a1a8a77907e7e33e9ba740e53cd5c229d}{main\+Window}} = nullptr
+\begin{DoxyCompactList}\small\item\em Wskaznik na okno glowne. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_a1f1f7841d914a7bf9f48ad6b52a14cd9}\label{class_windows_a1f1f7841d914a7bf9f48ad6b52a14cd9}} 
+static W\+I\+N\+D\+OW $\ast$ \mbox{\hyperlink{class_windows_a1f1f7841d914a7bf9f48ad6b52a14cd9}{info\+Window}} = nullptr
+\begin{DoxyCompactList}\small\item\em Wskaznik na okno informacyjne. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_a0fc1789a33acebebe571f14cd66139c1}\label{class_windows_a0fc1789a33acebebe571f14cd66139c1}} 
+static W\+I\+N\+D\+OW $\ast$ \mbox{\hyperlink{class_windows_a0fc1789a33acebebe571f14cd66139c1}{error\+Window}} = nullptr
+\begin{DoxyCompactList}\small\item\em Wskaznik na okno bledu. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_windows_afac69748f0f128493356850f4cba8566}\label{class_windows_afac69748f0f128493356850f4cba8566}} 
+static W\+I\+N\+D\+OW $\ast$ \mbox{\hyperlink{class_windows_afac69748f0f128493356850f4cba8566}{choice\+Window}} = nullptr
+\begin{DoxyCompactList}\small\item\em Wskaznik na okno wyboru. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Klasa implementujaca obsluge okien ncurses. 
+
+Definicja w linii 7 pliku windows.\+hpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_windows_ac98bb248e4b0ca214f4d20ab656073d4}\label{class_windows_ac98bb248e4b0ca214f4d20ab656073d4}} 
+\index{Windows@{Windows}!draw\+Basic\+Window@{draw\+Basic\+Window}}
+\index{draw\+Basic\+Window@{draw\+Basic\+Window}!Windows@{Windows}}
+\subsubsection{\texorpdfstring{draw\+Basic\+Window()}{drawBasicWindow()}}
+{\footnotesize\ttfamily void Windows\+::draw\+Basic\+Window (\begin{DoxyParamCaption}\item[{std\+::string}]{database\+Name,  }\item[{std\+::string}]{window\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Implementacje metod. 
+
+Rysuje podstawowe, puste okno z nazwami (przyjmuje nazwe bazy danych i nazwe okna) 
+
+Definicja w linii 11 pliku windows.\+cpp.
+
+\mbox{\Hypertarget{class_windows_a4f328c05c0eabb280128ed123d99bf7c}\label{class_windows_a4f328c05c0eabb280128ed123d99bf7c}} 
+\index{Windows@{Windows}!draw\+Input\+Window@{draw\+Input\+Window}}
+\index{draw\+Input\+Window@{draw\+Input\+Window}!Windows@{Windows}}
+\subsubsection{\texorpdfstring{draw\+Input\+Window()}{drawInputWindow()}}
+{\footnotesize\ttfamily std\+::string Windows\+::draw\+Input\+Window (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{window,  }\item[{std\+::string}]{name,  }\item[{unsigned int}]{shift,  }\item[{std\+::string}]{default\+Text = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Pobiera zmienna od uzytkownika (Przyjmuje odpowiednie okno, nazwe pobieranego parametru, przesuniecie oraz ewentualnie domyslna wartosc, zwraca pobrany bufor 
+
+Definicja w linii 175 pliku windows.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/windows.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/windows.\+cpp\end{DoxyCompactItemize}

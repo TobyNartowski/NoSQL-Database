@@ -1,0 +1,142 @@
+\hypertarget{class_database}{}\section{Dokumentacja klasy Database}
+\label{class_database}\index{Database@{Database}}
+
+
+Klasa calej bazy danych zawierajacej tabele.  
+
+
+
+
+{\ttfamily \#include $<$database.\+hpp$>$}
+
+\subsection*{Metody publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_database_aab14cbf95cbe114d24a2884e9417a102}{Database}} (std\+::string name\+Of\+Database, std\+::string database\+Filename)
+\begin{DoxyCompactList}\small\item\em Implementacje metod. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a87aa575818688a5e589899bd3fa97ada}\label{class_database_a87aa575818688a5e589899bd3fa97ada}} 
+std\+::string \mbox{\hyperlink{class_database_a87aa575818688a5e589899bd3fa97ada}{get\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca nazwe bazy danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_ae96b8e91b8119131e101555cbddb4308}\label{class_database_ae96b8e91b8119131e101555cbddb4308}} 
+void \mbox{\hyperlink{class_database_ae96b8e91b8119131e101555cbddb4308}{set\+Name}} (std\+::string database\+Name)
+\begin{DoxyCompactList}\small\item\em Ustawia nazwe bazy danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_ac5c3a78c9bdcd6462cd6e9e0f77d5fa7}\label{class_database_ac5c3a78c9bdcd6462cd6e9e0f77d5fa7}} 
+unsigned int \mbox{\hyperlink{class_database_ac5c3a78c9bdcd6462cd6e9e0f77d5fa7}{get\+Database\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca ilosc tabel w bazie danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a289b0374a783122e3fc62017b1a4f2d2}\label{class_database_a289b0374a783122e3fc62017b1a4f2d2}} 
+void \mbox{\hyperlink{class_database_a289b0374a783122e3fc62017b1a4f2d2}{clear\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Wyczysc cala baze danych. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_database_ac0427d3cb0807610d5b5d2c2e910d95c}{attach\+Table\+To\+Database}} (\mbox{\hyperlink{class_table}{Table}} $\ast$table)
+\item 
+\mbox{\Hypertarget{class_database_affa35fc28233e8c1bcce587cd0bfcf1a}\label{class_database_affa35fc28233e8c1bcce587cd0bfcf1a}} 
+void \mbox{\hyperlink{class_database_affa35fc28233e8c1bcce587cd0bfcf1a}{detach\+Table\+From\+Database}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Odlacz tabele z bazy danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a1b96ea42ef05966cbefddc0f58f62309}\label{class_database_a1b96ea42ef05966cbefddc0f58f62309}} 
+void \mbox{\hyperlink{class_database_a1b96ea42ef05966cbefddc0f58f62309}{print\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Wyswietla cala baze danych. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a5c807d796ad3dd3b1bec1022f6716384}\label{class_database_a5c807d796ad3dd3b1bec1022f6716384}} 
+void \mbox{\hyperlink{class_database_a5c807d796ad3dd3b1bec1022f6716384}{set\+Pk}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$pk\+Column)
+\begin{DoxyCompactList}\small\item\em Dodaje polaczenie klucza glownego (przyjmuje glowna kolumne) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a2829a5d8fae11a7321a77bba69e0af94}\label{class_database_a2829a5d8fae11a7321a77bba69e0af94}} 
+void \mbox{\hyperlink{class_database_a2829a5d8fae11a7321a77bba69e0af94}{set\+Fk}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$fk\+Column)
+\begin{DoxyCompactList}\small\item\em Dodaje polaczenie klucza obcego (przyjmuje obca kolumne) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_ac153fb7c7534f137a359a98095f21043}\label{class_database_ac153fb7c7534f137a359a98095f21043}} 
+void \mbox{\hyperlink{class_database_ac153fb7c7534f137a359a98095f21043}{delete\+Pk}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$pk\+Column)
+\begin{DoxyCompactList}\small\item\em Usuwa polaczenie klucza glownego (przyjmuje glowna kolumne) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_aa14d473d6896af6f530b1cd2875a22ca}\label{class_database_aa14d473d6896af6f530b1cd2875a22ca}} 
+void \mbox{\hyperlink{class_database_aa14d473d6896af6f530b1cd2875a22ca}{delete\+Fk}} (\mbox{\hyperlink{class_column_handler}{Column\+Handler}} $\ast$fk\+Column)
+\begin{DoxyCompactList}\small\item\em Usuwa polaczenie klucza obcego (przyjmuje obca kolumne) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a177cf4f47f1621c9fdc6ef02c79f15d5}\label{class_database_a177cf4f47f1621c9fdc6ef02c79f15d5}} 
+std\+::string \mbox{\hyperlink{class_database_a177cf4f47f1621c9fdc6ef02c79f15d5}{get\+Keys\+String}} ()
+\begin{DoxyCompactList}\small\item\em Zwraca wszystkie polaczenia miedzy tabelami. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_table}{Table}} $\ast$ \mbox{\hyperlink{class_database_a3e26371207ec61140b3853e606577d57}{get\+Table}} (std\+::string name\+Of\+Table)
+\item 
+\mbox{\Hypertarget{class_database_aeddeeeb63684a663c7f6f46e406ae84e}\label{class_database_aeddeeeb63684a663c7f6f46e406ae84e}} 
+\mbox{\hyperlink{class_table}{Table}} $\ast$ {\bfseries get\+Table} (unsigned int index)
+\item 
+bool \mbox{\hyperlink{class_database_a8e8b77a7b47bc487e32f81bc34524e10}{contains\+Table}} (std\+::string name\+Of\+Table)
+\item 
+\mbox{\Hypertarget{class_database_afefb0dc79154a0ec6d6ad80df11c6959}\label{class_database_afefb0dc79154a0ec6d6ad80df11c6959}} 
+bool \mbox{\hyperlink{class_database_afefb0dc79154a0ec6d6ad80df11c6959}{empty}} ()
+\begin{DoxyCompactList}\small\item\em Sprawdza czy baza danych jest pusta (Zwraca prawde lub falsz) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a1d055600cbd151eef4a2dd7989a2ab80}\label{class_database_a1d055600cbd151eef4a2dd7989a2ab80}} 
+bool \mbox{\hyperlink{class_database_a1d055600cbd151eef4a2dd7989a2ab80}{keys\+Empty}} ()
+\begin{DoxyCompactList}\small\item\em Sprawdza czy w bazie danych znajduja sie jakies polaczenia. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_database_a68c01178477790e27ae69cced3a0b437}\label{class_database_a68c01178477790e27ae69cced3a0b437}} 
+void \mbox{\hyperlink{class_database_a68c01178477790e27ae69cced3a0b437}{save\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Zapisuje baze danych do pliku lokalnego. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_database_a8ce06beb2fbd98398e0309e55a093508}{load\+Database}} (std\+::string \&time)
+\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Klasa calej bazy danych zawierajacej tabele. 
+
+Definicja w linii 12 pliku database.\+hpp.
+
+
+
+\subsection{Dokumentacja konstruktora i destruktora}
+\mbox{\Hypertarget{class_database_aab14cbf95cbe114d24a2884e9417a102}\label{class_database_aab14cbf95cbe114d24a2884e9417a102}} 
+\index{Database@{Database}!Database@{Database}}
+\index{Database@{Database}!Database@{Database}}
+\subsubsection{\texorpdfstring{Database()}{Database()}}
+{\footnotesize\ttfamily Database\+::\+Database (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Database,  }\item[{std\+::string}]{database\+Filename }\end{DoxyParamCaption})}
+
+
+
+Implementacje metod. 
+
+Konstruktor bazy danych (przyjmuje nazwe bazy danych, nazwe pliku lokalnego i wskaznik sprawdzajacy czy poprawnie otwarto plik) 
+
+Definicja w linii 7 pliku database.\+cpp.
+
+
+
+\subsection{Dokumentacja funkcji składowych}
+\mbox{\Hypertarget{class_database_ac0427d3cb0807610d5b5d2c2e910d95c}\label{class_database_ac0427d3cb0807610d5b5d2c2e910d95c}} 
+\index{Database@{Database}!attach\+Table\+To\+Database@{attach\+Table\+To\+Database}}
+\index{attach\+Table\+To\+Database@{attach\+Table\+To\+Database}!Database@{Database}}
+\subsubsection{\texorpdfstring{attach\+Table\+To\+Database()}{attachTableToDatabase()}}
+{\footnotesize\ttfamily bool Database\+::attach\+Table\+To\+Database (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_table}{Table}} $\ast$}]{table }\end{DoxyParamCaption})}
+
+Podlacz tabele do bazy bazy danych (zwraca flage, ktora mowi o tym czy udalo sie dolaczyc tabele) 
+
+Definicja w linii 35 pliku database.\+cpp.
+
+\mbox{\Hypertarget{class_database_a8e8b77a7b47bc487e32f81bc34524e10}\label{class_database_a8e8b77a7b47bc487e32f81bc34524e10}} 
+\index{Database@{Database}!contains\+Table@{contains\+Table}}
+\index{contains\+Table@{contains\+Table}!Database@{Database}}
+\subsubsection{\texorpdfstring{contains\+Table()}{containsTable()}}
+{\footnotesize\ttfamily bool Database\+::contains\+Table (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Table }\end{DoxyParamCaption})}
+
+Sprawdza czy tabela znajduje sie w bazie danych (przyjmuje nazwe tabeli, zwraca prawde lub falsz) 
+
+Definicja w linii 157 pliku database.\+cpp.
+
+\mbox{\Hypertarget{class_database_a3e26371207ec61140b3853e606577d57}\label{class_database_a3e26371207ec61140b3853e606577d57}} 
+\index{Database@{Database}!get\+Table@{get\+Table}}
+\index{get\+Table@{get\+Table}!Database@{Database}}
+\subsubsection{\texorpdfstring{get\+Table()}{getTable()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_table}{Table}} $\ast$ Database\+::get\+Table (\begin{DoxyParamCaption}\item[{std\+::string}]{name\+Of\+Table }\end{DoxyParamCaption})}
+
+Zwraca wskaznik na dana tabele (przyjmuje nazwe tabeli lub odpowiedni indeks) 
+
+Definicja w linii 141 pliku database.\+cpp.
+
+\mbox{\Hypertarget{class_database_a8ce06beb2fbd98398e0309e55a093508}\label{class_database_a8ce06beb2fbd98398e0309e55a093508}} 
+\index{Database@{Database}!load\+Database@{load\+Database}}
+\index{load\+Database@{load\+Database}!Database@{Database}}
+\subsubsection{\texorpdfstring{load\+Database()}{loadDatabase()}}
+{\footnotesize\ttfamily bool Database\+::load\+Database (\begin{DoxyParamCaption}\item[{std\+::string \&}]{time }\end{DoxyParamCaption})}
+
+Odczytuje baze danych z pliku lokalnego (zwraca flage czy powiodlo sie odczytywanie pliku) 
+
+Definicja w linii 246 pliku database.\+cpp.
+
+
+
+Dokumentacja dla tej klasy została wygenerowana z plików\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/database.\+hpp\item 
+F\+:/\+Pobieranie/\+No\+S\+Q\+L-\/\+Database-\/master/src/database.\+cpp\end{DoxyCompactItemize}

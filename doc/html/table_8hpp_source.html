@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>No SQL Database: Plik źródłowy F:/Pobieranie/NoSQL-Database-master/src/table.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">No SQL Database
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Baza danych C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Szukaj');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('table_8hpp_source.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">table.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;column.hpp&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_table.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_table.html">Table</a></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    std::string nameOfTable;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    std::vector&lt;ColumnHandler*&gt; columns;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    std::vector&lt;unsigned int&gt; columnLengths;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> tableSize;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">int</span> pkIndex;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    std::vector&lt;int&gt; fkIndexes;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">bool</span> vectorContains(std::vector&lt;int&gt; vector, <span class="keywordtype">int</span> index);</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="class_table.html#a13c865a29586d5b4b17518ea08b9bb17">Table</a>(std::string nameOfTable);</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="class_table.html#a776e2cab59507b3b59d475a964e347b8">   38</a></span>&#160;    std::string <a class="code" href="class_table.html#a776e2cab59507b3b59d475a964e347b8">name</a>;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    std::string <a class="code" href="class_table.html#a3a6049ceab7c12f75252590c8a3521df">getName</a>();</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_table.html#a440a486d84477d646ef7c570c06fa1a6">getTableSize</a>();</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_table.html#ae2cf6b2e397a0cc4ff6fea6b4c54e363">getHeight</a>();</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_table.html#a9142623a172710464598aaa309ebd54d">getLength</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index);</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#ac34865b32c2d5c1d8132494b21b04e15">printTable</a>();</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#a8c1485bde4c0ca46649d24fe737aeb70">printRow</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index, <span class="keywordtype">bool</span> printHeader = <span class="keyword">true</span>);</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#a77b0e0d729f4dcee457a7e00b2bbd47f">printRowWhereStringIs</a>(std::string <a class="code" href="class_table.html#a776e2cab59507b3b59d475a964e347b8">name</a>, std::string value);</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_table.html#a33f193d8b41d0f262bbd6fbcea777301">alignColumns</a>();</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#a13020a54a789ce200774e6ccf09611ef">calculateLength</a>(<a class="code" href="class_column_handler.html">ColumnHandler</a>* column, <span class="keywordtype">bool</span> overrideLength = <span class="keyword">false</span>);</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#a7c61e72c0170dd36f81b15ebe0a1685f">attachColumnToTable</a>(<a class="code" href="class_column_handler.html">ColumnHandler</a>* column);</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_table.html#ac98476e2e556fa3d8c770548cf5db2cf">detachColumnFromTable</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index);</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="class_column_handler.html">ColumnHandler</a> *<a class="code" href="class_table.html#abf7854a77e6fa5f9421565a2acc34590">getColumn</a>(std::string nameOfColumn);</div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="class_column_handler.html">ColumnHandler</a> *<a class="code" href="class_table.html#abf7854a77e6fa5f9421565a2acc34590">getColumn</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> index);</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_table.html#aa6b2d58e79fbfc9e2bc7a3f912c5157c">containsColumn</a>(std::string nameOfColumn);</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_table.html#a47c6260a9a8b769e630a0263f094ecff">isAlreadyPk</a>();</div><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div><div class="ttc" id="class_column_handler_html"><div class="ttname"><a href="class_column_handler.html">ColumnHandler</a></div><div class="ttdef"><b>Definition:</b> <a href="column_8hpp_source.html#l00016">column.hpp:16</a></div></div>
+<div class="ttc" id="class_table_html_a440a486d84477d646ef7c570c06fa1a6"><div class="ttname"><a href="class_table.html#a440a486d84477d646ef7c570c06fa1a6">Table::getTableSize</a></div><div class="ttdeci">unsigned int getTableSize()</div><div class="ttdoc">Zwraca rozmiar tabeli. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00024">table.cpp:24</a></div></div>
+<div class="ttc" id="class_table_html_ac34865b32c2d5c1d8132494b21b04e15"><div class="ttname"><a href="class_table.html#ac34865b32c2d5c1d8132494b21b04e15">Table::printTable</a></div><div class="ttdeci">void printTable()</div><div class="ttdoc">Wyswietl cala tabele. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00054">table.cpp:54</a></div></div>
+<div class="ttc" id="class_table_html_a33f193d8b41d0f262bbd6fbcea777301"><div class="ttname"><a href="class_table.html#a33f193d8b41d0f262bbd6fbcea777301">Table::alignColumns</a></div><div class="ttdeci">bool alignColumns()</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00154">table.cpp:154</a></div></div>
+<div class="ttc" id="class_table_html_ae2cf6b2e397a0cc4ff6fea6b4c54e363"><div class="ttname"><a href="class_table.html#ae2cf6b2e397a0cc4ff6fea6b4c54e363">Table::getHeight</a></div><div class="ttdeci">unsigned int getHeight()</div><div class="ttdoc">Zwraca wysokosc tabeli. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00029">table.cpp:29</a></div></div>
+<div class="ttc" id="class_table_html_aa6b2d58e79fbfc9e2bc7a3f912c5157c"><div class="ttname"><a href="class_table.html#aa6b2d58e79fbfc9e2bc7a3f912c5157c">Table::containsColumn</a></div><div class="ttdeci">bool containsColumn(std::string nameOfColumn)</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00269">table.cpp:269</a></div></div>
+<div class="ttc" id="class_table_html_a47c6260a9a8b769e630a0263f094ecff"><div class="ttname"><a href="class_table.html#a47c6260a9a8b769e630a0263f094ecff">Table::isAlreadyPk</a></div><div class="ttdeci">bool isAlreadyPk()</div><div class="ttdoc">Sprawdza czy tabeli znajduje sie aktualnie klucz glowny (Zwraca prawde lub falsz) ...</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00286">table.cpp:286</a></div></div>
+<div class="ttc" id="class_table_html_a9142623a172710464598aaa309ebd54d"><div class="ttname"><a href="class_table.html#a9142623a172710464598aaa309ebd54d">Table::getLength</a></div><div class="ttdeci">unsigned int getLength(unsigned int index)</div><div class="ttdoc">Zwraca dlugosc danej kolumny (przyjmuje odpowiedni indeks) </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00034">table.cpp:34</a></div></div>
+<div class="ttc" id="class_table_html_abf7854a77e6fa5f9421565a2acc34590"><div class="ttname"><a href="class_table.html#abf7854a77e6fa5f9421565a2acc34590">Table::getColumn</a></div><div class="ttdeci">ColumnHandler * getColumn(std::string nameOfColumn)</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00253">table.cpp:253</a></div></div>
+<div class="ttc" id="class_table_html_a8c1485bde4c0ca46649d24fe737aeb70"><div class="ttname"><a href="class_table.html#a8c1485bde4c0ca46649d24fe737aeb70">Table::printRow</a></div><div class="ttdeci">void printRow(unsigned int index, bool printHeader=true)</div><div class="ttdoc">Wyswietla caly wiersz (przyjmuje indeks, ktory rzad ma wyswietlic oraz flage czy maja zostac wyswietl...</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00089">table.cpp:89</a></div></div>
+<div class="ttc" id="class_table_html_ac98476e2e556fa3d8c770548cf5db2cf"><div class="ttname"><a href="class_table.html#ac98476e2e556fa3d8c770548cf5db2cf">Table::detachColumnFromTable</a></div><div class="ttdeci">void detachColumnFromTable(unsigned int index)</div><div class="ttdoc">Odlacz kolumne z tabeli (przyjmuje odpowiedni indeks) </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00230">table.cpp:230</a></div></div>
+<div class="ttc" id="class_table_html_a3a6049ceab7c12f75252590c8a3521df"><div class="ttname"><a href="class_table.html#a3a6049ceab7c12f75252590c8a3521df">Table::getName</a></div><div class="ttdeci">std::string getName()</div><div class="ttdoc">Zwraca nazwe tabeli. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00019">table.cpp:19</a></div></div>
+<div class="ttc" id="class_table_html_a77b0e0d729f4dcee457a7e00b2bbd47f"><div class="ttname"><a href="class_table.html#a77b0e0d729f4dcee457a7e00b2bbd47f">Table::printRowWhereStringIs</a></div><div class="ttdeci">void printRowWhereStringIs(std::string name, std::string value)</div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00115">table.cpp:115</a></div></div>
+<div class="ttc" id="class_table_html_a776e2cab59507b3b59d475a964e347b8"><div class="ttname"><a href="class_table.html#a776e2cab59507b3b59d475a964e347b8">Table::name</a></div><div class="ttdeci">std::string name</div><div class="ttdoc">Nazwa tabeli. </div><div class="ttdef"><b>Definition:</b> <a href="table_8hpp_source.html#l00038">table.hpp:38</a></div></div>
+<div class="ttc" id="class_table_html"><div class="ttname"><a href="class_table.html">Table</a></div><div class="ttdoc">Klasa tabeli w bazie danych zawierajacej kolumny. </div><div class="ttdef"><b>Definition:</b> <a href="table_8hpp_source.html#l00009">table.hpp:9</a></div></div>
+<div class="ttc" id="class_table_html_a13020a54a789ce200774e6ccf09611ef"><div class="ttname"><a href="class_table.html#a13020a54a789ce200774e6ccf09611ef">Table::calculateLength</a></div><div class="ttdeci">void calculateLength(ColumnHandler *column, bool overrideLength=false)</div><div class="ttdoc">Oblicza maksymalna dlugosc kolumny i zapisuje do wektora. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00174">table.cpp:174</a></div></div>
+<div class="ttc" id="class_table_html_a7c61e72c0170dd36f81b15ebe0a1685f"><div class="ttname"><a href="class_table.html#a7c61e72c0170dd36f81b15ebe0a1685f">Table::attachColumnToTable</a></div><div class="ttdeci">void attachColumnToTable(ColumnHandler *column)</div><div class="ttdoc">Podlacz kolumne do tabeli (przyjmuje kolumne do dodania) </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00201">table.cpp:201</a></div></div>
+<div class="ttc" id="class_table_html_a13c865a29586d5b4b17518ea08b9bb17"><div class="ttname"><a href="class_table.html#a13c865a29586d5b4b17518ea08b9bb17">Table::Table</a></div><div class="ttdeci">Table(std::string nameOfTable)</div><div class="ttdoc">Implementacje metod. </div><div class="ttdef"><b>Definition:</b> <a href="table_8cpp_source.html#l00008">table.cpp:8</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>table.hpp</b></li>
+    <li class="footer">Wygenerowano przez
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
+</body>
+</html>
